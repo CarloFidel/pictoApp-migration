@@ -4,14 +4,32 @@
  
 @import "nativewind/theme";
 
-:root {
-  --font-display:
-    Spline Sans, Inter, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji,
-    Segoe UI Symbol, Noto Color Emoji;
-  --font-mono:
-    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
-  --font-rounded: 'SF Pro Rounded', 'Hiragino Maru Gothic ProN', Meiryo, 'MS PGothic', sans-serif;
-  --font-serif: Georgia, 'Times New Roman', serif;
+@theme {
+  --font-sans: "HankenGrotesk-Regular";
+  --font-hanken-light: "HankenGrotesk-Light";
+  --font-hanken-medium: "HankenGrotesk-Medium";
+  --font-hanken-bold: "HankenGrotesk-Bold";
 
-  background-color: black;
+  --color-background-light: #f5f5f5;
+
+  --color-primary: #1475de;
+  --color-primary-50: #e6f2ff;
+  --color-primary-100: #b3d9ff;
+  --color-primary-200: #80bfff;
+  --color-primary-300: #4da6ff;
+  --color-primary-400: #1a8cff;
+  --color-primary-500: #1475de;
+  --color-primary-600: #0f5cb3;
+  --color-primary-700: #0a4290;
+  --color-primary-800: #052967;
+  --color-primary-900: #021433;
+
+  --color-alert: #ff3c3c;
+  --color-error: #f26161;
+  
+  --color-text: #333333;
+
+  --color-gray-04: #f5f5f5;
+  --color-gray-16: #cecece;
+  --color-gray-55: #737373;
 }
