@@ -2,6 +2,7 @@ import { BackButton } from '@/components/ui/BackButton';
 import { PrimaryButtton } from '@/components/ui/PrimaryButtton';
 import { globalStyle } from '@/styles/global.style';
 import { Image, StatusBar, Text, useWindowDimensions, View } from 'react-native';
+import Animated, { FadeIn } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { PopUpOnboarding } from '../components/PopUpOnboarding';
 import { CustomProgressBar } from '../components/PropgressBar';
@@ -12,7 +13,25 @@ const OnBoardingScreen = () => {
 
   const { width, height } = useWindowDimensions();
 
-  const { handleStart, showBackbutton, landingPage, showProgressBar, handleBack, progressValue, handlePressOne, handlePressTwo, title, labelOne, labelTwo } = useOnboarding();
+  const {
+    twoButtons,
+    handleStart,
+    showBackbutton,
+    landingPage,
+    showProgressBar,
+    handleBack,
+    progressValue,
+    handlePressOne,
+    handlePressTwo,
+    title,
+    labelOne,
+    labelTwo,
+    customHeight,
+    buttonVariant,
+    icon,
+    justifyTitle,
+    body,
+    image } = useOnboarding();
 
   return (
     <SafeAreaView edges={['top']} className="h-full" style={{ backgroundColor: globalStyle.color.primary[400] }}>
@@ -33,7 +52,9 @@ const OnBoardingScreen = () => {
         {
           landingPage ? (
             <>
-              <View className="justify-center items-center gap-4">
+              <Animated.View
+                entering={FadeIn.duration(300)}
+                className="justify-center items-center gap-4">
                 <Image
                   source={require("@/assets/images/icons.png")}
                   style={{
@@ -48,7 +69,7 @@ const OnBoardingScreen = () => {
                 >
                   El mundo es más fácil con pictogramas
                 </Text>
-              </View>
+              </Animated.View>
               <View className="absolute bottom-8 mt-8 justify-end p-8">
                 <PrimaryButtton
                   text="Empezar"
@@ -62,7 +83,19 @@ const OnBoardingScreen = () => {
 
             </>
           ) : (
-            <PopUpOnboarding onPressOne={handlePressOne} onPressTwo={handlePressTwo} title={title!} labelOne={labelOne!} labelTwo={labelTwo!} />
+            <PopUpOnboarding
+              twoButtons={twoButtons}
+              onPressOne={handlePressOne}
+              onPressTwo={handlePressTwo}
+              title={title!} labelOne={labelOne!}
+              labelTwo={labelTwo!}
+              customHeight={customHeight!}
+              buttonVariant={buttonVariant as "outline" | "filled"}
+              icon={icon!}
+              justifyTitle={justifyTitle!}
+              body={body}
+              image={image}
+            />
           )
         }
 

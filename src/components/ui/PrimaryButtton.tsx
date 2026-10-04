@@ -19,7 +19,7 @@ export const PrimaryButtton = ({ text, variant, backgroundColor, size, icon, ...
   const buttonWidth = size === 'sm' ? width * 0.4 : size === 'md' ? width * 0.6 : width * 0.8;
   const buttonPadding = size === 'sm' ? 10 : size === 'md' ? 15 : 20;
   const buttonBackground =
-    variant === 'outline' ? 'white' :
+    variant === 'outline' ? 'bg-background-light' :
       variant === 'filled' ? 'bg-primary-500' :
         variant === 'alert' ? 'bg-alert' : 'bg-primary-500';
 
@@ -43,7 +43,7 @@ export const PrimaryButtton = ({ text, variant, backgroundColor, size, icon, ...
         padding: buttonPadding,
         borderColor: border.borderColor,
         borderWidth: border.borderWidth,
-        backgroundColor: backgroundColor ? backgroundColor : '#f5f5f5',
+       // backgroundColor: backgroundColor ? backgroundColor : '#f5f5f5',
       },
       globalStyle.shadow.small,
       ]}
