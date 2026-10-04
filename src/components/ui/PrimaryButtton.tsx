@@ -1,3 +1,4 @@
+import { globalStyle } from '@/styles/global.style';
 import { SymbolView, type AndroidSymbol, type SFSymbol } from 'expo-symbols';
 import { Pressable, PressableProps, Text, useWindowDimensions } from 'react-native';
 
@@ -12,13 +13,13 @@ interface PrimaryButttonProps extends PressableProps {
   backgroundColor?: string;
 }
 
-export const PrimaryButtton = ({ text, variant, backgroundColor, onPress, size, icon, ...props }: PrimaryButttonProps) => {
+export const PrimaryButtton = ({ text, variant, backgroundColor, size, icon, ...props }: PrimaryButttonProps) => {
 
   const { width, height } = useWindowDimensions();
   const buttonWidth = size === 'sm' ? width * 0.4 : size === 'md' ? width * 0.6 : width * 0.8;
   const buttonPadding = size === 'sm' ? 10 : size === 'md' ? 15 : 20;
   const buttonBackground =
-    variant === 'outline' ? 'bg-white' :
+    variant === 'outline' ? 'white' :
       variant === 'filled' ? 'bg-primary-500' :
         variant === 'alert' ? 'bg-alert' : 'bg-primary-500';
 
@@ -29,14 +30,23 @@ export const PrimaryButtton = ({ text, variant, backgroundColor, onPress, size, 
   const iconColor = variant === 'outline' ? '#333333' :
     variant === 'filled' ? 'white' :
       variant === 'alert' ? 'white' : 'white';
+
+  const border = {
+    borderWidth: variant === 'outline' ? 1 : 0,
+    borderColor: variant === 'outline' ? '#3333' : 'transparent',
+  }
   return (
     <Pressable
-      onPress={onPress}
-      className={`${buttonBackground} rounded-2xl flex-row items-center justify-center gap-2`}
-      style={{
+      className={`${buttonBackground} rounded-2xl flex-row items-center justify-center gap-2 ${globalStyle.buttonPress}`}
+      style={[{
         width: buttonWidth,
         padding: buttonPadding,
-      }}
+        borderColor: border.borderColor,
+        borderWidth: border.borderWidth,
+        backgroundColor: backgroundColor ? backgroundColor : '#f5f5f5',
+      },
+      globalStyle.shadow.small,
+      ]}
       {...props}
     >
       <Text className={`${textColor} text-center font-hanken text-lg`}>{text}</Text>
