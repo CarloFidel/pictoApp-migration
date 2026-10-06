@@ -19,8 +19,8 @@ interface PrimaryButttonProps extends PressableProps {
 export const PrimaryButtton = ({ text, variant, backgroundColor, size, icon, distanceTop, iconRight, iconGoogle, ...props }: PrimaryButttonProps) => {
 
   const { width, height } = useWindowDimensions();
-  const buttonWidth = size === 'sm' ? width * 0.4 : size === 'md' ? width * 0.6 : width * 0.8;
-  const buttonPadding = size === 'sm' ? 10 : size === 'md' ? 15 : 20;
+  const buttonWidth = size === 'sm' ? width * 0.4 : size === 'md' ? width * 0.6 : width * 0.87;
+  const buttonPadding = size === 'sm' ? 10 : size === 'md' ? 14 : 18;
   const buttonBackground =
     variant === 'outline' ? 'bg-background-light' :
       variant === 'filled' ? 'bg-primary-600' :

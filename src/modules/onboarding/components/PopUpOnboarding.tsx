@@ -101,7 +101,7 @@ export const PopUpOnboarding = ({
           </Animated.View>
         ) : (
           !register && (
-            <Animated.View className='gap-4'>
+            <Animated.View className='gap-4 justify-center items-center'>
               <PrimaryButtton
                 text={labelOne}
                 variant={buttonVariant!}
@@ -129,7 +129,7 @@ export const PopUpOnboarding = ({
       }
       {
         register && (
-          <View className='gap-4'>
+          <View className='gap-4 justify-center items-center'>
             <PrimaryButtton
               text="Regístrate con Google"
               variant='filled'

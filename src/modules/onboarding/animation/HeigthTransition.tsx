@@ -2,19 +2,21 @@ import { useEffect } from 'react';
 import {
     useAnimatedStyle,
     useSharedValue,
-    withTiming,
+    withTiming
 } from "react-native-reanimated";
 
 export const useHeigthTransition = (height: number) => {
     const customHeight = useSharedValue(270)
 
     useEffect(() => {
-        customHeight.value = withTiming(height, { duration: 300 })
+        customHeight.value =
+            withTiming(height, { duration: 200 }
+            );
     }, [height, customHeight])
 
     const animatedStyle = useAnimatedStyle(() => ({
         height: customHeight.value,
-       // overflow: 'hidden',
+        // overflow: 'hidden',
     }))
 
     return animatedStyle

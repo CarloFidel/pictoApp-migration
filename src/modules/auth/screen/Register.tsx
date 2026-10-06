@@ -9,7 +9,10 @@ export const RegisterScreen = () => {
     <SafeAreaView className="flex-1" style={{ backgroundColor: 'white' }} edges={['top']}>
       <StatusBar barStyle="dark-content" />
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} className="">
-        <ScrollView className=" bg-white" contentContainerStyle={{ flexGrow: 1 }}>
+        <ScrollView
+          className=" bg-white"
+          contentContainerStyle={{ flexGrow: 1 }}
+          showsVerticalScrollIndicator={false}>
           <BackButton onPress={() => router.back()} top={10} left={10} />
           <CustomForm onSubmitTrigger='register' formType='register' />
         </ScrollView>

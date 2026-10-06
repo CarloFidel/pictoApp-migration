@@ -1,11 +1,13 @@
 import CustomInput from '@/components/ui/CustomInput'
 import { PrimaryButtton } from '@/components/ui/PrimaryButtton'
+import { globalStyle } from '@/styles/global.style'
 import { zodResolver } from "@hookform/resolvers/zod"
+import { Link } from 'expo-router'
 import { SymbolView } from 'expo-symbols'
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
-import { Pressable, Text, useWindowDimensions, View } from 'react-native'
-import Animated, { FadeIn } from 'react-native-reanimated'
+import { Platform, Pressable, Text, useWindowDimensions, View } from 'react-native'
+import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated'
 import { UserRegister } from '../interfaces/User.interface'
 import { RegisterSchema } from '../schema/form.schema'
 
@@ -33,61 +35,73 @@ const CustomForm = ({ onSubmitTrigger, formType }: Props) => {
 
     return (
         <View
-            style={{ height: height, gap: 40, marginTop: 40 }}
+            style={{ height: Platform.OS === 'ios' ? height - 70 : height, gap: 40, paddingTop: 80 }}
             className="justify-start items-center w-full py-10"
         >
             <Text className="text-4xl font-hanken-light text-text text-start w-full px-6">{formType === 'register' ? 'Registro' : 'Iniciar sesión'}</Text>
 
-            <Controller
-                control={control}
-                name="name"
-                render={({ field: { onChange, value } }) => (
-                    <View>
-                        <CustomInput
-                            placeholder="Nombre"
-                            keyboardType="default"
-                            autoCapitalize="none"
-                            onChange={onChange}
-                            value={value} />
-                        {errors.name && (
-                            <Animated.View
-                                entering={FadeIn}
-                                className="flex-row justify-start items-center gap-2 mt-2"
-                            >
-                                <Text style={{ color: "red" }} className="text-left">
-                                    {errors.name.message as string}
-                                </Text>
-                            </Animated.View>
-                        )}
-                    </View>
-                )}
-            />
+            {formType === 'register' && (
+                <Controller
+                    control={control}
+                    name="name"
+                    render={({ field: { onChange, value } }) => (
+                        <View>
+                            <CustomInput
+                                placeholder="Nombre"
+                                keyboardType="default"
+                                autoCapitalize="none"
+                                onChange={onChange}
+                                value={value}
+                                error={errors.name ? true : false}
+                            />
+                            {errors.name && (
+                                <Animated.View
+                                    entering={FadeIn}
+                                    className="flex-row justify-start items-center gap-2 mt-2"
+                                >
+                                    <SymbolView name={{ ios: 'exclamationmark.triangle', android: 'warning_amber' }} size={18} tintColor={"red"} />
+                                    <Text style={{ color: "red" }} className="text-left">
+                                        {errors.name.message}
+                                    </Text>
+                                </Animated.View>
+                            )}
+                        </View>
+                    )}
+                />
 
-            <Controller
-                control={control}
-                name="lastName"
-                render={({ field: { onChange, value } }) => (
-                    <View>
-                        <CustomInput
-                            placeholder="Apellido"
-                            keyboardType="default"
-                            autoCapitalize="none"
-                            onChange={onChange}
-                            value={value} />
-                        {errors.lastName && (
-                            <Animated.View
-                                entering={FadeIn}
-                                className="flex-row justify-start items-center gap-2 mt-2"
-                            >
-                                <Text style={{ color: "red" }} className="text-left">
-                                    {errors.lastName.message as string}
-                                </Text>
-                            </Animated.View>
-                        )}
-                    </View>
-                )}
-            />
+            )}
 
+            {formType === 'register' && (
+                <Controller
+                    control={control}
+                    name="lastName"
+                    render={({ field: { onChange, value } }) => (
+                        <View>
+                            <CustomInput
+                                placeholder="Apellido"
+                                keyboardType="default"
+                                autoCapitalize="none"
+                                onChange={onChange}
+                                value={value}
+                                error={errors.lastName ? true : false}
+                            />
+                            {errors.lastName && (
+                                <Animated.View
+                                    entering={FadeIn}
+                                    className="flex-row justify-start items-center gap-2 mt-2"
+                                >
+                                    <SymbolView name={{ ios: 'exclamationmark.triangle', android: 'warning_amber' }} size={18} tintColor={"red"} />
+                                    <Text style={{ color: "red" }} className="text-left">
+                                        {errors.lastName.message}
+                                    </Text>
+                                </Animated.View>
+                            )}
+                        </View>
+                    )}
+                />
+
+
+            )}
             <Controller
                 control={control}
                 name="email"
@@ -98,14 +112,17 @@ const CustomForm = ({ onSubmitTrigger, formType }: Props) => {
                             keyboardType="email-address"
                             autoCapitalize="none"
                             onChange={onChange}
-                            value={value} />
+                            value={value}
+                            error={errors.email ? true : false}
+                        />
                         {errors.email && (
                             <Animated.View
                                 entering={FadeIn}
                                 className="flex-row justify-start items-center gap-2 mt-2"
                             >
+                                <SymbolView name={{ ios: 'exclamationmark.triangle', android: 'warning_amber' }} size={18} tintColor={"red"} />
                                 <Text style={{ color: "red" }} className="text-left">
-                                    {errors.email.message as string}
+                                    {errors.email.message}
                                 </Text>
                             </Animated.View>
                         )}
@@ -122,14 +139,16 @@ const CustomForm = ({ onSubmitTrigger, formType }: Props) => {
                             placeholder="Contraseña"
                             secureTextEntry={!isPasswordVisible ? true : false}
                             onChange={onChange}
-                            value={value} />
+                            value={value}
+                            error={errors.password ? true : false}
+                        />
                         {errors.password && (
                             <Animated.View
                                 entering={FadeIn}
                                 style={{ width: width * 0.9 }}
                                 className="flex-row justify-start items-center gap-2 mt-2"
                             >
-                                <SymbolView name={'exclamationmark.triangle'} size={18} tintColor={"red"} />
+                                <SymbolView name={{ ios: 'exclamationmark.triangle', android: 'warning_amber' }} size={18} tintColor={"red"} />
                                 <Text style={{ color: "red" }} className="text-left">
                                     {errors.password.message!}
                                 </Text>
@@ -155,8 +174,27 @@ const CustomForm = ({ onSubmitTrigger, formType }: Props) => {
                 text='Confirmar'
                 onPress={onSubmit}
             />
+            {
+                formType === 'register' ? (<Animated.View
+                    entering={FadeInDown.duration(1000)}
+                    className="absolute bottom-10"
+                >
+                    <Text className=" text-[16px] font-hanken-light">
+                        Ya tienes una cuenta? <Link href="/login" style={{ color: globalStyle.color.primary[700] }}>Inicia sesión</Link>
+                    </Text>
+                </Animated.View>
+                ) : (
+                    <Animated.View
+                        entering={FadeInDown.duration(1000)}
+                        className="absolute bottom-10"
+                    >
+                        <Text className=" text-[16px] font-hanken-light">
+                            No tienes una cuenta? <Link href="/register" style={{ color: globalStyle.color.primary[700] }}>Registrate</Link>
+                        </Text>
+                    </Animated.View>
+                )}
+        </View>
+    );
+};
 
-        </View>)
-}
-
-export default CustomForm
+export default CustomForm;

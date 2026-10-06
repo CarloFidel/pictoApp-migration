@@ -1,9 +1,19 @@
-import { useReducer } from "react";
+import { useReducer, useRef } from "react";
 import { getInitialState, onboardingReducer } from "../reducer/onboardingReducer";
 
 
 export const useOnboarding = () => {
   const [state, dispatch] = useReducer(onboardingReducer, getInitialState());
+
+  const stepRef = useRef(state.step);
+  const previousStepRef = useRef(state.step);
+
+  if (stepRef.current !== state.step) {
+    previousStepRef.current = stepRef.current;
+    stepRef.current = state.step;
+  }
+
+  const previousStep = previousStepRef.current;
 
   const { 
     landingPage,
@@ -40,8 +50,10 @@ export const useOnboarding = () => {
       dispatch({ type: "QUE_ES_UN_PICTOGRAMA" });
     } else if (state.step === 5) {
       dispatch({ type: "QUE_ES_UN_HORARIO_VISUAL" });
-    } else if (state.step === 6) {
+    } else if (state.step === 6 && previousStep !== 2) {
       dispatch({ type: "POR_QUE_SON_UTILES" });
+    } else if ( previousStep === 2 && state.step === 6 ) {
+      dispatch({ type: "HAS_USADO_PICTOGRAMAS" });
     }
   }
 

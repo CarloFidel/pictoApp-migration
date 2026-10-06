@@ -166,7 +166,7 @@ export const onboardingReducer = (state: OnboardingState, action: onboardingActi
                 progressValue: 1,
                 register: true,
                 title: "Regístrate",
-                customHeight: 300,
+                customHeight: 270,
                 body: undefined,
                 twoButtons: false,
                 iconGoogle: true,

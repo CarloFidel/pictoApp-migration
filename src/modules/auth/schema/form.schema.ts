@@ -6,16 +6,14 @@ export const RegisterSchema = z.object({
     .min(2, { message: "El nombre tiene que tener más de una letras" })
     .regex(/^[A-Za-zÀ-ÿ\s]+$/, {
       message: "El nombre solo puede contener letras",
-    })
-    .optional(),
+    }),
 
   lastName: z
     .string({ message: "Ingresa un apellido válido" })
     .min(2, { message: "El apellido tiene que tener más de una letras" })
     .regex(/^[A-Za-zÀ-ÿ\s]+$/, {
       message: "El apellido solo puede contener letras",
-    })
-    .optional(),
+    }),
 
   email: z.email({
     message: "Ingresa un email válido",
@@ -39,3 +37,5 @@ export const LoginSchema = z.object({
       message: "La contraseña debe tener al menos 8 caracteres y una mayúscula",
     }),
 });
+
+
