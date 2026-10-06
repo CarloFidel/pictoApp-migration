@@ -16,6 +16,7 @@ export interface OnboardingState {
     justifyTitle: 'center' | 'start' | 'end';
     body?: string[];
     image?: boolean;
+    iconGoogle?: boolean;
 }
 
 export type onboardingActions =
@@ -25,7 +26,7 @@ export type onboardingActions =
     | { type: "QUE_ES_UN_PICTOGRAMA" }
     | { type: "QUE_ES_UN_HORARIO_VISUAL" }
     | { type: "POR_QUE_SON_UTILES" }
-    | { type: "REGISTRO" };
+    | { type: "REGISTER" };
 
 
 export const getInitialState = (): OnboardingState => {
@@ -72,10 +73,7 @@ export const onboardingReducer = (state: OnboardingState, action: onboardingActi
                 icon: undefined,
                 body: undefined,
                 image: false,
-
-
-
-
+                register: false,
             };
         case "HAS_USADO_PICTOGRAMAS":
             return {
@@ -92,7 +90,9 @@ export const onboardingReducer = (state: OnboardingState, action: onboardingActi
                 icon: undefined,
                 body: undefined,
                 image: false,
-            };
+                register: false,
+                };
+
 
         case "QUE_ES_UN_PICTOGRAMA":
             return {
@@ -110,8 +110,11 @@ export const onboardingReducer = (state: OnboardingState, action: onboardingActi
                     "Es una imagen sencilla que representa un objeto, una acción o un concepto de forma visual y clara.",
                     "Ejemplo de un pictograma:",
                 ],
-                image: true
+                image: true,
+                register: false,
             };
+
+
 
         case "QUE_ES_UN_HORARIO_VISUAL":
             return {
@@ -120,7 +123,7 @@ export const onboardingReducer = (state: OnboardingState, action: onboardingActi
                 progressValue: 0.6,
                 title: "¿Qué es un horario visual?",
                 labelOne: "Continuar",
-                customHeight: 650,
+                customHeight: 500,
                 twoButtons: false,
                 buttonVariant: "filled",
                 icon: { ios: 'arrow.forward.circle', android: 'arrow_circle_right' },
@@ -131,6 +134,7 @@ export const onboardingReducer = (state: OnboardingState, action: onboardingActi
                     "Gracias a los horarios visuales, se reduce el grado de ansiedad y posibles problemas de conducta.",
                 ],
                 image: false,
+                register: false,
             };
         case "POR_QUE_SON_UTILES":
             return {
@@ -147,13 +151,28 @@ export const onboardingReducer = (state: OnboardingState, action: onboardingActi
                 body: [
                     "Las personas con autismo comprenden mejor la información visual que las palabras.",
                     "Los horarios visuales cubren dos necesidades:",
-                    " - Presentan la información de forma visual, ya que están hechos con pictogramas.",
-                    " - Ayudan a estructurar y organizar las actividades del día, proporcionando una rutina clara.",
+                    "• Presentan la información de forma visual, ya que están hechos con pictogramas.",
+                    "• Ayudan a estructurar y organizar las actividades del día, proporcionando una rutina clara.",
                 ],
                 image: false,
+                register: false,
             };
-        /*  */
-        default:
-            return state;
-    }
-};
+
+
+        case "REGISTER":
+            return {
+                ...state,
+                step: 6,
+                progressValue: 1,
+                register: true,
+                title: "Regístrate",
+                customHeight: 300,
+                body: undefined,
+                twoButtons: false,
+                iconGoogle: true,
+            };
+
+            default:
+                return state;
+        }
+    };

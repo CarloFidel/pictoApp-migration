@@ -9,7 +9,7 @@ export const useHeigthTransition = (height: number) => {
     const customHeight = useSharedValue(270)
 
     useEffect(() => {
-        customHeight.value = withTiming(height, { duration: 200 })
+        customHeight.value = withTiming(height, { duration: 300 })
     }, [height, customHeight])
 
     const animatedStyle = useAnimatedStyle(() => ({

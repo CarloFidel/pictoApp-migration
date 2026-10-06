@@ -1,8 +1,9 @@
 import { BackButton } from '@/components/ui/BackButton';
 import { PrimaryButtton } from '@/components/ui/PrimaryButtton';
 import { globalStyle } from '@/styles/global.style';
+import { Link } from 'expo-router';
 import { Image, StatusBar, Text, useWindowDimensions, View } from 'react-native';
-import Animated, { FadeIn } from 'react-native-reanimated';
+import Animated, { FadeIn, FadeInDown, FadeOutDown } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { PopUpOnboarding } from '../components/PopUpOnboarding';
 import { CustomProgressBar } from '../components/PropgressBar';
@@ -31,7 +32,11 @@ const OnBoardingScreen = () => {
     icon,
     justifyTitle,
     body,
-    image } = useOnboarding();
+    register,
+    image,
+    iconGoogle,
+    step,
+  } = useOnboarding();
 
   return (
     <SafeAreaView edges={['top']} className="h-full" style={{ backgroundColor: globalStyle.color.primary[400] }}>
@@ -95,6 +100,8 @@ const OnBoardingScreen = () => {
               justifyTitle={justifyTitle!}
               body={body}
               image={image}
+              register={register}
+              iconGoogle={iconGoogle}
             />
           )
         }
@@ -102,6 +109,17 @@ const OnBoardingScreen = () => {
 
 
       </View>
+      {
+        step === 6 && (
+          <Animated.View entering={FadeInDown.duration(600)} exiting={FadeOutDown.duration(600)} className="absolute bottom-0 left-0 right-0 p-4 w-full flex justify-center items-center">
+            <Text className="text-white text-center text-[16px] mb-8"  >
+              Ya tienes cuenta?
+              <Link href="/login"> Inicia sesión</Link>
+            </Text>
+          </Animated.View>
+        )
+      }
+
 
     </SafeAreaView>
   )

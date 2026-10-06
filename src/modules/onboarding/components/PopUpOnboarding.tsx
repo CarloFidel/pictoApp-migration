@@ -15,6 +15,8 @@ interface PopUpOnboardingProps {
   customHeight?: number
   body?: string[];
   image?: boolean;
+  register?: boolean;
+  iconGoogle?: boolean;
   onPressOne: () => void
   onPressTwo?: () => void
 }
@@ -29,20 +31,23 @@ export const PopUpOnboarding = ({
   customHeight,
   buttonVariant,
   icon,
+  iconGoogle,
   justifyTitle,
+  register = false,
   body = undefined,
   image = undefined }: PopUpOnboardingProps) => {
 
   const animatedStyle = useHeigthTransition(customHeight!)
 
   return (
-    <Animated.View entering={FadeInDown} className='w-full p-8 bg-linear-to-br from-background-light to-gray-400 rounded-2xl gap-8 shadow-lg'
+    <Animated.View entering={FadeInDown} className='w-full p-8 bg-linear-to-br from-white to-gray-300 rounded-2xl gap-8 shadow-lg'
       style={{ height: customHeight, ...animatedStyle }}
 
     >
       <Text
         className={`text-text text-3xl font-hanken-regular text-${justifyTitle}`}
-      >{title}</Text>
+      >{title}
+      </Text>
       {
         body ? (
           <Animated.View
@@ -50,9 +55,9 @@ export const PopUpOnboarding = ({
             className='items-center justify-center gap-8 '>
             {
               body.filter((item, index) => index !== 2 && index !== 3).map((item) => (
-                <Text key={item} className='text-text text-[18px] font-hanken-regular text-center'>
+                <Animated.Text key={item} entering={FadeIn.delay(100).duration(200)} className='text-text text-[18px] font-hanken-regular text-start'>
                   {item}
-                </Text>
+                </Animated.Text>
               ))
             }
             {
@@ -67,46 +72,79 @@ export const PopUpOnboarding = ({
                 />
               )
             }
-                        {
+            {
               body.filter((item, index) => index !== 0 && index !== 1).map((item) => (
-                <Text key={item} className='text-text text-[18px] font-hanken-regular text-start'>
+                <Animated.Text key={item} entering={FadeIn.delay(100).duration(200)} className='text-text text-[18px] font-hanken-regular text-start px-4'>
                   {item}
-                </Text>
+                </Animated.Text>
               ))
             }
 
-            <PrimaryButtton
-              text={labelOne}
-              variant={buttonVariant!}
-              size="lg"
-              onPress={onPressOne}
-              icon={icon ? { ios: icon.ios as SFSymbol, android: icon.android as AndroidSymbol } : undefined}
-
-            />
-
-          </Animated.View>
-        ) : (
-          <View className='gap-4'>
-            <PrimaryButtton
-              text={labelOne}
-              variant={buttonVariant!}
-              size="lg"
-              onPress={onPressOne}
-              icon={icon ? { ios: icon.ios as SFSymbol, android: icon.android as AndroidSymbol } : undefined}
-
-            />
             {
-              twoButtons && (
-                <PrimaryButtton
-                  text={labelTwo}
-                  variant={buttonVariant!}
-                  size="lg"
-                  onPress={onPressTwo}
-                />
-
+              !register && (<PrimaryButtton
+                text={labelOne}
+                distanceTop={20}
+                variant={buttonVariant!}
+                size="lg"
+                onPress={onPressOne}
+                icon={icon ? { ios: icon.ios as SFSymbol, android: icon.android as AndroidSymbol } : undefined}
+              />
               )
             }
 
+
+          </Animated.View>
+        ) : (
+          !register && (
+            <View className='gap-4'>
+              <PrimaryButtton
+                text={labelOne}
+                variant={buttonVariant!}
+                size="lg"
+                onPress={onPressOne}
+                icon={icon ? { ios: icon.ios as SFSymbol, android: icon.android as AndroidSymbol } : undefined}
+
+              />
+              {
+                twoButtons && (
+                  <PrimaryButtton
+                    text={labelTwo}
+                    variant={buttonVariant!}
+                    size="lg"
+                    onPress={onPressTwo}
+                  />
+
+                )
+              }
+            </View>
+
+          )
+
+        )
+      }
+      {
+        register && (
+          <View className='gap-4'>
+            <PrimaryButtton
+              text="Regístrate con Google"
+              variant='filled'
+              size="lg"
+              onPress={onPressOne}
+              backgroundColor='bg-black'
+              iconRight={true}
+              //icon={{ ios: 'apple.logo', android: 'google_home_devices' }}
+              iconGoogle={iconGoogle}
+
+
+            />
+            <PrimaryButtton
+              text="Regístrate con Email"
+              variant='outline'
+              size="lg"
+              onPress={onPressTwo}
+              icon={{ ios: 'envelope', android: 'email' }}
+              iconRight={true}
+            />
           </View>
 
         )
