@@ -1,6 +1,6 @@
 import { PrimaryButtton } from '@/components/ui/PrimaryButtton'
 import { type AndroidSymbol, type SFSymbol } from 'expo-symbols'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
 import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated'
 import { useHeigthTransition } from '../animation/HeigthTransition'
 
@@ -17,6 +17,7 @@ interface PopUpOnboardingProps {
   image?: boolean;
   register?: boolean;
   iconGoogle?: boolean;
+  step?: number;
   onPressOne: () => void
   onPressTwo?: () => void
 }
@@ -33,29 +34,29 @@ export const PopUpOnboarding = ({
   icon,
   iconGoogle,
   justifyTitle,
+  step = 0,
   register = false,
   body = undefined,
   image = undefined }: PopUpOnboardingProps) => {
 
   const animatedStyle = useHeigthTransition(customHeight!)
-
   return (
     <Animated.View entering={FadeInDown} className='w-full p-8 bg-linear-to-br from-white to-gray-300 rounded-2xl gap-8 shadow-lg'
       style={{ height: customHeight, ...animatedStyle }}
 
     >
-      <Text
+      <Animated.Text
+        entering={FadeIn.delay(100).duration(500 * step)}
         className={`text-text text-3xl font-hanken-regular text-${justifyTitle}`}
       >{title}
-      </Text>
+      </Animated.Text>
       {
         body ? (
           <Animated.View
-            entering={FadeIn.delay(100).duration(300)}
             className='items-center justify-center gap-8 '>
             {
-              body.filter((item, index) => index !== 2 && index !== 3).map((item) => (
-                <Animated.Text key={item} entering={FadeIn.delay(100).duration(200)} className='text-text text-[18px] font-hanken-regular text-start'>
+              body.filter((item, index) => index !== 2 && index !== 3).map((item, index) => (
+                <Animated.Text key={item} entering={FadeIn.delay(100).duration(500)} className='text-text text-[18px] font-hanken-regular text-start'>
                   {item}
                 </Animated.Text>
               ))
@@ -64,31 +65,34 @@ export const PopUpOnboarding = ({
               image && (
                 <Animated.Image
                   source={{ uri: "https://api.arasaac.org/v1/pictograms/2780?download=false" }}
-                  style={{
+                  style={[{
                     width: 200,
                     height: 200,
-                  }}
-                  entering={FadeIn.delay(100).duration(200)}
+                  }]}
+                  entering={FadeIn.delay(100).duration(500)}
                 />
               )
             }
             {
               body.filter((item, index) => index !== 0 && index !== 1).map((item) => (
-                <Animated.Text key={item} entering={FadeIn.delay(100).duration(200)} className='text-text text-[18px] font-hanken-regular text-start px-4'>
+                <Animated.Text key={item} entering={FadeIn.delay(200).duration(200)}  className='text-text text-[18px] font-hanken-regular text-start px-4'>
                   {item}
                 </Animated.Text>
               ))
             }
 
             {
-              !register && (<PrimaryButtton
-                text={labelOne}
-                distanceTop={20}
-                variant={buttonVariant!}
-                size="lg"
-                onPress={onPressOne}
-                icon={icon ? { ios: icon.ios as SFSymbol, android: icon.android as AndroidSymbol } : undefined}
-              />
+              !register && (
+                <Animated.View >
+                  <PrimaryButtton
+                    text={labelOne}
+                    distanceTop={20}
+                    variant={buttonVariant!}
+                    size="lg"
+                    onPress={onPressOne}
+                    icon={icon ? { ios: icon.ios as SFSymbol, android: icon.android as AndroidSymbol } : undefined}
+                  />
+                </Animated.View>
               )
             }
 
@@ -96,7 +100,7 @@ export const PopUpOnboarding = ({
           </Animated.View>
         ) : (
           !register && (
-            <View className='gap-4'>
+            <Animated.View className='gap-4'>
               <PrimaryButtton
                 text={labelOne}
                 variant={buttonVariant!}
@@ -116,7 +120,7 @@ export const PopUpOnboarding = ({
 
                 )
               }
-            </View>
+            </Animated.View>
 
           )
 

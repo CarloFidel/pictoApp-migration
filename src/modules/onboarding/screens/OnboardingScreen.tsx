@@ -102,6 +102,7 @@ const OnBoardingScreen = () => {
               image={image}
               register={register}
               iconGoogle={iconGoogle}
+              step={step}
             />
           )
         }
