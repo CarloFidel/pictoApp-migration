@@ -8,6 +8,8 @@ interface BackButtonProps extends PressableProps {
         ios: SFSymbol;
         android: AndroidSymbol;
     };
+    top?: number
+    left?: number
 }
 
 const defaultIcon = {
@@ -16,12 +18,13 @@ const defaultIcon = {
 } as const;
 
 
-export const BackButton = ({ icon = defaultIcon, ...props }: BackButtonProps) => {
+export const BackButton = ({ icon = defaultIcon, top = 4, left = 4, ...props }: BackButtonProps) => {
     return (
         <Animated.View
             entering={FadeInLeft.duration(500)}
             exiting={FadeOutLeft.duration(500)}
-            className={`absolute top-4 left-4`}
+            className={`absolute z-10`}
+            style={{ top: top, left: left }}
         >
 
             <Pressable

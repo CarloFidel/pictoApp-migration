@@ -1,4 +1,5 @@
 import { PrimaryButtton } from '@/components/ui/PrimaryButtton'
+import { router } from 'expo-router'
 import { type AndroidSymbol, type SFSymbol } from 'expo-symbols'
 import { View } from 'react-native'
 import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated'
@@ -145,9 +146,9 @@ export const PopUpOnboarding = ({
               text="Regístrate con Email"
               variant='outline'
               size="lg"
-              onPress={onPressTwo}
               icon={{ ios: 'envelope', android: 'email' }}
               iconRight={true}
+              onPress= {() => router.push('/register')}
             />
           </View>
 

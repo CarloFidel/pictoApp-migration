@@ -1,9 +1,9 @@
 import OnBoardingScreen from "@/modules/onboarding/screens/OnboardingScreen"
 
-const index = () => {
+const Onboarding = () => {
     return (
         <OnBoardingScreen />
     )
 }
 
-export default index
+export default Onboarding

@@ -1,10 +1,20 @@
-import { Text, View } from 'react-native'
+import { BackButton } from '@/components/ui/BackButton';
+import { router } from 'expo-router';
+import { KeyboardAvoidingView, Platform, ScrollView, StatusBar } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import CustomForm from '../components/CustomForm';
 
 export const RegisterScreen = () => {
   return (
-    <View>
-      <Text>register</Text>
-    </View>
+    <SafeAreaView className="flex-1" style={{ backgroundColor: 'white' }} edges={['top']}>
+      <StatusBar barStyle="dark-content" />
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} className="">
+        <ScrollView className=" bg-white" contentContainerStyle={{ flexGrow: 1 }}>
+          <BackButton onPress={() => router.back()} top={10} left={10} />
+          <CustomForm onSubmitTrigger='register' formType='register' />
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   )
 }
 
