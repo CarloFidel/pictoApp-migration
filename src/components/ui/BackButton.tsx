@@ -18,7 +18,7 @@ const defaultIcon = {
 } as const;
 
 
-export const BackButton = ({ icon = defaultIcon, top = 4, left = 4, ...props }: BackButtonProps) => {
+export const BackButton = ({ icon = defaultIcon, top = 4, left = 12, ...props }: BackButtonProps) => {
     return (
         <Animated.View
             entering={FadeInLeft.duration(500)}

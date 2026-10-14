@@ -83,7 +83,7 @@ export const onboardingReducer = (state: OnboardingState, action: onboardingActi
                 title: "¿Has usado pictogramas antes?",
                 labelOne: "Sí",
                 labelTwo: "No",
-                customHeight: 320,
+                customHeight: 300,
                 justifyTitle: 'start',
                 buttonVariant: "outline",
                 twoButtons: true,
