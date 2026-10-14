@@ -2,7 +2,7 @@ import CustomInput from '@/components/ui/CustomInput'
 import { PrimaryButtton } from '@/components/ui/PrimaryButtton'
 import { globalStyle } from '@/styles/global.style'
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Link } from 'expo-router'
+import { Link, useLocalSearchParams } from 'expo-router'
 import { SymbolView } from 'expo-symbols'
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
@@ -23,9 +23,11 @@ const CustomForm = ({ onSubmitTrigger, formType }: Props) => {
     const { height, width } = useWindowDimensions()
     const { control, handleSubmit, formState: { errors } } = useForm<UserRegister>({ resolver: zodResolver(RegisterSchema) })
 
+    const { isTherapistLocal  } = useLocalSearchParams()
+
 
     const onSubmit = handleSubmit((data) => {
-        console.log(data)
+        console.log({...data, isTherapistLocal })
         if (onSubmitTrigger === 'register') {
             console.log('register')
         } else {
@@ -50,7 +52,7 @@ const CustomForm = ({ onSubmitTrigger, formType }: Props) => {
                                 placeholder="Nombre"
                                 keyboardType="default"
                                 autoCapitalize="none"
-                                onChange={onChange}
+                                onChangeText={onChange}
                                 value={value}
                                 error={errors.name ? true : false}
                             />
@@ -81,7 +83,7 @@ const CustomForm = ({ onSubmitTrigger, formType }: Props) => {
                                 placeholder="Apellido"
                                 keyboardType="default"
                                 autoCapitalize="none"
-                                onChange={onChange}
+                                onChangeText={onChange}
                                 value={value}
                                 error={errors.lastName ? true : false}
                             />
@@ -111,7 +113,7 @@ const CustomForm = ({ onSubmitTrigger, formType }: Props) => {
                             placeholder="Email"
                             keyboardType="email-address"
                             autoCapitalize="none"
-                            onChange={onChange}
+                            onChangeText={onChange}
                             value={value}
                             error={errors.email ? true : false}
                         />
@@ -138,7 +140,7 @@ const CustomForm = ({ onSubmitTrigger, formType }: Props) => {
                         <CustomInput
                             placeholder="Contraseña"
                             secureTextEntry={!isPasswordVisible ? true : false}
-                            onChange={onChange}
+                            onChangeText={onChange}
                             value={value}
                             error={errors.password ? true : false}
                         />
