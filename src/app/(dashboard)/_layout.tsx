@@ -3,11 +3,11 @@ import { StackScreen } from 'expo-router/build/layouts/stack-utils';
 
 const dashboardLaoyout = () => {
   return (
-    <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Protected guard={false}>
+    <Stack.Protected guard={false}>
+      <Stack screenOptions={{ headerShown: false }}>
         <StackScreen name='dashboard' />
-      </Stack.Protected>
-    </Stack>
+      </Stack>
+    </Stack.Protected>
   );
 };
 
