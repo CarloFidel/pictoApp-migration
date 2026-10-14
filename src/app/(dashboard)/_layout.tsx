@@ -1,12 +1,14 @@
-import { Stack } from 'expo-router'
-import { StackScreen } from 'expo-router/build/layouts/stack-utils'
+import { Stack } from 'expo-router';
+import { StackScreen } from 'expo-router/build/layouts/stack-utils';
 
 const dashboardLaoyout = () => {
   return (
     <Stack screenOptions={{ headerShown: false }}>
-      <StackScreen name='dashboard' />
+      <Stack.Protected guard={false}>
+        <StackScreen name='dashboard' />
+      </Stack.Protected>
     </Stack>
-  )
-}
+  );
+};
 
-export default dashboardLaoyout
+export default dashboardLaoyout;
