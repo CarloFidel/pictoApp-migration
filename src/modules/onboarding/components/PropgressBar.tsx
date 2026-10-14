@@ -18,7 +18,7 @@ export const CustomProgressBar = ({ progressValue }: Props) => {
       style={{
         position: "absolute",
         left: width * 0.2,
-        top: height * 0.045,
+        top: height * 0.033,
       }}
 
     >
