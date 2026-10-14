@@ -14,7 +14,7 @@ export const RegisterScreen = () => {
           contentContainerStyle={{ flexGrow: 1 }}
           showsVerticalScrollIndicator={false}>
           <BackButton onPress={() => router.back()} top={10} left={10} />
-          <CustomForm onSubmitTrigger='register' formType='register' />
+          <CustomForm formType='register' />
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>

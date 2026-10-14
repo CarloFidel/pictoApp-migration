@@ -1,9 +1,10 @@
-import { useReducer, useRef } from "react";
+import { useReducer, useRef, useState } from "react";
 import { getInitialState, onboardingReducer } from "../reducer/onboardingReducer";
 
 
 export const useOnboarding = () => {
   const [state, dispatch] = useReducer(onboardingReducer, getInitialState());
+  const [isTherapistLocal, setIsTherapistLocal] = useState<boolean>(false);
 
   const stepRef = useRef(state.step);
   const previousStepRef = useRef(state.step);
@@ -15,7 +16,7 @@ export const useOnboarding = () => {
 
   const previousStep = previousStepRef.current;
 
-  const { 
+  const {
     landingPage,
     showProgressBar,
     progressValue,
@@ -52,13 +53,14 @@ export const useOnboarding = () => {
       dispatch({ type: "QUE_ES_UN_HORARIO_VISUAL" });
     } else if (state.step === 6 && previousStep !== 2) {
       dispatch({ type: "POR_QUE_SON_UTILES" });
-    } else if ( previousStep === 2 && state.step === 6 ) {
+    } else if (previousStep === 2 && state.step === 6) {
       dispatch({ type: "HAS_USADO_PICTOGRAMAS" });
     }
   }
 
   const handlePressOne = () => {
     if (state.step === 1) {
+      setIsTherapistLocal(true);
       dispatch({ type: "HAS_USADO_PICTOGRAMAS" });
     } else if (state.step === 2) {
       dispatch({ type: "REGISTER" });
@@ -73,10 +75,11 @@ export const useOnboarding = () => {
 
   const handlePressTwo = () => {
     if (state.step === 1) {
+      setIsTherapistLocal(false);
       dispatch({ type: "HAS_USADO_PICTOGRAMAS" });
     } else if (state.step === 2) {
       dispatch({ type: "QUE_ES_UN_PICTOGRAMA" });
-    } 
+    }
   }
 
   return {
@@ -97,7 +100,8 @@ export const useOnboarding = () => {
     image,
     register,
     iconGoogle,
-    
+    isTherapistLocal,
+
     handleStart,
     handleBack,
     handlePressOne,

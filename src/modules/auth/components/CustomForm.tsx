@@ -2,33 +2,33 @@ import CustomInput from '@/components/ui/CustomInput'
 import { PrimaryButtton } from '@/components/ui/PrimaryButtton'
 import { globalStyle } from '@/styles/global.style'
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Link } from 'expo-router'
+import { Link, useLocalSearchParams } from 'expo-router'
 import { SymbolView } from 'expo-symbols'
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { Platform, Pressable, Text, useWindowDimensions, View } from 'react-native'
 import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated'
-import { UserRegister } from '../interfaces/User.interface'
-import { RegisterSchema } from '../schema/form.schema'
+import { UserLogin, UserRegister } from '../interfaces/User.interface'
+import { LoginSchema, RegisterSchema } from '../schema/form.schema'
 
 interface Props {
-    onSubmitTrigger: 'register' | 'login'
     formType: 'register' | 'login'
 }
 
 
-const CustomForm = ({ onSubmitTrigger, formType }: Props) => {
+const CustomForm = ({ formType }: Props) => {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+    const { role } = useLocalSearchParams()
 
     const { height, width } = useWindowDimensions()
-    const { control, handleSubmit, formState: { errors } } = useForm<UserRegister>({ resolver: zodResolver(RegisterSchema) })
+    const { control, handleSubmit, formState: { errors } } = useForm<UserRegister | UserLogin>({ resolver: zodResolver(formType === 'register' ? RegisterSchema : LoginSchema) })
 
 
     const onSubmit = handleSubmit((data) => {
-        console.log(data)
-        if (onSubmitTrigger === 'register') {
+        console.log({ ...data, role })
+        if (formType === 'register') {
             console.log('register')
-        } else {
+        } else if (formType === 'login') {
             console.log('login')
         }
     })
@@ -50,14 +50,14 @@ const CustomForm = ({ onSubmitTrigger, formType }: Props) => {
                                 placeholder="Nombre"
                                 keyboardType="default"
                                 autoCapitalize="none"
-                                onChange={onChange}
+                                onChangeText={onChange}
                                 value={value}
                                 error={errors.name ? true : false}
                             />
                             {errors.name && (
                                 <Animated.View
                                     entering={FadeIn}
-                                    className="flex-row justify-start items-center gap-2 mt-2"
+                                    className="flex-row justify-start items-center gap-2 mt-2 w-full"
                                 >
                                     <SymbolView name={{ ios: 'exclamationmark.triangle', android: 'warning_amber' }} size={18} tintColor={"red"} />
                                     <Text style={{ color: "red" }} className="text-left">
@@ -81,7 +81,7 @@ const CustomForm = ({ onSubmitTrigger, formType }: Props) => {
                                 placeholder="Apellido"
                                 keyboardType="default"
                                 autoCapitalize="none"
-                                onChange={onChange}
+                                onChangeText={onChange}
                                 value={value}
                                 error={errors.lastName ? true : false}
                             />
@@ -111,7 +111,7 @@ const CustomForm = ({ onSubmitTrigger, formType }: Props) => {
                             placeholder="Email"
                             keyboardType="email-address"
                             autoCapitalize="none"
-                            onChange={onChange}
+                            onChangeText={onChange}
                             value={value}
                             error={errors.email ? true : false}
                         />
@@ -138,7 +138,7 @@ const CustomForm = ({ onSubmitTrigger, formType }: Props) => {
                         <CustomInput
                             placeholder="Contraseña"
                             secureTextEntry={!isPasswordVisible ? true : false}
-                            onChange={onChange}
+                            onChangeText={onChange}
                             value={value}
                             error={errors.password ? true : false}
                         />

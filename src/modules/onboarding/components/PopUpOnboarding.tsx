@@ -19,6 +19,7 @@ interface PopUpOnboardingProps {
   register?: boolean;
   iconGoogle?: boolean;
   step?: number;
+  isTherapistLocal?: boolean;
   onPressOne: () => void
   onPressTwo?: () => void
 }
@@ -38,7 +39,8 @@ export const PopUpOnboarding = ({
   step = 0,
   register = false,
   body = undefined,
-  image = undefined }: PopUpOnboardingProps) => {
+  image = undefined,
+  isTherapistLocal = false }: PopUpOnboardingProps) => {
 
   const animatedStyle = useHeigthTransition(customHeight!)
   return (
@@ -76,7 +78,7 @@ export const PopUpOnboarding = ({
             }
             {
               body.filter((item, index) => index !== 0 && index !== 1).map((item) => (
-                <Animated.Text key={item} entering={FadeIn.delay(200).duration(200)}  className='text-text text-[18px] font-hanken-regular text-start px-4'>
+                <Animated.Text key={item} entering={FadeIn.delay(200).duration(200)} className='text-text text-[18px] font-hanken-regular text-start px-4'>
                   {item}
                 </Animated.Text>
               ))
@@ -137,7 +139,6 @@ export const PopUpOnboarding = ({
               onPress={onPressOne}
               backgroundColor='bg-black'
               iconRight={true}
-              //icon={{ ios: 'apple.logo', android: 'google_home_devices' }}
               iconGoogle={iconGoogle}
 
 
@@ -148,7 +149,12 @@ export const PopUpOnboarding = ({
               size="lg"
               icon={{ ios: 'envelope', android: 'email' }}
               iconRight={true}
-              onPress= {() => router.push('/register')}
+              onPress={() => router.push({
+                pathname: '/register',
+                params: {
+                  role: isTherapistLocal ? 'therapist' : 'user'
+                }
+              })}
             />
           </View>
 

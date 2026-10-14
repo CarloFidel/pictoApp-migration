@@ -5,3 +5,10 @@ export interface UserRegister {
   password: string;
 }
 
+export interface UserLogin {
+  name?: string;
+  lastName?: string;
+
+  email: string;
+  password: string;
+}

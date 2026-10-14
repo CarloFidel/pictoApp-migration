@@ -14,7 +14,7 @@ export const LoginScreen = () => {
           contentContainerStyle={{ flexGrow: 1 }}
           showsVerticalScrollIndicator={false}>
           <BackButton onPress={() => router.back()} top={10} left={10} />
-          <CustomForm onSubmitTrigger='login' formType='login' />
+          <CustomForm formType='login' />
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>

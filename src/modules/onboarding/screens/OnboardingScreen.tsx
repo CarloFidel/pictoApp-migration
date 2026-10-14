@@ -36,6 +36,7 @@ const OnBoardingScreen = () => {
     image,
     iconGoogle,
     step,
+    isTherapistLocal,
   } = useOnboarding();
 
   return (
@@ -103,6 +104,7 @@ const OnBoardingScreen = () => {
               register={register}
               iconGoogle={iconGoogle}
               step={step}
+              isTherapistLocal={isTherapistLocal}
             />
           )
         }
