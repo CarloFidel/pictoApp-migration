@@ -10,8 +10,6 @@ import { CustomProgressBar } from '../components/PropgressBar';
 import { useOnboarding } from '../hooks/useOnboarding';
 
 const OnBoardingScreen = () => {
-
-
   const { width, height } = useWindowDimensions();
 
   const {
@@ -36,7 +34,10 @@ const OnBoardingScreen = () => {
     image,
     iconGoogle,
     step,
+    isTherapist
   } = useOnboarding();
+
+
 
   return (
     <SafeAreaView edges={['top']} className="h-full" style={{ backgroundColor: globalStyle.color.primary[400] }}>
@@ -92,7 +93,8 @@ const OnBoardingScreen = () => {
               twoButtons={twoButtons}
               onPressOne={handlePressOne}
               onPressTwo={handlePressTwo}
-              title={title!} labelOne={labelOne!}
+              title={title!}
+              labelOne={labelOne!}
               labelTwo={labelTwo!}
               customHeight={customHeight!}
               buttonVariant={buttonVariant as "outline" | "filled"}
@@ -103,6 +105,7 @@ const OnBoardingScreen = () => {
               register={register}
               iconGoogle={iconGoogle}
               step={step}
+              isTherapist={isTherapist}
             />
           )
         }
