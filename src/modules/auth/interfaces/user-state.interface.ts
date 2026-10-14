@@ -8,6 +8,13 @@ export interface UserState {
 
     isLoggedIn: boolean;
 
-    logIn: () => void;
+    logIn: (
+        name: string,
+        lastName: string,
+        email: string,
+        password: string,
+        role: string[],
+        token: string,
+    ) => void;
     logOut: () => void;
 }

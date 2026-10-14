@@ -16,16 +16,27 @@ export const useAuthStore = create(
             role: [],
             token: '',
 
-            logIn: () => set((state) => {
+            logIn: (name, lastName, email, password, role, token) => set((state) => {
                 return {
                     ...state,
                     isLoggedIn: true,
+                    name,
+                    lastName,
+                    email,
+                    password,
+                    role,
+                    token,
                 }
             }),
             logOut: () => set((state) => {
                 return {
-                    ...state,
                     isLoggedIn: false,
+
+                    name: '',
+                    lastName: '',
+                    email: '',
+                    password: '',
+                    role: [],
                     token: '',
                 }
             }),
