@@ -4,9 +4,13 @@ import { Redirect } from 'expo-router';
 
 const index = () => {
 
-  const {isLoggedIn} = useAuthStore()
+  const { isLoggedIn, isSessionExpired } = useAuthStore()
 
-  if(isLoggedIn) {
+  if (isSessionExpired) {
+    return <Redirect href="/login" />
+}
+
+  if (isLoggedIn) {
     return <Redirect href="/dashboard" />
   }
 
