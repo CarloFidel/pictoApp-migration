@@ -3,6 +3,7 @@ import { Slot } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 
+import GlobalProvider from '@/config/providers/GlobalProvider';
 import '../global.css';
 
 SplashScreen.preventAutoHideAsync();
@@ -25,5 +26,9 @@ export default function RootLayout() {
     return null;
   }
 
-  return <Slot />;
+
+  return (
+    <GlobalProvider>
+      <Slot />
+    </GlobalProvider>)
 }
