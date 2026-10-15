@@ -21,8 +21,8 @@ export const RegisterSchema = z.object({
 
   password: z
     .string({ message: "Ingresa una contraseña válida" })
-    .regex(/^(?=.*[A-Z]).{8,}$/, {
-      message: "La contraseña debe tener al menos 8 caracteres y una mayúscula",
+    .regex(/^(?=.*[A-Z])(?=.*\d).{8,}$/, {
+      message: "La contraseña debe tener al menos 8 caracteres, una mayúscula y un número",
     }),
 });
 
@@ -33,8 +33,8 @@ export const LoginSchema = z.object({
 
   password: z
     .string({ message: "Ingresa una contraseña válida" })
-    .regex(/^(?=.*[A-Z]).{8,}$/, {
-      message: "La contraseña debe tener al menos 8 caracteres y una mayúscula",
+    .regex(/^(?=.*[A-Z])(?=.*\d).{8,}$/, {
+      message: "La contraseña debe tener al menos 8 caracteres, una mayúscula y un número",
     }),
 });
 

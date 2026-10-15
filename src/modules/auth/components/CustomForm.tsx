@@ -2,13 +2,16 @@ import CustomInput from '@/components/ui/CustomInput'
 import { PrimaryButtton } from '@/components/ui/PrimaryButtton'
 import { globalStyle } from '@/styles/global.style'
 import { zodResolver } from "@hookform/resolvers/zod"
+
 import { Link, useLocalSearchParams } from 'expo-router'
 import { SymbolView } from 'expo-symbols'
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { Platform, Pressable, Text, useWindowDimensions, View } from 'react-native'
 import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated'
-import { UserLogin, UserRegister } from '../interfaces/User.interface'
+
+import { useRegisterMutation } from '../hooks/useRegisterMutation'
+import { UserLogin, UserRegister } from '../interfaces/user.interface'
 import { LoginSchema, RegisterSchema } from '../schema/form.schema'
 
 interface Props {
@@ -18,17 +21,18 @@ interface Props {
 
 const CustomForm = ({ formType }: Props) => {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-    const { role } = useLocalSearchParams()
+    const { roles } = useLocalSearchParams()
+
+    const {mutate} = useRegisterMutation()
 
     const { height, width } = useWindowDimensions()
     const { control, handleSubmit, formState: { errors } } = useForm<UserRegister | UserLogin>({ resolver: zodResolver(formType === 'register' ? RegisterSchema : LoginSchema) })
 
 
     const onSubmit = handleSubmit((data) => {
-        console.log({ ...data, role })
+        console.log(mutate({data: data as UserRegister, roles: roles as string[]}))
         if (formType === 'register') {
-            console.log('register')
-        } else if (formType === 'login') {
+            } else if (formType === 'login') {
             console.log('login')
         }
     })

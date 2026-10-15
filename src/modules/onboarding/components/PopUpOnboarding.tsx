@@ -152,7 +152,7 @@ export const PopUpOnboarding = ({
               onPress={() => router.push({
                 pathname: '/register',
                 params: {
-                  role: isTherapistLocal ? 'therapist' : 'user'
+                  roles: isTherapistLocal ? 'therapist' : 'user'
                 }
               })}
             />

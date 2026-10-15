@@ -15,7 +15,7 @@ export const useAuthStore = create(
             email: '',
             password: '',
             role: [],
-            token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlkIjoiYTA3MjRhMzktMWRjMC00YThmLWE3NDctZjAwNmRiMzRlMmM4IiwibmFtZSI6IkFkbWluIiwibGFzdE5hbWUiOiJBZG1pbiIsInJvbGVzIjpbInRoZXJhcGlzdCJdLCJpYXQiOjE3OTIwNjgyMjYsImV4cCI6MTc5MjA3NTQyNn0.Y-CfHQaOVXkSXRtkv1gWjkPvt8suShS70vKDxVTSOrA',
+            token: '',
 
             logIn: (name, lastName, email, password, role, token) => set((state) => {
                 return {
