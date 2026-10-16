@@ -19,11 +19,11 @@ export const MyProfileScreen = () => {
                 <Animated.Text entering={FadeInLeft.delay(500).duration(800)} className='text-white font-hanken-light text-xl'>{email}</Animated.Text>
             </View>
             <Animated.View
-                className='bg-white flex-1 rounded-t-4xl py-12 px-6 gap-12'
+                className='bg-white flex-1 rounded-t-4xl py-12 px-4 gap-12'
                 entering={FadeInDown.duration(1000)}
                 style={globalStyle.shadow.medium}
             >
-                <View className='gap-4'>
+                <View className='gap-3'>
                     <Text className='text-2xl text-gray-600 font-hanken-light mb-2'>Cuenta</Text>
                     {
                         DASHBOARD_CUENTA_ITEMS.map((item, index) => (
@@ -36,7 +36,7 @@ export const MyProfileScreen = () => {
                         ))
                     }
                 </View>
-                <View className='gap-4'>
+                <View className='gap-3'>
                     <Text className='text-2xl text-gray-600 font-hanken-light mb-2'>Ayuda</Text>
                     {
                         DASHBOARD_AYUDA_ITEMS.map((item, index) => (
@@ -49,7 +49,7 @@ export const MyProfileScreen = () => {
                         ))
                     }
                 </View>
-                <View className='gap-4'>
+                <View className='gap-3'>
                     <Text className='text-2xl text-gray-600 font-hanken-light mb-2'>Preferencias</Text>
                     {
                         DASHBOARD_PREFERENCIAS_ITEMS.map((item, index) => (
@@ -64,7 +64,7 @@ export const MyProfileScreen = () => {
                 </View>
                 <View>
                     <DashboardItem
-                        icon={{ ios: 'arrow.left.square', android: 'arrow_left' }}
+                        icon={{ ios: 'arrow.left.square', android: 'logout' }}
                         title='Cerrar sesión'
                         onPress={() => {
                             logOut()

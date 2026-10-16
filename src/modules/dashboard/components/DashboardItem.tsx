@@ -20,7 +20,7 @@ const DashboardItem = ({ icon, title, redirect, onPress }: Props) => {
             <Pressable onPress={redirect ? redirect : onPress}>
                 <View className='flex-row gap-4 justify-between items-center'>
                     <SymbolView name={icon} tintColor={globalStyle.color.text} size={20} />
-                    <Text className='text-text text-xl'>{title}</Text>
+                    <Text className='text-text text-lg'>{title}</Text>
                 </View>
             </Pressable>
             <SymbolView name={{ ios: 'arrow.forward', android: 'arrow_forward' }} tintColor={globalStyle.color.text} size={14} />

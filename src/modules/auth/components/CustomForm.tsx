@@ -173,9 +173,9 @@ const CustomForm = (props: Props) => {
                             className="absolute right-4 top-5"
                         >
                             {isPasswordVisible ? (
-                                <SymbolView name="eye" size={18} tintColor={"gray"} />
+                                <SymbolView name={{ios: 'eye', android: 'visibility'}} size={18} tintColor={"gray"} />
                             ) : (
-                                <SymbolView name="eye.slash" size={18} tintColor={"gray"} />
+                                <SymbolView name={{ios: 'eye.slash', android: 'visibility_off'}} size={18} tintColor={"gray"} />
                             )}
                         </Pressable>
                     </View>
