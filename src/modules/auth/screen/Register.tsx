@@ -1,29 +1,18 @@
-import BlurComponent from '@/components/BlurComponent';
-import CustomLoading from '@/components/CustomLoading';
-import CustomPopUp from '@/components/PopUp';
+import BlurComponent from '@/components/common/BlurComponent';
+import CustomLoading from '@/components/common/CustomLoading';
+import CustomPopUp from '@/components/common/PopUp';
 import { BackButton } from '@/components/ui/BackButton';
-import { getAxiosError } from '@/utility/getAxiosError';
 import { router } from 'expo-router';
-import { useEffect, useState } from 'react';
 import { KeyboardAvoidingView, Platform, ScrollView, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CustomForm from '../components/CustomForm';
-import { useRegisterMutation } from '../hooks/useRegisterMutation';
+import { useRegister } from '../hooks/useRegister';
 
 
 export const RegisterScreen = () => {
-  const { mutate, isError, isPending, isSuccess, error } = useRegisterMutation()
-  const [showPopUp, setShowPopUp] = useState(true)
 
-
-  useEffect(() => {
-    if (isError) {
-      setShowPopUp(true)
-    }
-  }, [isError])
-
-  const errorMessageFromServer = getAxiosError(error)
-
+  const { mutate, isError, isPending, showPopUp, setShowPopUp, errorMessage } = useRegister()
+  
   return (
     <>
       <SafeAreaView className="flex-1" style={{ backgroundColor: 'white' }} edges={['top']}>
@@ -39,17 +28,19 @@ export const RegisterScreen = () => {
         </KeyboardAvoidingView>
       </SafeAreaView>
       {isPending && <>
-        <BlurComponent />
-        <CustomLoading />
+        <BlurComponent>
+          <CustomLoading />
+        </BlurComponent>
       </>}
       {isError && showPopUp && <>
-        <BlurComponent />
-        <CustomPopUp
-          text={errorMessageFromServer}
-          onPress={() => { setShowPopUp(false) }}
-          buttonText="Ok"
-          warning
-        />
+        <BlurComponent>
+          <CustomPopUp
+            text={errorMessage}
+            onPress={() => { setShowPopUp(false) }}
+            buttonText="Ok"
+            warning
+          />
+        </BlurComponent>
       </>}
     </>
   )

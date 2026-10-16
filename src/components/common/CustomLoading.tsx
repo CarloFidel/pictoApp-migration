@@ -13,7 +13,6 @@ const CustomLoading = () => {
         width: width * 0.25,
         left: width * 0.375,
         top: "40%",
-        opacity: 0.8,
         zIndex: 11,
       }}
     >

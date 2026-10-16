@@ -6,7 +6,7 @@ import {
 } from "react-native-reanimated";
 
 export const useHeigthTransition = (height: number) => {
-    const customHeight = useSharedValue(270)
+    const customHeight = useSharedValue(245)
 
     useEffect(() => {
         customHeight.value =

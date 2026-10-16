@@ -1,4 +1,4 @@
-import type { Href } from 'expo-router'
+import { type Href } from 'expo-router'
 import type { AndroidSymbol, SFSymbol } from 'expo-symbols'
 
 
@@ -6,6 +6,7 @@ type Items = {
     title: string
     icon: { ios: SFSymbol; android: AndroidSymbol }
     redirect?: Href
+    onPress?: () => void
 }
 
 export const DASHBOARD_CUENTA_ITEMS: Items[] = [
@@ -51,5 +52,5 @@ export const DASHBOARD_PREFERENCIAS_ITEMS: Items[] = [
     {
         title: 'Idioma',
         icon: { ios: 'globe', android: 'globe' },
-    },
+    }
 ]

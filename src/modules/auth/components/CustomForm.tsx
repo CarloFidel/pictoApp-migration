@@ -10,19 +10,21 @@ import { Controller, useForm } from 'react-hook-form'
 import { Platform, Pressable, Text, useWindowDimensions, View } from 'react-native'
 import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated'
 
+import { useLoginMutation, useRegisterMutation } from '../hooks/useAuthMutations'
 import { UserLogin, UserRegister } from '../interfaces/user.interface'
 import { LoginSchema, RegisterSchema } from '../schema/form.schema'
-import { useRegisterMutation } from '../hooks/useRegisterMutation'
 
 type RegisterMutate = ReturnType<typeof useRegisterMutation>['mutate']
+type LoginMutate = ReturnType<typeof useLoginMutation>['mutate']
 
 type Props =
-    | {
+    {
         formType: 'register'
         onRegister: RegisterMutate
-    }
-    | {
+    } | 
+    {
         formType: 'login'
+        onLogin: LoginMutate
     }
 
 
@@ -41,7 +43,7 @@ const CustomForm = (props: Props) => {
             props.onRegister({ data: data as UserRegister, roles: roleList })
         }
         if (formType === 'login') {
-            console.log('login')
+            props.onLogin({ data: data as UserLogin })
         }
     })
 

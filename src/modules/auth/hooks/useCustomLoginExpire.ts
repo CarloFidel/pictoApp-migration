@@ -1,6 +1,6 @@
-import { getPayloadJwt, PayloadJwt } from "@/utility/getPayloadJwt"
+import { getPayloadJwt } from "@/utility/getPayloadJwt"
 import { router } from "expo-router"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useAuthStore } from "../store/authStore"
 
 
@@ -11,32 +11,52 @@ export const useCustomLoginExpire = () => {
     const isLoggedIn = useAuthStore((state) => state.isLoggedIn)
     const sessionExpired = useAuthStore((state) => state.sessionExpired)
 
+    const [delay, setDelay] = useState<number>(0)
+
+    
     
     useEffect(() => {
-        if (!isLoggedIn || !token) return
-
-        let payload: PayloadJwt
-
+        if (!isLoggedIn || !token) {
+          setDelay(0)
+          return
+        }
+      
+        let remaining: number
         try {
-            payload = getPayloadJwt(token)
+          const payload = getPayloadJwt(token)
+          remaining = payload.exp * 1000 - Date.now()
         } catch {
-            sessionExpired()
-            router.replace('/login')
-            return
+          sessionExpired()
+          router.replace('/login')
+          setDelay(0)
+          return
         }
-        const delay = payload.exp * 1000 - Date.now()
-
-        if (delay <= 0) {
-            sessionExpired()
-            router.replace('/login')
-            return
+      
+        if (remaining <= 0) {
+          sessionExpired()
+          router.replace('/login')
+          setDelay(0)
+          return
         }
-        const timeOut = setTimeout(() => {
-            sessionExpired()
-            router.replace('/login')
-        }, delay)
-
-        return () => clearTimeout(timeOut)
-
-    }, [token, isLoggedIn, sessionExpired])
+      
+        setDelay(remaining)
+      
+        const warningIn = remaining - 30_000
+        const warningTimeout =
+          warningIn > 0
+            ? setTimeout(() => setDelay(30_000), warningIn)
+            : undefined
+      
+        const expireTimeout = setTimeout(() => {
+          sessionExpired()
+          router.replace('/login')
+        }, remaining)
+      
+        return () => {
+          clearTimeout(expireTimeout)
+          if (warningTimeout) clearTimeout(warningTimeout)
+        }
+      }, [token, isLoggedIn, sessionExpired])
+      
+    return delay
 }

@@ -8,15 +8,16 @@ interface Props {
         android: AndroidSymbol;
     }
     title: string
-    redirect: () => void
+    redirect?: () => void
+    onPress?: () => void
 }
 
 
 
-const DashboardItem = ({ icon, title, redirect }: Props) => {
+const DashboardItem = ({ icon, title, redirect, onPress }: Props) => {
     return (
         <View className='flex-row w-full justify-between items-center'>
-            <Pressable onPress={redirect}>
+            <Pressable onPress={redirect ? redirect : onPress}>
                 <View className='flex-row gap-4 justify-between items-center'>
                     <SymbolView name={icon} tintColor={globalStyle.color.text} size={20} />
                     <Text className='text-text text-xl'>{title}</Text>

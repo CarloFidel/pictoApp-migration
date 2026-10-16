@@ -2,7 +2,7 @@ import { globalStyle } from "@/styles/global.style";
 import { SymbolView } from "expo-symbols";
 import { Text, useWindowDimensions } from "react-native";
 import Animated, { FadeInDown, FadeOutDown } from "react-native-reanimated";
-import { PrimaryButtton } from "./ui/PrimaryButtton";
+import { PrimaryButtton } from "../ui/PrimaryButtton";
 
 interface Props {
   warning?: boolean;
@@ -24,9 +24,6 @@ const CustomPopUp = ({
       exiting={FadeOutDown.springify().duration(800)}
       className="absolute bg-white justify-center border border-gray-200 items-center p-2 py-8 rounded-2xl gap-5 mt-2"
       style={{
-        top: height * 0.35,
-        right: width - width * 0.82,
-        opacity: 0.8,
         zIndex: 11,
       }}
     >
