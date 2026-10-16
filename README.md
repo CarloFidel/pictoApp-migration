@@ -1,56 +1,89 @@
-# Welcome to your Expo app 👋
+# Picto App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Aplicación móvil de pictogramas para entornos educativos y de comunicación asistida. Este repositorio es la migración a **Expo SDK 57**, **React Native** y **TypeScript**, con navegación por archivos de **Expo Router**.
 
-## Get started
+La interfaz y los flujos de entrada ya están montados. Las pantallas de cuenta (perfil, fotos, horarios, artículos y ayuda) son placeholders a la espera de migrar la lógica de la app anterior.
 
-1. Install dependencies
+## Stack
 
-   ```bash
-   npm install
-   ```
+- Expo SDK 57 y React Native 0.86
+- React 19 y TypeScript
+- Expo Router (rutas tipadas)
+- NativeWind 5 y Tailwind CSS 4
+- React Hook Form y Zod
+- React Native Reanimated y Gesture Handler
+- Fuente Hanken Grotesk
 
-2. Start the app
+El proyecto usa [Bun](https://bun.sh) (`bun.lock`).
 
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+## Cómo ejecutarlo
 
 ```bash
-npm run reset-project
+bun install
+bun run start
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Plataformas:
 
-### Other setup steps
+```bash
+bun run ios
+bun run android
+bun run web
+```
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+Otros scripts:
 
-## Learn more
+- `bun run lint` — ESLint vía Expo
+- `npx tsc --noEmit` — comprobación de tipos
 
-To learn more about developing your project with Expo, look at the following resources:
+Instala paquetes de Expo con `bunx expo install <paquete>` para resolver versiones compatibles con el SDK.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Rutas
 
-## Join the community
+La entrada (`/`) redirige a `/dashboard`.
 
-Join our community of developers creating universal apps.
+| Ruta | Qué muestra |
+| --- | --- |
+| `/onboarding` | Flujo de bienvenida por pasos |
+| `/login` | Inicio de sesión |
+| `/register` | Registro |
+| `/dashboard` | Inicio: cuenta, ayuda y preferencias |
+| `/myProfile` | Información personal (placeholder) |
+| `/myPhotos` | Fotos (placeholder) |
+| `/mySchedules` | Horarios guardados (placeholder) |
+| `/myArticles` | Artículos (placeholder) |
+| `/faqs` | Preguntas frecuentes (placeholder) |
+| `/about` | Sobre la app (placeholder) |
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Los grupos `(auth)` y `(dashboard)` no forman parte de la URL. Definen stacks separados, ambos sin cabecera nativa.
+
+## Estructura
+
+```
+src/
+  app/                  rutas de Expo Router
+    _layout.tsx         fuentes, splash y slot raíz
+    (auth)/             onboarding, login y registro
+    (dashboard)/        inicio y secciones de cuenta
+  modules/
+    auth/               formularios, schema Zod e interfaces
+    onboarding/         pasos, reducer y animaciones
+    dashboard/          pantalla de inicio e ítems de navegación
+  components/ui/        botones, inputs y loading compartidos
+  styles/               estilos globales (sombras, color)
+  constants/            tema
+assets/                 iconos, splash y fuentes
+```
+
+Los alias de TypeScript son `@/*` → `src/*` y `@/assets/*` → `assets/*`.
+
+## Qué hay implementado
+
+- **Onboarding.** Secuencia de pasos con un reducer, barra de progreso y transiciones.
+- **Login y registro.** Formularios validados con Zod. El envío todavía solo registra los datos en consola; no hay API de autenticación.
+- **Dashboard.** Cabecera de usuario y listas de Cuenta, Ayuda y Preferencias. Idioma no tiene ruta todavía.
+- **Estilos.** NativeWind con tokens de color y la familia Hanken Grotesk en `src/global.css`. Metro está envuelto con `withNativewind`.
+
+## Configuración nativa
+
+`ios/` y `android/` no se editan a mano. El comportamiento nativo se define en `app.json` (identificadores, splash, iconos y plugins). El compilador de React y las rutas tipadas están activados en `experiments`.
