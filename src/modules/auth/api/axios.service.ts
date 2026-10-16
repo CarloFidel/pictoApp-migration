@@ -8,3 +8,4 @@ export const axiosRegister = async (data: UserRegister, roles: string[]) => {
     });
     return response.data;
 };
+

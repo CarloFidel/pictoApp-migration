@@ -9,11 +9,7 @@ interface Props {
 
 export const useRegisterMutation = () => useMutation({
     mutationFn: ({data, roles}: Props) => axiosRegister(data, roles),
-    onError: (error) => {
-        console.log(error)
-    },
     onSuccess: (data) => {
         console.log(data)
     }
-
 })
