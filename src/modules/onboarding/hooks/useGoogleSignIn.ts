@@ -20,6 +20,7 @@ export const useGoogleSignIn = () => {
             setIsSubmitting(false)
         } catch (error) {
             setIsSubmitting(false)
+            console.log(error)
 
         }
     }

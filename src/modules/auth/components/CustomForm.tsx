@@ -21,7 +21,7 @@ type Props =
     {
         formType: 'register'
         onRegister: RegisterMutate
-    } | 
+    } |
     {
         formType: 'login'
         onLogin: LoginMutate
@@ -173,9 +173,9 @@ const CustomForm = (props: Props) => {
                             className="absolute right-4 top-5"
                         >
                             {isPasswordVisible ? (
-                                <SymbolView name={{ios: 'eye', android: 'visibility'}} size={18} tintColor={"gray"} />
+                                <SymbolView name={{ ios: 'eye', android: 'visibility' }} size={18} tintColor={"gray"} />
                             ) : (
-                                <SymbolView name={{ios: 'eye.slash', android: 'visibility_off'}} size={18} tintColor={"gray"} />
+                                <SymbolView name={{ ios: 'eye.slash', android: 'visibility_off' }} size={18} tintColor={"gray"} />
                             )}
                         </Pressable>
                     </View>
@@ -191,7 +191,7 @@ const CustomForm = (props: Props) => {
             {
                 formType === 'register' ? (<Animated.View
                     entering={FadeInDown.duration(1000)}
-                    className="absolute bottom-10"
+                    style={{ marginTop: height * 0.2 }}
                 >
                     <Text className=" text-[16px] font-hanken-light">
                         Ya tienes una cuenta? <Link href="/login" style={{ color: globalStyle.color.primary[700] }}>Inicia sesión</Link>
@@ -200,7 +200,8 @@ const CustomForm = (props: Props) => {
                 ) : (
                     <Animated.View
                         entering={FadeInDown.duration(1000)}
-                        className="absolute bottom-10"
+                        style={{ marginTop: height * 0.4 }}
+
                     >
                         <Text className=" text-[16px] font-hanken-light">
                             No tienes una cuenta? <Link href="/register" style={{ color: globalStyle.color.primary[700] }}>Registrate</Link>
