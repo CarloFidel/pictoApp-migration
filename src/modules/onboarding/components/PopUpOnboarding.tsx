@@ -4,6 +4,7 @@ import { type AndroidSymbol, type SFSymbol } from 'expo-symbols'
 import { View } from 'react-native'
 import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated'
 import { useHeigthTransition } from '../animation/HeigthTransition'
+import { useGoogleSignIn } from '../hooks/useGoogleSignIn'
 
 interface PopUpOnboardingProps {
   buttonVariant?: "outline" | "filled"
@@ -41,6 +42,8 @@ export const PopUpOnboarding = ({
   body = undefined,
   image = undefined,
   isTherapistLocal = false }: PopUpOnboardingProps) => {
+
+  const { handleGoogleSignIn } = useGoogleSignIn()
 
   const animatedStyle = useHeigthTransition(customHeight!)
   return (
@@ -136,7 +139,7 @@ export const PopUpOnboarding = ({
               text="Regístrate con Google"
               variant='filled'
               size="lg"
-              onPress={onPressOne}
+              onPress={useGoogleSignIn}
               backgroundColor='bg-black'
               iconRight={true}
               iconGoogle={iconGoogle}

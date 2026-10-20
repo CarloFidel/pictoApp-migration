@@ -43,11 +43,24 @@
           }
         }
       ],
+      [
+        "@react-native-google-signin/google-signin",
+        {
+          "iosUrlScheme": "com.googleusercontent.apps.TU_CLIENT_ID"
+        }
+      ],
       "expo-secure-store"
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "6f4d884c-5cf5-4f84-947c-9f12df8da785"
+      }
+    },
+    "owner": "charlyflow"
   }
 }

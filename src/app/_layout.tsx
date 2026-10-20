@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { BlurComponent, CustomPopUp } from '@/components/common';
 import GlobalProvider from '@/config/providers/GlobalProvider';
 import { useCustomLoginExpire } from '@/modules/auth/hooks/useCustomLoginExpire';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { View } from 'react-native';
 import '../global.css';
 
@@ -37,6 +38,13 @@ export default function RootLayout() {
       }
     }
   }, [timeCounter, sessionEnding])
+
+  useEffect(() => {
+    GoogleSignin.configure({
+      profileImageSize: 120,
+    })
+
+  })
 
 
   useEffect(() => {
