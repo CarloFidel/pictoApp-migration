@@ -4,7 +4,7 @@ import { getInitialState, onboardingReducer } from "../reducer/onboardingReducer
 
 export const useOnboarding = () => {
   const [state, dispatch] = useReducer(onboardingReducer, getInitialState());
-  const [isTherapist, setIsTherapist] = useState<boolean>(false);
+  const [isTherapistLocal, setIsTherapistLocal] = useState<boolean>(false);
 
   const stepRef = useRef(state.step);
   const previousStepRef = useRef(state.step);
@@ -60,7 +60,7 @@ export const useOnboarding = () => {
 
   const handlePressOne = () => {
     if (state.step === 1) {
-      setIsTherapist(true);
+      setIsTherapistLocal(true);
       dispatch({ type: "HAS_USADO_PICTOGRAMAS" });
     } else if (state.step === 2) {
       dispatch({ type: "REGISTER" });
@@ -75,7 +75,7 @@ export const useOnboarding = () => {
 
   const handlePressTwo = () => {
     if (state.step === 1) {
-      setIsTherapist(false);
+      setIsTherapistLocal(false);
       dispatch({ type: "HAS_USADO_PICTOGRAMAS" });
     } else if (state.step === 2) {
       dispatch({ type: "QUE_ES_UN_PICTOGRAMA" });
@@ -100,7 +100,7 @@ export const useOnboarding = () => {
     image,
     register,
     iconGoogle,
-    isTherapist,
+    isTherapistLocal,
 
     handleStart,
     handleBack,

@@ -34,7 +34,7 @@ const OnBoardingScreen = () => {
     image,
     iconGoogle,
     step,
-    isTherapist
+    isTherapistLocal,
   } = useOnboarding();
 
 
@@ -105,7 +105,7 @@ const OnBoardingScreen = () => {
               register={register}
               iconGoogle={iconGoogle}
               step={step}
-              isTherapist={isTherapist}
+              isTherapistLocal={isTherapistLocal}
             />
           )
         }
@@ -115,7 +115,10 @@ const OnBoardingScreen = () => {
       </View>
       {
         step === 6 && (
-          <Animated.View entering={FadeInDown.duration(600)} exiting={FadeOutDown.duration(600)} className="absolute bottom-0 left-0 right-0 p-4 w-full flex justify-center items-center">
+          <Animated.View
+            entering={FadeInDown.duration(600)} exiting={FadeOutDown.duration(600)}
+            className="absolute bottom-0 left-0 right-0 p-4 w-full flex justify-center items-center"
+          >
             <Text className="text-white text-center text-[16px] mb-8"  >
               Ya tienes cuenta?
               <Link href="/login"> Inicia sesión</Link>

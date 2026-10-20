@@ -4,6 +4,7 @@ import { type AndroidSymbol, type SFSymbol } from 'expo-symbols'
 import { View } from 'react-native'
 import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated'
 import { useHeigthTransition } from '../animation/HeigthTransition'
+import { useGoogleSignIn } from '../hooks/useGoogleSignIn'
 
 interface PopUpOnboardingProps {
   buttonVariant?: "outline" | "filled"
@@ -19,8 +20,7 @@ interface PopUpOnboardingProps {
   register?: boolean;
   iconGoogle?: boolean;
   step?: number;
-  isTherapist?: boolean;
-
+  isTherapistLocal?: boolean;
   onPressOne: () => void
   onPressTwo?: () => void
 }
@@ -41,7 +41,9 @@ export const PopUpOnboarding = ({
   register = false,
   body = undefined,
   image = undefined,
-  isTherapist = false }: PopUpOnboardingProps) => {
+  isTherapistLocal = false }: PopUpOnboardingProps) => {
+
+  const { handleGoogleSignIn } = useGoogleSignIn()
 
   const animatedStyle = useHeigthTransition(customHeight!)
 
@@ -139,7 +141,7 @@ export const PopUpOnboarding = ({
               text="Regístrate con Google"
               variant='filled'
               size="lg"
-              onPress={onPressOne}
+              onPress={handleGoogleSignIn}
               backgroundColor='bg-black'
               iconRight={true}
               iconGoogle={iconGoogle}
@@ -155,7 +157,7 @@ export const PopUpOnboarding = ({
               onPress={() => router.push({
                 pathname: '/register',
                 params: {
-                  isTherapistLocal: isTherapist ? 'isTherapist' : 'noTherapist'
+                  roles: isTherapistLocal ? 'therapist' : 'user'
                 }
               })}
             />

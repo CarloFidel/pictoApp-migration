@@ -8,30 +8,40 @@ import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { Platform, Pressable, Text, useWindowDimensions, View } from 'react-native'
 import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated'
-import { UserRegister } from '../interfaces/User.interface'
-import { RegisterSchema } from '../schema/form.schema'
 
-interface Props {
-    onSubmitTrigger: 'register' | 'login'
-    formType: 'register' | 'login'
-}
+import { useLoginMutation, useRegisterMutation } from '../hooks/useAuthMutations'
+import { UserLogin, UserRegister } from '../interfaces/user.interface'
+import { LoginSchema, RegisterSchema } from '../schema/form.schema'
+
+type RegisterMutate = ReturnType<typeof useRegisterMutation>['mutate']
+type LoginMutate = ReturnType<typeof useLoginMutation>['mutate']
+
+type Props =
+    {
+        formType: 'register'
+        onRegister: RegisterMutate
+    } | 
+    {
+        formType: 'login'
+        onLogin: LoginMutate
+    }
 
 
-const CustomForm = ({ onSubmitTrigger, formType }: Props) => {
+const CustomForm = (props: Props) => {
+    const { formType } = props
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+    const { roles } = useLocalSearchParams()
+    const roleList = [roles].flat().filter((role): role is string => typeof role === 'string')
 
     const { height, width } = useWindowDimensions()
-    const { control, handleSubmit, formState: { errors } } = useForm<UserRegister>({ resolver: zodResolver(RegisterSchema) })
-
-    const { isTherapistLocal  } = useLocalSearchParams()
-
+    const { control, handleSubmit, formState: { errors } } = useForm<UserRegister | UserLogin>({ resolver: zodResolver(formType === 'register' ? RegisterSchema : LoginSchema) })
 
     const onSubmit = handleSubmit((data) => {
-        console.log({...data, isTherapistLocal })
-        if (onSubmitTrigger === 'register') {
-            console.log('register')
-        } else {
-            console.log('login')
+        if (props.formType === 'register') {
+            props.onRegister({ data: data as UserRegister, roles: roleList })
+        }
+        if (formType === 'login') {
+            props.onLogin({ data: data as UserLogin })
         }
     })
 
@@ -59,7 +69,7 @@ const CustomForm = ({ onSubmitTrigger, formType }: Props) => {
                             {errors.name && (
                                 <Animated.View
                                     entering={FadeIn}
-                                    className="flex-row justify-start items-center gap-2 mt-2"
+                                    className="flex-row justify-start items-center gap-2 mt-2 w-full"
                                 >
                                     <SymbolView name={{ ios: 'exclamationmark.triangle', android: 'warning_amber' }} size={18} tintColor={"red"} />
                                     <Text style={{ color: "red" }} className="text-left">
@@ -161,9 +171,9 @@ const CustomForm = ({ onSubmitTrigger, formType }: Props) => {
                             className="absolute right-4 top-5"
                         >
                             {isPasswordVisible ? (
-                                <SymbolView name="eye" size={18} tintColor={"gray"} />
+                                <SymbolView name={{ios: 'eye', android: 'visibility'}} size={18} tintColor={"gray"} />
                             ) : (
-                                <SymbolView name="eye.slash" size={18} tintColor={"gray"} />
+                                <SymbolView name={{ios: 'eye.slash', android: 'visibility_off'}} size={18} tintColor={"gray"} />
                             )}
                         </Pressable>
                     </View>
