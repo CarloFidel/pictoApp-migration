@@ -15,7 +15,7 @@ export const MyProfileScreen = () => {
         <SafeAreaView edges={['top']} style={{ backgroundColor: globalStyle.color.primary[500], flex: 1 }}>
             <StatusBar barStyle="light-content" />
             <View className='px-4 py-10 gap-2'>
-                <Animated.Text entering={FadeInLeft.delay(400).duration(600)} className='text-white font-hanken-medium text-3xl'>{`${name} ${lastName}`} </Animated.Text>
+                <Animated.Text entering={FadeInLeft.delay(400).duration(600)} className='text-white font-hanken-medium text-3xl'>{`${name}`} </Animated.Text>
                 <Animated.Text entering={FadeInLeft.delay(500).duration(800)} className='text-white font-hanken-light text-xl'>{email}</Animated.Text>
             </View>
             <Animated.View

@@ -1,7 +1,6 @@
 import { PrimaryButtton } from '@/components/ui/PrimaryButtton'
 import { router } from 'expo-router'
 import { type AndroidSymbol, type SFSymbol } from 'expo-symbols'
-import { useState } from 'react'
 import { View } from 'react-native'
 import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated'
 import { useHeigthTransition } from '../animation/HeigthTransition'
@@ -47,16 +46,14 @@ export const PopUpOnboarding = ({
   image = undefined,
   isTherapistLocal = false }: PopUpOnboardingProps) => {
 
-  const [tokenGoogle, setTokenGoogle] = useState<string | null>(null)
 
   const { handleGoogleSignIn } = useGoogleSignIn()
 
   const handleSignInWithGoogle = async () => {
     const token = await handleGoogleSignIn()
     if (token) {
-      setTokenGoogle(token)
+      onGoogleSignIn(token ?? "")
     }
-    onGoogleSignIn(token ?? "")
   }
 
   const animatedStyle = useHeigthTransition(customHeight!)
