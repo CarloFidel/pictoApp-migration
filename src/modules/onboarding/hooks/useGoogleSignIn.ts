@@ -13,8 +13,9 @@ export const useGoogleSignIn = () => {
             await GoogleSignin.hasPlayServices()
             const response = await GoogleSignin.signIn()
             if (isSuccessResponse(response)) {
-                const { idToken, user } = response.data
-                console.log(idToken, user)
+                const { idToken } = response.data
+                console.log(idToken)
+                return idToken
             }
 
             setIsSubmitting(false)
@@ -26,5 +27,6 @@ export const useGoogleSignIn = () => {
     }
     return {
         isSubmitting,
-        handleGoogleSignIn }
+        handleGoogleSignIn,
+    }
 }

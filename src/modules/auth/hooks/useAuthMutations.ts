@@ -12,7 +12,8 @@ interface LoginProps {
 }
 
 interface LoginGoogleProps {
-    googleToken: string
+    token: string
+    roles: string[]
 }
 
 
@@ -29,6 +30,6 @@ export const useLoginMutation = () => useMutation({
 
 
 export const useLoginGoogleMutation = () => useMutation({
-    mutationFn: ({ googleToken }: LoginGoogleProps) => axiosLoginGoogle(googleToken),
+    mutationFn: ({ token, roles }: LoginGoogleProps) => axiosLoginGoogle(token, roles),
     mutationKey: ["login-google"],
 })

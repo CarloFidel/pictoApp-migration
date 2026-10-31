@@ -18,9 +18,10 @@ export const axiosLogin = async (data: UserLogin,) => {
 };
 
 
-export const axiosLoginGoogle = async (googleToken: string) => {
-    const response = await customApiConfig.post("/auth/login/google", {
-        googleToken: googleToken
+export const axiosLoginGoogle = async (googleToken: string, roles: string[]) => {
+    const response = await customApiConfig.post("/auth/google", {
+        token: googleToken,
+        roles: roles || []
     });
     return response.data;
 }

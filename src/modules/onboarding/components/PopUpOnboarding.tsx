@@ -1,6 +1,7 @@
 import { PrimaryButtton } from '@/components/ui/PrimaryButtton'
 import { router } from 'expo-router'
 import { type AndroidSymbol, type SFSymbol } from 'expo-symbols'
+import { useState } from 'react'
 import { View } from 'react-native'
 import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated'
 import { useHeigthTransition } from '../animation/HeigthTransition'
@@ -21,6 +22,8 @@ interface PopUpOnboardingProps {
   iconGoogle?: boolean;
   step?: number;
   isTherapistLocal?: boolean;
+
+  onGoogleSignIn: (token: string) => void
   onPressOne: () => void
   onPressTwo?: () => void
 }
@@ -37,13 +40,24 @@ export const PopUpOnboarding = ({
   icon,
   iconGoogle,
   justifyTitle,
+  onGoogleSignIn,
   step = 0,
   register = false,
   body = undefined,
   image = undefined,
   isTherapistLocal = false }: PopUpOnboardingProps) => {
 
+  const [tokenGoogle, setTokenGoogle] = useState<string | null>(null)
+
   const { handleGoogleSignIn } = useGoogleSignIn()
+
+  const handleSignInWithGoogle = async () => {
+    const token = await handleGoogleSignIn()
+    if (token) {
+      setTokenGoogle(token)
+    }
+    onGoogleSignIn(token ?? "")
+  }
 
   const animatedStyle = useHeigthTransition(customHeight!)
   return (
@@ -139,7 +153,7 @@ export const PopUpOnboarding = ({
               text="Regístrate con Google"
               variant='filled'
               size="lg"
-              onPress={handleGoogleSignIn}
+              onPress={handleSignInWithGoogle}
               backgroundColor='bg-black'
               iconRight={true}
               iconGoogle={iconGoogle}

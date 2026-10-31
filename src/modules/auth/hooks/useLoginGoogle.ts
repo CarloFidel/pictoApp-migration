@@ -9,35 +9,35 @@ import { useLoginGoogleMutation } from "./useAuthMutations"
 
 
 export const useLoginGoogle = () => {
-    const { mutate, isError, isPending, isSuccess, error, data } = useLoginGoogleMutation()
-    const [showPopUp, setShowPopUp] = useState(true)
-  
-    const { logIn } = useAuthStore()
-  
-    useEffect(() => {
-      if (!isSuccess || !data) return
-      logIn(data.name, data.lastName, data.email, data.password, data.role, data.token)
-      router.push("/dashboard")
-    }, [isSuccess, data])
-  
-    useEffect(() => {
-      if (isError) {
-        setShowPopUp(true)
-      }
-    }, [isError])
-  
-    const errorMessageFromServer = getAxiosError(error)
-    const errorMessage = errorMessageMapperAuth(errorMessageFromServer)
+  const { mutate, isError, isPending, isSuccess, error, data } = useLoginGoogleMutation()
+  const [showPopUp, setShowPopUp] = useState(true)
 
-    return {
-        mutate,
-        isError,
-        isPending,
-        isSuccess,
-        error,
-        data,
-        errorMessage,
-        showPopUp,
-        setShowPopUp
+  const { logIn } = useAuthStore()
+
+  useEffect(() => {
+    if (!isSuccess || !data) return
+    logIn(data.name, data.lastName, data.email, data.password, data.role, data.token)
+    router.push("/dashboard")
+  }, [isSuccess, data])
+
+  useEffect(() => {
+    if (isError) {
+      setShowPopUp(true)
     }
+  }, [isError])
+
+  const errorMessageFromServer = getAxiosError(error)
+  const errorMessage = errorMessageMapperAuth(errorMessageFromServer)
+
+  return {
+    mutate,
+    isError,
+    isPending,
+    isSuccess,
+    error,
+    data,
+    errorMessage,
+    showPopUp,
+    setShowPopUp
+  }
 }

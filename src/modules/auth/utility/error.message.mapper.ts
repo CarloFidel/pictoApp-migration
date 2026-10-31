@@ -18,7 +18,7 @@ export const errorMessageMapperAuth = (error: number) => {
         case 429:
             return "Too Many Requests";
         case 500:
-            return "Internal Server Error";
+            return "Error del servidor";
         case 502:
             return "Bad Gateway";
         case 500:

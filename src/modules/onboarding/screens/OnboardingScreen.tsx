@@ -1,7 +1,10 @@
+import { BlurComponent, CustomLoading, CustomPopUp } from '@/components/common';
 import { BackButton } from '@/components/ui/BackButton';
 import { PrimaryButtton } from '@/components/ui/PrimaryButtton';
+import { useLoginGoogle } from '@/modules/auth/hooks/useLoginGoogle';
 import { globalStyle } from '@/styles/global.style';
 import { Link } from 'expo-router';
+import { useRef } from 'react';
 import { Image, StatusBar, Text, useWindowDimensions, View } from 'react-native';
 import Animated, { FadeIn, FadeInDown, FadeOutDown } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -12,7 +15,7 @@ import { useOnboarding } from '../hooks/useOnboarding';
 const OnBoardingScreen = () => {
 
 
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
   const {
     twoButtons,
@@ -39,95 +42,125 @@ const OnBoardingScreen = () => {
     isTherapistLocal,
   } = useOnboarding();
 
+  const { mutate, isError, isPending, showPopUp, setShowPopUp, errorMessage } = useLoginGoogle()
+  const blurTargetRef = useRef<View>(null)
+
+
+  const handleSignInWithGoogle = async (token: string) => {
+    mutate({ token, roles: isTherapistLocal ? ['therapist'] : ['user'] })
+  }
+
   return (
-    <SafeAreaView edges={['top']} className="h-full" style={{ backgroundColor: globalStyle.color.primary[400] }}>
-      <StatusBar barStyle="light-content" />
-      <View className="h-full items-center justify-center bg-linear-to-b from-primary-400 to-primary-700 px-4"
-      >
+    <>
+      <SafeAreaView edges={['top']} className="h-full" style={{ backgroundColor: globalStyle.color.primary[400] }}>
+        <StatusBar barStyle="light-content" />
+        <View className="h-full items-center justify-center bg-linear-to-b from-primary-400 to-primary-700 px-4"
+        >
+          {
+            showBackbutton && (
+              <BackButton onPress={handleBack} />
+            )
+          }
+          {
+            showProgressBar && (
+              <CustomProgressBar progressValue={progressValue} />
+            )
+          }
+
+          {
+            landingPage ? (
+              <>
+                <Animated.View
+                  entering={FadeIn.duration(300)}
+                  className="justify-center items-center gap-4">
+                  <Image
+                    source={require("@/assets/images/icons.png")}
+                    style={{
+                      width: width * 0.8,
+                      height: width * 0.3,
+                      resizeMode: "contain",
+                    }}
+                  />
+                  <Text
+                    className="text-white text-3xl text-center mb-4 font-hanken-light"
+                    style={{ width: width * 0.8 }}
+                  >
+                    El mundo es más fácil con pictogramas
+                  </Text>
+                </Animated.View>
+                <View className="absolute bottom-8 mt-8 justify-end p-8">
+                  <PrimaryButtton
+                    text="Empezar"
+                    variant="outline"
+                    size="lg"
+                    icon={{ ios: 'arrow.forward.circle', android: 'arrow_circle_right' }}
+                    onPress={handleStart}
+
+                  />
+                </View>
+
+              </>
+            ) : (
+              <PopUpOnboarding
+                twoButtons={twoButtons}
+                onPressOne={handlePressOne}
+                onPressTwo={handlePressTwo}
+                title={title!} labelOne={labelOne!}
+                labelTwo={labelTwo!}
+                customHeight={customHeight!}
+                buttonVariant={buttonVariant as "outline" | "filled"}
+                icon={icon!}
+                justifyTitle={justifyTitle!}
+                body={body}
+                image={image}
+                register={register}
+                iconGoogle={iconGoogle}
+                step={step}
+                isTherapistLocal={isTherapistLocal}
+                onGoogleSignIn={handleSignInWithGoogle}
+              />
+            )
+          }
+
+
+
+        </View>
         {
-          showBackbutton && (
-            <BackButton onPress={handleBack} />
+          step === 6 && (
+            <Animated.View
+              entering={FadeInDown.duration(600)} exiting={FadeOutDown.duration(600)}
+              className="absolute bottom-0 left-0 right-0 p-4 w-full flex justify-center items-center"
+            >
+              <Text className="text-white text-center text-[16px] mb-8"  >
+                Ya tienes cuenta?
+                <Link href="/login"> Inicia sesión</Link>
+              </Text>
+            </Animated.View>
           )
         }
-        {
-          showProgressBar && (
-            <CustomProgressBar progressValue={progressValue} />
-          )
-        }
-
-        {
-          landingPage ? (
-            <>
-              <Animated.View
-                entering={FadeIn.duration(300)}
-                className="justify-center items-center gap-4">
-                <Image
-                  source={require("@/assets/images/icons.png")}
-                  style={{
-                    width: width * 0.8,
-                    height: width * 0.3,
-                    resizeMode: "contain",
-                  }}
-                />
-                <Text
-                  className="text-white text-3xl text-center mb-4 font-hanken-light"
-                  style={{ width: width * 0.8 }}
-                >
-                  El mundo es más fácil con pictogramas
-                </Text>
-              </Animated.View>
-              <View className="absolute bottom-8 mt-8 justify-end p-8">
-                <PrimaryButtton
-                  text="Empezar"
-                  variant="outline"
-                  size="lg"
-                  icon={{ ios: 'arrow.forward.circle', android: 'arrow_circle_right' }}
-                  onPress={handleStart}
-
-                />
-              </View>
-
-            </>
-          ) : (
-            <PopUpOnboarding
-              twoButtons={twoButtons}
-              onPressOne={handlePressOne}
-              onPressTwo={handlePressTwo}
-              title={title!} labelOne={labelOne!}
-              labelTwo={labelTwo!}
-              customHeight={customHeight!}
-              buttonVariant={buttonVariant as "outline" | "filled"}
-              icon={icon!}
-              justifyTitle={justifyTitle!}
-              body={body}
-              image={image}
-              register={register}
-              iconGoogle={iconGoogle}
-              step={step}
-              isTherapistLocal={isTherapistLocal}
-            />
-          )
-        }
 
 
 
-      </View>
+      </SafeAreaView>
       {
-        step === 6 && (
-          <Animated.View
-            entering={FadeInDown.duration(600)} exiting={FadeOutDown.duration(600)}
-            className="absolute bottom-0 left-0 right-0 p-4 w-full flex justify-center items-center"
-          >
-            <Text className="text-white text-center text-[16px] mb-8"  >
-              Ya tienes cuenta?
-              <Link href="/login"> Inicia sesión</Link>
-            </Text>
-          </Animated.View>
-        )
+        isPending && (
+          <BlurComponent blurTarget={blurTargetRef}>
+            <CustomLoading />
+          </BlurComponent>
+        )}
+      {isError && showPopUp && (
+        <BlurComponent blurTarget={blurTargetRef}>
+          <CustomPopUp
+            text={errorMessage}
+            onPress={() => { setShowPopUp(false) }}
+            buttonText="Ok"
+            warning
+          />
+        </BlurComponent>
+      )
       }
 
-
-    </SafeAreaView>
+    </>
   )
 }
 
