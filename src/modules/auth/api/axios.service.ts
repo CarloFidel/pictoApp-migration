@@ -8,6 +8,8 @@ export const axiosRegister = async (data: UserRegister, roles: string[]) => {
     });
     return response.data;
 };
+
+
 export const axiosLogin = async (data: UserLogin,) => {
     const response = await customApiConfig.post("/auth/login", {
         ...data,
@@ -15,3 +17,10 @@ export const axiosLogin = async (data: UserLogin,) => {
     return response.data;
 };
 
+
+export const axiosLoginGoogle = async (googleToken: string) => {
+    const response = await customApiConfig.post("/auth/login/google", {
+        googleToken: googleToken
+    });
+    return response.data;
+}
