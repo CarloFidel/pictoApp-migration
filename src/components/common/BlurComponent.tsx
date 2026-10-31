@@ -1,12 +1,13 @@
 import { BlurView } from "expo-blur";
-import { Pressable } from "react-native";
+import { Pressable, View } from "react-native";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 
 interface Props {
   onClick?: () => void;
   children: React.ReactNode;
+  blurTarget?: React.RefObject<View | null>;
 }
-const BlurComponent = ({ onClick, children }: Props) => {
+const BlurComponent = ({ onClick, children, blurTarget }: Props) => {
   return (
     <Pressable
       onPress={onClick}
@@ -39,6 +40,7 @@ const BlurComponent = ({ onClick, children }: Props) => {
         <BlurView
           intensity={35}
           tint="systemMaterialDark"
+          blurTarget={blurTarget}
           blurMethod="dimezisBlurView"
           style={{
             position: "absolute",
@@ -48,6 +50,7 @@ const BlurComponent = ({ onClick, children }: Props) => {
             bottom: 0,
           }}
         />
+        {children}
       </Animated.View>
     </Pressable>
   );

@@ -1,12 +1,13 @@
 import { useFonts } from 'expo-font';
 import { Slot } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { BlurComponent, CustomPopUp } from '@/components/common';
 import GlobalProvider from '@/config/providers/GlobalProvider';
 import { useCustomLoginExpire } from '@/modules/auth/hooks/useCustomLoginExpire';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { BlurTargetView } from 'expo-blur';
 import { View } from 'react-native';
 import '../global.css';
 
@@ -26,6 +27,8 @@ export default function RootLayout() {
 
   const delay = useCustomLoginExpire()
   const sessionEnding = delay > 0 && delay <= 30_000
+
+  const blurTargetRef = useRef<View>(null);
 
   useEffect(() => {
     if (sessionEnding) {
@@ -60,13 +63,14 @@ export default function RootLayout() {
 
 
 
-
   return (
     <GlobalProvider>
       <View style={{ flex: 1 }}>
-        <Slot />
+        <BlurTargetView ref={blurTargetRef} style={{ flex: 1 }}>
+          <Slot />
+        </BlurTargetView>
         {sessionEnding && showPopUp && (
-          <BlurComponent>
+          <BlurComponent blurTarget={blurTargetRef}>
             <CustomPopUp
               warning
               text={`Tu sesión caducará en ${timeCounter} segundos`}
