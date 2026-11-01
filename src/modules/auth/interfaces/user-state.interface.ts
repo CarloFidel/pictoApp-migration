@@ -5,6 +5,7 @@ export interface UserState {
     password: string;
     role?: string[];
     token?: string;
+    avatar?: string;
     isSessionExpired?: boolean;
 
     isLoggedIn: boolean;
@@ -16,6 +17,7 @@ export interface UserState {
         password: string,
         role: string[],
         token: string,
+        avatar?: string,
     ) => void;
     logOut: () => void;
     

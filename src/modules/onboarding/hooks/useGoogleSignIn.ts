@@ -14,7 +14,6 @@ export const useGoogleSignIn = () => {
             const response = await GoogleSignin.signIn()
             if (isSuccessResponse(response)) {
                 const { idToken } = response.data
-                console.log(idToken)
                 return idToken
             }
 
