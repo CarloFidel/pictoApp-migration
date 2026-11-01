@@ -1,7 +1,8 @@
 import { useAuthStore } from '@/modules/auth/store/authStore'
 import { globalStyle } from '@/styles/global.style'
 import { router } from 'expo-router'
-import { Image, StatusBar, Text, View } from 'react-native'
+import { SymbolView } from 'expo-symbols'
+import { Image, Pressable, StatusBar, Text, View } from 'react-native'
 import Animated, { FadeInDown, FadeInLeft, FadeInRight } from 'react-native-reanimated'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import DashboardItem from '../components/DashboardItem'
@@ -9,7 +10,7 @@ import { DASHBOARD_AYUDA_ITEMS, DASHBOARD_CUENTA_ITEMS, DASHBOARD_PREFERENCIAS_I
 
 export const MyProfileScreen = () => {
 
-    const { email, name, logOut, avatar } = useAuthStore.getState()
+    const { email, name, logOut, avatar, role } = useAuthStore.getState()
 
     return (
         <SafeAreaView edges={['top']} style={{ backgroundColor: globalStyle.color.primary[500], flex: 1 }}>
@@ -19,7 +20,8 @@ export const MyProfileScreen = () => {
                     <Animated.Text entering={FadeInLeft.delay(400).duration(600)} className='text-white font-hanken-medium text-3xl'>{`${name}`} </Animated.Text>
                     <Animated.Text entering={FadeInLeft.delay(500).duration(800)} className='text-white font-hanken-light text-xl'>{email}</Animated.Text>
                 </View>
-                <Animated.View className='aspect-square w-18 rounded-full border border-white bg-white overflow-hidden'
+                <Animated.View className='relative aspect-square w-18 rounded-full border border-white bg-white overflow-hidden'
+                    style={globalStyle.shadow.large}
                     entering={FadeInRight.delay(600).duration(800)}
                 >
                     <Image
@@ -35,8 +37,11 @@ export const MyProfileScreen = () => {
                         }}
                     />
 
-
                 </Animated.View>
+                <Pressable className='absolute top-24 right-3 p-2 rounded-full bg-white/80 z-10 active:bg-gray-300'>
+                    <SymbolView name={{ ios: 'pencil', android: 'edit' }} size={18} tintColor={globalStyle.color.gray[55]} />
+                </Pressable>
+
             </View>
             <Animated.View
                 className='bg-white flex-1 rounded-t-4xl py-12 px-4 gap-12'
