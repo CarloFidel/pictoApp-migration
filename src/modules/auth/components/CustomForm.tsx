@@ -32,7 +32,13 @@ const CustomForm = (props: Props) => {
     const { formType } = props
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const { roles } = useLocalSearchParams()
-    const roleList = [roles].flat().filter((role): role is string => typeof role === 'string')
+    let roleList: string[] = []
+
+    if (!roles || roles.length === 0) {
+        roleList = ['user'].flat().filter((role): role is string => typeof role === 'string')
+    } else {
+        roleList = [roles].flat().filter((role): role is string => typeof role === 'string')
+    }
 
     const { height, width } = useWindowDimensions()
     const { control, handleSubmit, formState: { errors } } = useForm<UserRegister | UserLogin>({ resolver: zodResolver(formType === 'register' ? RegisterSchema : LoginSchema) })

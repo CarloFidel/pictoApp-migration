@@ -46,9 +46,17 @@ const OnBoardingScreen = () => {
   const { mutate, isError, isPending, showPopUp, setShowPopUp, errorMessage } = useLoginGoogle()
   const blurTargetRef = useRef<View>(null)
 
+  let roles: string[]
+
+  if (isTherapistLocal) {
+    roles = ['therapist']
+  } else {
+    roles = ['user']
+  }
+
 
   const handleSignInWithGoogle = async (token: string) => {
-    mutate({ token, roles: isTherapistLocal ? ['therapist'] : ['user'] })
+    mutate({ token, roles: roles })
   }
 
   return (
