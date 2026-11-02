@@ -16,7 +16,7 @@ export const useLoginGoogle = () => {
 
   useEffect(() => {
     if (!isSuccess || !data) return
-    logIn(data.name, data.lastName, data.email, data.password, data.role, data.token, data.avatar ?? '')
+    logIn(data.name, data.lastName, data.email, data.password, data.roles, data.token, data.avatar ?? '')
     router.push("/dashboard")
   }, [isSuccess, data])
 

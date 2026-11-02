@@ -13,7 +13,7 @@ export const useLogin = () => {
   
     useEffect(() => {
       if (!isSuccess || !data) return
-      logIn(data.name, data.lastName, data.email, data.password, data.role, data.token)
+      logIn(data.name, data.lastName, data.email, data.password, data.roles, data.token)
       router.push("/dashboard")
     }, [isSuccess, data])
   

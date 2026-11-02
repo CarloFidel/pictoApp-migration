@@ -14,11 +14,11 @@ export const useAuthStore = create(
             lastName: '',
             email: '',
             password: '',
-            role: [],
+            roles: [],
             token: '',
             avatar: '',
 
-            logIn: (name, lastName, email, password, role, token, avatar = '') => set(() => {
+            logIn: (name, lastName, email, password, roles, token, avatar = '') => set(() => {
                 return {
                     isLoggedIn: true,
                     isSessionExpired: false,
@@ -27,7 +27,7 @@ export const useAuthStore = create(
                     lastName,
                     email,
                     password,
-                    role,
+                    roles,
                     token,
                     avatar,
                 }
@@ -41,7 +41,7 @@ export const useAuthStore = create(
                     lastName: '',
                     email: '',
                     password: '',
-                    role: [],
+                    roles: [],
                     token: '',
                     avatar: '',
 
@@ -57,7 +57,7 @@ export const useAuthStore = create(
                     lastName: '',
                     email: '',
                     password: '',
-                    role: [],
+                    roles: [],
                     token: '',
                     avatar: '',
 

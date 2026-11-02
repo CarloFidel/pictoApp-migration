@@ -3,7 +3,7 @@ export interface UserState {
     lastName?: string;
     email: string;
     password: string;
-    role?: string[];
+    roles?: string[];
     token?: string;
     avatar?: string;
     isSessionExpired?: boolean;
@@ -15,7 +15,7 @@ export interface UserState {
         lastName: string,
         email: string,
         password: string,
-        role: string[],
+        roles: string[],
         token: string,
         avatar?: string,
     ) => void;

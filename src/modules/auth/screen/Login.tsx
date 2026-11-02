@@ -3,7 +3,7 @@ import CustomLoading from '@/components/common/CustomLoading'
 import CustomPopUp from '@/components/common/PopUp'
 import { BackButton } from '@/components/ui/BackButton'
 import { BlurTargetView } from 'expo-blur'
-import { router } from 'expo-router'
+import { router, useLocalSearchParams } from 'expo-router'
 import { useRef } from 'react'
 import { KeyboardAvoidingView, Platform, ScrollView, StatusBar, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -15,6 +15,9 @@ export const LoginScreen = () => {
   const { mutate, isError, isPending, showPopUp, setShowPopUp, errorMessage } = useLogin()
   const blurTargetRef = useRef<View>(null)
 
+  const { from } = useLocalSearchParams()
+
+
   return (
     <View style={{ flex: 1 }}>
       <BlurTargetView ref={blurTargetRef} style={{ flex: 1 }}>
@@ -25,7 +28,11 @@ export const LoginScreen = () => {
               className=" bg-white"
               contentContainerStyle={{ flexGrow: 1 }}
               showsVerticalScrollIndicator={false}>
-              {router.canGoBack() && <BackButton onPress={() => router.back()} top={10} left={10} />}
+              {
+                (router.canGoBack()) && (
+                  from === 'dashboard' ? <BackButton icon={{ ios: 'house', android: 'home_app_logo' }} top={10} left={10} onPress={() => router.push('/onboarding')}/> : <BackButton onPress={() => router.back()} top={10} left={10} />
+                )
+              }
               <CustomForm formType='login' onLogin={mutate} />
             </ScrollView>
           </KeyboardAvoidingView>

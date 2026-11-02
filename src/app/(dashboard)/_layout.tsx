@@ -6,7 +6,6 @@ const dashboardLaoyout = () => {
 
 
   const { isLoggedIn } = useAuthStore()
-  console.log('isLoggedIn', isLoggedIn)
 
   return (
     <Stack screenOptions={{ headerShown: false }}>

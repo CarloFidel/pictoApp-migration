@@ -3,26 +3,33 @@ import { globalStyle } from '@/styles/global.style'
 import { router } from 'expo-router'
 import { SymbolView } from 'expo-symbols'
 import { Image, Pressable, StatusBar, Text, View } from 'react-native'
-import Animated, { FadeInDown, FadeInLeft, FadeInRight } from 'react-native-reanimated'
+import Animated, { FadeInDown, FadeInLeft, FadeInRight, ZoomIn } from 'react-native-reanimated'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { DashboaedBackgroundSvg } from '../components/DashboaedBackgroundSvg'
 import DashboardItem from '../components/DashboardItem'
 import { DASHBOARD_AYUDA_ITEMS, DASHBOARD_CUENTA_ITEMS, DASHBOARD_PREFERENCIAS_ITEMS } from '../config/dasboard.items.config'
 
 export const MyProfileScreen = () => {
 
-    const { email, name, logOut, avatar, role } = useAuthStore.getState()
+    const { email, name, logOut, avatar, roles } = useAuthStore.getState()
+
+    let istherapist: boolean = false
+    if (roles?.includes('therapist')) {
+        istherapist = true
+    }
+    console.log(istherapist, roles, avatar)
 
     return (
         <SafeAreaView edges={['top']} style={{ backgroundColor: globalStyle.color.primary[500], flex: 1 }}>
             <StatusBar barStyle="light-content" />
             <View className='w-full flex-row justify-between items-center px-4' >
                 <View className='py-10 gap-2'>
-                    <Animated.Text entering={FadeInLeft.delay(400).duration(600)} className='text-white font-hanken-medium text-3xl'>{`${name}`} </Animated.Text>
-                    <Animated.Text entering={FadeInLeft.delay(500).duration(800)} className='text-white font-hanken-light text-xl'>{email}</Animated.Text>
+                    <Animated.Text entering={FadeInLeft.duration(600)} className='text-white font-hanken-medium text-3xl'>{`${name}`} </Animated.Text>
+                    <Animated.Text entering={FadeInLeft.delay(500).duration(400)} className='text-white font-hanken-light text-xl'>{email}</Animated.Text>
                 </View>
-                <Animated.View className='relative aspect-square w-18 rounded-full border border-white bg-white overflow-hidden'
-                    style={globalStyle.shadow.large}
-                    entering={FadeInRight.delay(600).duration(800)}
+                <Animated.View className={`relative aspect-square w-22 rounded-full border-3 ${istherapist ? 'border-primary-700' : 'border-white'} bg-white overflow-hidden`}
+                    style={globalStyle.shadow.medium}
+                    entering={FadeInRight.delay(600).duration(300)}
                 >
                     <Image
                         source={
@@ -38,16 +45,28 @@ export const MyProfileScreen = () => {
                     />
 
                 </Animated.View>
-                <Pressable className='absolute top-24 right-3 p-2 rounded-full bg-white/80 z-10 active:bg-gray-300'>
-                    <SymbolView name={{ ios: 'pencil', android: 'edit' }} size={18} tintColor={globalStyle.color.gray[55]} />
-                </Pressable>
+
+                <Animated.View
+                    entering={ZoomIn.delay(1000).springify().damping(10).stiffness(100).mass(1)}
+                    className='absolute top-24 right-3 p-2 rounded-full bg-white/80 z-10 active:bg-gray-300'
+                    style={globalStyle.shadow.small}
+                >
+                    <Pressable >
+                        <SymbolView name={{ ios: 'pencil', android: 'edit' }} size={18} tintColor={globalStyle.color.gray[55]} />
+                    </Pressable>
+                </Animated.View>
 
             </View>
             <Animated.View
-                className='bg-white flex-1 rounded-t-4xl py-12 px-4 gap-12'
-                entering={FadeInDown.duration(1000).delay(1000)}
+                className={`relative flex-1 overflow-hidden rounded-t-4xl py-12 px-4 gap-12 border-2 border-primary-600 bg-white`}
+                entering={FadeInDown.duration(600).delay(1000)}
                 style={globalStyle.shadow.medium}
             >
+                {
+                    istherapist && (
+                        <DashboaedBackgroundSvg />
+                    )
+                }
                 <View className='gap-3'>
                     <Text className='text-2xl text-gray-600 font-hanken-light mb-2'>Cuenta</Text>
                     {
@@ -92,8 +111,8 @@ export const MyProfileScreen = () => {
                         icon={{ ios: 'arrow.left.square', android: 'logout' }}
                         title='Cerrar sesión'
                         onPress={() => {
+                            router.push({ pathname: '/login', params: { from: 'dashboard' } })
                             logOut()
-                            router.push('/login')
                         }}
                     />
                 </View>
