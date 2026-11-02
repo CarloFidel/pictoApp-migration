@@ -1,4 +1,5 @@
 import { PrimaryButtton } from '@/components/ui/PrimaryButtton'
+import { IMAGES_ROUTES } from '@/constants/images.statics.routes'
 import { router } from 'expo-router'
 import { type AndroidSymbol, type SFSymbol } from 'expo-symbols'
 import { View } from 'react-native'
@@ -81,7 +82,7 @@ export const PopUpOnboarding = ({
             {
               image && (
                 <Animated.Image
-                  source={{ uri: "https://api.arasaac.org/v1/pictograms/2780?download=false" }}
+                  source={IMAGES_ROUTES.IMAGE_ONBOARDING_ICON}
                   style={[{
                     width: 200,
                     height: 200,

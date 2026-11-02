@@ -1,3 +1,4 @@
+import { IMAGES_ROUTES } from '@/constants/images.statics.routes';
 import { globalStyle } from '@/styles/global.style';
 import { SymbolView, type AndroidSymbol, type SFSymbol } from 'expo-symbols';
 import { Image, Pressable, PressableProps, Text, useWindowDimensions } from 'react-native';
@@ -62,7 +63,7 @@ export const PrimaryButtton = ({ text, variant, backgroundColor, size, icon, dis
       ) : null}
       {
         iconGoogle ? (
-          <Image source={require('../../modules/onboarding/assets/logo-google.png')} className='w-6 h-6' />
+          <Image source={IMAGES_ROUTES.LOGO_GOOGLE} className='w-6 h-6' />
         ) : null
       }
     </Pressable>

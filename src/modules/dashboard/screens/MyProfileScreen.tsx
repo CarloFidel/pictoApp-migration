@@ -9,6 +9,7 @@ import { DashboaedBackgroundSvg } from '../components/DashboaedBackgroundSvg'
 import DashboardItem from '../components/DashboardItem'
 import { DASHBOARD_AYUDA_ITEMS, DASHBOARD_CUENTA_ITEMS, DASHBOARD_PREFERENCIAS_ITEMS } from '../config/dasboard.items.config'
 
+
 export const MyProfileScreen = () => {
 
     const { email, name, logOut, avatar, roles } = useAuthStore.getState()
@@ -23,8 +24,15 @@ export const MyProfileScreen = () => {
         <SafeAreaView edges={['top']} style={{ backgroundColor: globalStyle.color.primary[500], flex: 1 }}>
             <StatusBar barStyle="light-content" />
             <View className='w-full flex-row justify-between items-center px-4' >
-                <View className='py-10 gap-2'>
-                    <Animated.Text entering={FadeInLeft.duration(600)} className='text-white font-hanken-medium text-3xl'>{`${name}`} </Animated.Text>
+                <View className=' py-10 gap-2'>
+                    <Animated.View entering={FadeInLeft.duration(600)} className={'flex-row gap-8 justify-start items-center'}>
+                        <Text className='text-white font-hanken-medium text-3xl'>
+                            {name}
+                        </Text>
+                        <Animated.View entering={FadeInLeft.delay(500).duration(400)}>
+                            <SymbolView name={{ ios: 'cross.fill', android: 'health_cross' }} size={38} tintColor={globalStyle.color.primary[600]} />
+                        </Animated.View>
+                    </Animated.View>
                     <Animated.Text entering={FadeInLeft.delay(500).duration(400)} className='text-white font-hanken-light text-xl'>{email}</Animated.Text>
                 </View>
                 <Animated.View className={`relative aspect-square w-22 rounded-full border-3 ${istherapist ? 'border-primary-700' : 'border-white'} bg-white overflow-hidden`}
@@ -48,17 +56,17 @@ export const MyProfileScreen = () => {
 
                 <Animated.View
                     entering={ZoomIn.delay(1000).springify().damping(10).stiffness(100).mass(1)}
-                    className='absolute top-24 right-3 p-2 rounded-full bg-white/80 z-10 active:bg-gray-300'
+                    className='absolute top-24 right-3'
                     style={globalStyle.shadow.small}
                 >
-                    <Pressable >
+                    <Pressable className='p-2 rounded-full bg-white/80 z-10 active:bg-gray-300' >
                         <SymbolView name={{ ios: 'pencil', android: 'edit' }} size={18} tintColor={globalStyle.color.gray[55]} />
                     </Pressable>
                 </Animated.View>
 
             </View>
             <Animated.View
-                className={`relative flex-1 overflow-hidden rounded-t-4xl py-12 px-4 gap-12 border-2 border-primary-600 bg-white`}
+                className={`relative flex-1 overflow-hidden rounded-t-4xl py-12 px-4 gap-12 border border-primary-600 bg-white`}
                 entering={FadeInDown.duration(600).delay(1000)}
                 style={globalStyle.shadow.medium}
             >
