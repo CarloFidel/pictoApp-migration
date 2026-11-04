@@ -1,3 +1,4 @@
+import { globalStyle } from "@/styles/global.style";
 import { ActivityIndicator, useWindowDimensions } from "react-native";
 import Animated, { FadeInDown, FadeOutDown } from "react-native-reanimated";
 
@@ -16,7 +17,7 @@ const CustomLoading = () => {
         zIndex: 11,
       }}
     >
-      <ActivityIndicator size={40} />
+      <ActivityIndicator size={40} color={globalStyle.color.primary[600]} />
     </Animated.View>
   );
 };

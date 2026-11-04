@@ -5,8 +5,8 @@ import Svg, { Defs, RadialGradient, Rect, Stop } from 'react-native-svg'
 const BASE_COLOR = globalStyle.color.background.light
 
 const MESH_LAYERS = [
-  { id: 'meshPurpleTopLeft', cx: '0.16', cy: '0.12', color: '#cadeefdf' },
-  { id: 'meshBlueBottom', cx: '0.5', cy: '0.5', color: '#bceee646' },
+  { id: 'meshPurpleTopLeft', cx: '0.16', cy: '0.12', color: '#b5c2dedf' },
+  //{ id: 'meshBlueBottom', cx: '0.5', cy: '0.5', color: '#bceee646' },
   { id: 'meshVioletBottom', cx: '0.82', cy: '0.8', color: '#f4dbf646' },
   //{ id: 'meshVioletBottom', cx: '0.82', cy: '0.8', color: '#c3d9eddf' },
 ] as const

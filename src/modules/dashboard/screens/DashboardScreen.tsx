@@ -10,7 +10,7 @@ import DashboardItem from '../components/DashboardItem'
 import { DASHBOARD_AYUDA_ITEMS, DASHBOARD_CUENTA_ITEMS, DASHBOARD_PREFERENCIAS_ITEMS } from '../config/dasboard.items.config'
 
 
-export const MyProfileScreen = () => {
+export const DashboardScreen = () => {
 
     const { email, name, logOut, avatar, roles } = useAuthStore.getState()
 
@@ -18,7 +18,6 @@ export const MyProfileScreen = () => {
     if (roles?.includes('therapist')) {
         istherapist = true
     }
-    console.log(istherapist, roles, avatar)
 
     return (
         <SafeAreaView edges={['top']} style={{ backgroundColor: globalStyle.color.primary[500], flex: 1 }}>
@@ -29,13 +28,18 @@ export const MyProfileScreen = () => {
                         <Text className='text-white font-hanken-medium text-3xl'>
                             {name}
                         </Text>
-                        <Animated.View entering={FadeInLeft.delay(500).duration(400)}>
-                            <SymbolView name={{ ios: 'cross.fill', android: 'health_cross' }} size={38} tintColor={globalStyle.color.primary[600]} />
-                        </Animated.View>
+                        {
+                            istherapist && (
+                                <Animated.View entering={FadeInLeft.delay(500).duration(400)}>
+                                    <SymbolView name={{ ios: 'cross.fill', android: 'health_cross' }} size={38} tintColor={globalStyle.color.primary[600]} style={globalStyle.shadow.small} />
+                                </Animated.View>
+
+                            )
+                        }
                     </Animated.View>
                     <Animated.Text entering={FadeInLeft.delay(500).duration(400)} className='text-white font-hanken-light text-xl'>{email}</Animated.Text>
                 </View>
-                <Animated.View className={`relative aspect-square w-22 rounded-full border-3 ${istherapist ? 'border-primary-700' : 'border-white'} bg-white overflow-hidden`}
+                <Animated.View className={`relative aspect-square w-22 rounded-full ${istherapist ? 'border-3' : 'border'} ${istherapist ? 'border-primary-600' : 'border-white'} bg-white overflow-hidden`}
                     style={globalStyle.shadow.medium}
                     entering={FadeInRight.delay(600).duration(300)}
                 >

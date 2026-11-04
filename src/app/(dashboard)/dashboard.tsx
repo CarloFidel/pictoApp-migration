@@ -1,8 +1,8 @@
-import { MyProfileScreen } from "@/modules/dashboard/screens/MyProfileScreen"
+import { DashboardScreen } from "@/modules/dashboard/screens/DashboardScreen"
 
 const dashboard = () => {
   return (
-    <MyProfileScreen />)
+    <DashboardScreen />)
 }
 
 export default dashboard

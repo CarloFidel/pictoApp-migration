@@ -21,11 +21,23 @@ type Props =
     {
         formType: 'register'
         onRegister: RegisterMutate
+        placeholders?: {
+            name: string
+            lastName: string
+            email: string
+            password: string
+        }
     } |
     {
         formType: 'login'
         onLogin: LoginMutate
+        placeholders?: {
+            email: string
+            password: string
+        }
     }
+    
+
 
 
 const CustomForm = (props: Props) => {
@@ -67,7 +79,7 @@ const CustomForm = (props: Props) => {
                     render={({ field: { onChange, value } }) => (
                         <View>
                             <CustomInput
-                                placeholder="Nombre"
+                                placeholder={props.placeholders?.name ?? 'Nombre'}
                                 keyboardType="default"
                                 autoCapitalize="none"
                                 onChangeText={onChange}
@@ -98,7 +110,7 @@ const CustomForm = (props: Props) => {
                     render={({ field: { onChange, value } }) => (
                         <View>
                             <CustomInput
-                                placeholder="Apellido"
+                                placeholder={props.placeholders?.lastName ?? 'Apellido'}
                                 keyboardType="default"
                                 autoCapitalize="none"
                                 onChangeText={onChange}
@@ -128,7 +140,7 @@ const CustomForm = (props: Props) => {
                 render={({ field: { onChange, value } }) => (
                     <View>
                         <CustomInput
-                            placeholder="Email"
+                            placeholder={props.placeholders?.email ?? 'Email'}
                             keyboardType="email-address"
                             autoCapitalize="none"
                             onChangeText={onChange}
