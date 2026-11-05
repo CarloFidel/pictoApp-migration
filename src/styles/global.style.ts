@@ -40,32 +40,19 @@ export const globalStyle = {
   },
   shadow: {
     small: {
-      shadowColor: '#1D1C1C96',
-      shadowOffset: { width: 0, height: 3 },
-      shadowOpacity: 0.25,
-      shadowRadius: 5.84,
-      elevation: 10,
+      boxShadow: '0px 2px 6px rgba(2, 20, 51, 0.25)',
     },
     medium: {
-      shadowColor: '#1D1C1C96',
-      shadowOffset: { width: 0, height: 16 },
-      shadowOpacity: 0.25,
-      shadowRadius: 5.84,
-      elevation: 20,
+      boxShadow: '0px 4px 14px rgba(2, 20, 51, 0.55)',
     },
     large: {
-      shadowColor: '#1D1C1C96',
-      shadowOffset: { width: 0, height: 24 },
-      shadowOpacity: 0.25,
-      shadowRadius: 5.84,
-      elevation: 30,
+      boxShadow: '0px 8px 24px rgba(2, 20, 51, 0.55)',
     },
     xlarge: {
-      shadowColor: '#1D1C1C96',
-      shadowOffset: { width: 0, height: 32 },
-      shadowOpacity: 0.25,
-      shadowRadius: 5.84,
-      elevation: 40,
+      boxShadow: '0px 12px 36px rgba(2, 20, 51, 0.75)',
+    },
+    dashboard: {
+      boxShadow: '0px -12px 36px rgba(4, 32, 80, 0.42)',
     },
   },
   buttonPress: 'active:shadow-md active:opacity-90 active:scale-99 trassition-all duration-200'

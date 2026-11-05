@@ -92,11 +92,20 @@ export const PopUpOnboarding = ({
               )
             }
             {
-              body.filter((item, index) => index !== 0 && index !== 1).map((item) => (
-                <Animated.Text key={item} entering={FadeIn.delay(200).duration(200)} className='text-text text-[18px] font-hanken-regular text-start px-4'>
-                  {item}
-                </Animated.Text>
-              ))
+              step === 5 ? (
+                body.filter((item, index) => index !== 0 && index !== 1).map((item) => (
+                  <Animated.Text key={item} entering={FadeIn.delay(200).duration(200)} className='text-text text-[18px] font-hanken-regular text-start px-4'>
+                    {item}
+                  </Animated.Text>
+                ))
+
+              )
+                : body.filter((item, index) => index !== 0 && index !== 1).map((item) => (
+                  <Animated.Text key={item} entering={FadeIn.delay(200).duration(200)} className='text-text text-[18px] font-hanken-regular text-start'>
+                    {item}
+                  </Animated.Text>
+                ))
+
             }
 
             {
@@ -148,7 +157,7 @@ export const PopUpOnboarding = ({
         register && (
           <View className='gap-4 justify-center items-center'>
             <PrimaryButtton
-              text="Regístrate con Google"
+              text="SignIn con Google"
               variant='filled'
               size="lg"
               onPress={handleSignInWithGoogle}

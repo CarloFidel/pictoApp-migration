@@ -12,9 +12,9 @@ interface BackButtonProps extends PressableProps {
     left?: number
 }
 
-const defaultIcon = {
+const defaultIcon: { ios: SFSymbol, android: AndroidSymbol } = {
     ios: 'arrow.left',
-    android: 'arrow_left',
+    android: 'arrow_back',
 } as const;
 
 
@@ -34,7 +34,7 @@ export const BackButton = ({ icon = defaultIcon, top = 4, left = 12, ...props }:
             >
                 <SymbolView
                     name={icon}
-                    size={Platform.OS === 'ios' ? 20 : 24}
+                    size={Platform.OS === 'ios' ? 16 : 20}
                     tintColor='black' />
             </Pressable>
         </Animated.View>

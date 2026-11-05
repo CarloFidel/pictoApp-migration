@@ -30,7 +30,9 @@ export const LoginScreen = () => {
               showsVerticalScrollIndicator={false}>
               {
                 (router.canGoBack()) && (
-                  from === 'dashboard' ? <BackButton icon={{ ios: 'house', android: 'home_app_logo' }} top={10} left={10} onPress={() => router.push('/onboarding')}/> : <BackButton onPress={() => router.back()} top={10} left={10} />
+                  from === 'dashboard' ?
+                    <BackButton icon={{ ios: 'house', android: 'home_app_logo' }} top={10} left={10} onPress={() => router.push('/onboarding')} /> :
+                    <BackButton onPress={() => router.back()} top={10} left={10} />
                 )
               }
               <CustomForm formType='login' onLogin={mutate} />

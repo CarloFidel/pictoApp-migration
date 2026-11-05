@@ -67,7 +67,7 @@ const CustomForm = (props: Props) => {
 
     return (
         <View
-            style={{ height: Platform.OS === 'ios' ? height - 70 : height, gap: 40, paddingTop: 80 }}
+            style={{ height: Platform.OS === 'ios' ? height - 10 : height, gap: 40, paddingTop: 70 }}
             className="justify-start items-center w-full py-10"
         >
             <Text className="text-4xl font-hanken-light text-text text-start w-full px-6">{formType === 'register' ? 'Registro' : 'Iniciar sesión'}</Text>
@@ -209,7 +209,7 @@ const CustomForm = (props: Props) => {
             {
                 formType === 'register' ? (<Animated.View
                     entering={FadeInDown.duration(1000)}
-                    style={{ marginTop: height * 0.2 }}
+                    style={{ marginTop: height * (Platform.OS === 'ios' ? 0.13 : 0.18) }}
                 >
                     <Text className=" text-[16px] font-hanken-light">
                         Ya tienes una cuenta? <Link href="/login" style={{ color: globalStyle.color.primary[700] }}>Inicia sesión</Link>
@@ -218,7 +218,7 @@ const CustomForm = (props: Props) => {
                 ) : (
                     <Animated.View
                         entering={FadeInDown.duration(1000)}
-                        style={{ marginTop: height * 0.4 }}
+                        style={{ marginTop: height * (Platform.OS === 'ios' ? 0.35 : 0.4) }}
 
                     >
                         <Text className=" text-[16px] font-hanken-light">

@@ -1,3 +1,4 @@
+import { Platform } from "react-native";
 
 export interface OnboardingState {
     step: number;
@@ -123,7 +124,7 @@ export const onboardingReducer = (state: OnboardingState, action: onboardingActi
                 progressValue: 0.6,
                 title: "¿Qué es un horario visual?",
                 labelOne: "Continuar",
-                customHeight: 435,
+                customHeight: Platform.OS === 'ios' ? 455 : 435,
                 twoButtons: false,
                 buttonVariant: "filled",
                 icon: { ios: 'arrow.forward.circle', android: 'arrow_circle_right' },
