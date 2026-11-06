@@ -86,6 +86,7 @@ const CustomForm = (props: Props) => {
                                 onChangeText={onChange}
                                 value={value}
                                 error={errors.name ? true : false}
+                                positionText="left"
                             />
                             {errors.name && (
                                 <Animated.View
@@ -117,6 +118,7 @@ const CustomForm = (props: Props) => {
                                 onChangeText={onChange}
                                 value={value}
                                 error={errors.lastName ? true : false}
+                                positionText="left"
                             />
                             {errors.lastName && (
                                 <Animated.View
@@ -147,6 +149,7 @@ const CustomForm = (props: Props) => {
                             onChangeText={onChange}
                             value={value}
                             error={errors.email ? true : false}
+                            positionText="left"
                         />
                         {errors.email && (
                             <Animated.View
@@ -174,6 +177,7 @@ const CustomForm = (props: Props) => {
                             onChangeText={onChange}
                             value={value}
                             error={errors.password ? true : false}
+                            positionText="left"
                         />
                         {errors.password && (
                             <Animated.View

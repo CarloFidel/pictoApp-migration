@@ -14,11 +14,13 @@ import { getTherapistRole } from "../utility/getRole"
 import { CustomAvatar } from "./CustomAvatar"
 
 
+interface Props {
+    setShowDeleteAccountPopup: (term: boolean) => void;
+    setShowPasswordChangePopup: (term: boolean) => void;
+}
 
 
-
-export const PersonalInfoForm = () => {
-
+export const PersonalInfoForm = ({ setShowDeleteAccountPopup, setShowPasswordChangePopup }: Props) => {
     const { email, name, lastName, avatar, roles } = useAuthStore.getState()
 
 
@@ -226,7 +228,7 @@ export const PersonalInfoForm = () => {
                     )
                 }
 
-                <Pressable>
+                <Pressable onPress={() => { setShowPasswordChangePopup(true) }}>
                     <Text className="text-lg font-hanken-light text-center w-full px-6 text-primary">Cambiar contraseña</Text>
                 </Pressable>
 
@@ -235,7 +237,7 @@ export const PersonalInfoForm = () => {
 
 
             <Animated.View entering={FadeInDown.duration(800)} exiting={FadeOut.duration(300)} className='gap-5'>
-                <Pressable>
+                <Pressable onPress={() => { setShowDeleteAccountPopup(true) }}>
                     <Text className="text-lg font-hanken-light text-center w-full px-6 text-alert">Eliminar cuenta</Text>
                 </Pressable>
             </Animated.View>

@@ -3,14 +3,14 @@ import { Pressable, View } from "react-native";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 
 interface Props {
-  onClick?: () => void;
+  onTap?: () => void;
   children: React.ReactNode;
   blurTarget?: React.RefObject<View | null>;
 }
-const BlurComponent = ({ onClick, children, blurTarget }: Props) => {
+const BlurComponent = ({ onTap, children, blurTarget }: Props) => {
   return (
     <Pressable
-      onPress={onClick}
+      onPress={onTap}
       style={{
         flex: 1,
         position: "absolute",

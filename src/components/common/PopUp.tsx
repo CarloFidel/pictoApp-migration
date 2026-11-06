@@ -8,6 +8,7 @@ interface Props {
   warning?: boolean;
   text: string;
   buttonText?: string;
+  buttonVariant?: 'filled' | 'outline' | 'alert';
   onPress: () => void;
 }
 const CustomPopUp = ({
@@ -15,6 +16,7 @@ const CustomPopUp = ({
   buttonText = "Ok",
   text,
   warning = false,
+  buttonVariant = 'outline',
 }: Props) => {
   const { width, height } = useWindowDimensions();
 
@@ -56,7 +58,7 @@ const CustomPopUp = ({
       <PrimaryButtton
         onPress={onPress}
         text={buttonText}
-        variant="outline"
+        variant={buttonVariant}
         size="md"
       />
     </Animated.View>
