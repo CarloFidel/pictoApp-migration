@@ -1,13 +1,10 @@
-import BlurComponent from '@/components/common/BlurComponent'
-import CustomLoading from '@/components/common/CustomLoading'
-import CustomPopUp from '@/components/common/PopUp'
+import { BlurComponent, CustomForm, CustomLoading, CustomPopUp } from '@/components/common'
 import { BackButton } from '@/components/ui/BackButton'
 import { BlurTargetView } from 'expo-blur'
 import { router, useLocalSearchParams } from 'expo-router'
 import { useRef } from 'react'
 import { KeyboardAvoidingView, Platform, ScrollView, StatusBar, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import CustomForm from '../components/CustomForm'
 import { useLogin } from '../hooks/useLogin'
 
 export const LoginScreen = () => {

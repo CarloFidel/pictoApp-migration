@@ -1,5 +1,3 @@
-import CustomInput from '@/components/ui/CustomInput'
-import { PrimaryButtton } from '@/components/ui/PrimaryButtton'
 import { globalStyle } from '@/styles/global.style'
 import { zodResolver } from "@hookform/resolvers/zod"
 
@@ -10,9 +8,10 @@ import { Controller, useForm } from 'react-hook-form'
 import { Platform, Pressable, Text, useWindowDimensions, View } from 'react-native'
 import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated'
 
-import { useLoginMutation, useRegisterMutation } from '../hooks/useAuthMutations'
-import { UserLogin, UserRegister } from '../interfaces/user.interface'
-import { LoginSchema, RegisterSchema } from '../schema/form.schema'
+import { useLoginMutation, useRegisterMutation } from '../../modules/auth/hooks/useAuthMutations'
+import { UserLogin, UserRegister } from '../../modules/auth/interfaces/user.interface'
+import { LoginSchema, RegisterSchema } from '../../modules/auth/schema/form.schema'
+import { CustomInput, PrimaryButtton } from '../ui'
 
 type RegisterMutate = ReturnType<typeof useRegisterMutation>['mutate']
 type LoginMutate = ReturnType<typeof useLoginMutation>['mutate']

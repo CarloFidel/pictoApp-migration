@@ -9,7 +9,7 @@ interface Props extends TextInputProps {
   positionText?: 'left' | 'center' | 'right'
 }
 
-const CustomInput = ({ placeholder, error, ref, colorText, positionText, ...props }: Props) => {
+export const CustomInput = ({ placeholder, error, ref, colorText, positionText, ...props }: Props) => {
 
   const { height, width } = useWindowDimensions()
 
@@ -24,4 +24,3 @@ const CustomInput = ({ placeholder, error, ref, colorText, positionText, ...prop
   )
 }
 
-export default CustomInput

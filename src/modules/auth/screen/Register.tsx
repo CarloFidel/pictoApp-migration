@@ -7,7 +7,7 @@ import { router } from 'expo-router';
 import { useRef } from 'react';
 import { KeyboardAvoidingView, Platform, ScrollView, StatusBar, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import CustomForm from '../components/CustomForm';
+import CustomForm from '../../../components/common/CustomForm';
 import { useRegister } from '../hooks/useRegister';
 
 

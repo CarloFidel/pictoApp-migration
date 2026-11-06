@@ -1,7 +1,5 @@
-import CustomInput from "@/components/ui/CustomInput"
+import { CustomInput } from "@/components/ui"
 import { PrimaryButtton } from "@/components/ui/PrimaryButtton"
-import { UserRegister } from "@/modules/auth/interfaces/user.interface"
-import { RegisterSchema } from "@/modules/auth/schema/form.schema"
 import { useAuthStore } from "@/modules/auth/store/authStore"
 import { globalStyle } from "@/styles/global.style"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -9,26 +7,31 @@ import { SymbolView } from "expo-symbols"
 import { Controller, useForm } from "react-hook-form"
 import { Platform, Pressable, Text, useWindowDimensions, View } from "react-native"
 import Animated, { FadeIn, FadeInDown, FadeOut, ZoomIn } from "react-native-reanimated"
+import { useEditProfileMutation } from "../hooks/editProfileMutation"
 import { useEditField } from "../hooks/useEditField"
+import { EditProfileData } from "../interface/edit-profile.interface"
+import { EditProfileSchema } from "../schema/edit-profile.schema"
 import { getTherapistRole } from "../utility/getRole"
 import { CustomAvatar } from "./CustomAvatar"
+
+type editProfileMutate = ReturnType<typeof useEditProfileMutation>['mutate']
 
 
 interface Props {
     setShowDeleteAccountPopup: (term: boolean) => void;
     setShowPasswordChangePopup: (term: boolean) => void;
+    onEditProfile: editProfileMutate
 }
 
 
-export const PersonalInfoForm = ({ setShowDeleteAccountPopup, setShowPasswordChangePopup }: Props) => {
-    const { email, name, lastName, avatar, roles } = useAuthStore.getState()
-
+export const PersonalInfoForm = ({ setShowDeleteAccountPopup, setShowPasswordChangePopup, onEditProfile }: Props) => {
+    const { email, name, lastName, avatar, roles, token } = useAuthStore.getState()
 
     const { height, width } = useWindowDimensions()
-    const { control, handleSubmit, formState: { errors } } = useForm<UserRegister>({ resolver: zodResolver(RegisterSchema), defaultValues: { name: name, lastName: lastName, email: email } })
+    const { control, handleSubmit, formState: { errors } } = useForm<EditProfileData>({ resolver: zodResolver(EditProfileSchema), defaultValues: { name: name, lastName: lastName, avatar: avatar, } })
 
     const onSubmit = handleSubmit((data) => {
-        console.log(data)
+        onEditProfile({ token: token ?? '', data: data })
     })
 
 
@@ -180,38 +183,19 @@ export const PersonalInfoForm = ({ setShowDeleteAccountPopup, setShowPasswordCha
                 />
 
 
-                <Controller
-                    control={control}
-                    name="email"
-                    render={({ field: { onChange, value } }) => (
-                        <View>
-                            <CustomInput
-                                placeholder={email ?? 'Email'}
-                                keyboardType="email-address"
-                                autoCapitalize="none"
-                                onChangeText={onChange}
-                                value={email}
-                                error={errors.email ? true : false}
-                                editable={false}
-                                colorText={globalStyle.color.gray[55]}
-                                positionText="center"
+                <View>
+                    <CustomInput
+                        placeholder={email ?? 'Email'}
+                        keyboardType="email-address"
+                        autoCapitalize="none"
+                        value={email ?? ''}
+                        editable={false}
+                        colorText={globalStyle.color.gray[55]}
+                        positionText="center"
 
 
-                            />
-                            {errors.email && (
-                                <Animated.View
-                                    entering={FadeIn}
-                                    className="flex-row justify-start items-center gap-2 mt-2"
-                                >
-                                    <SymbolView name={{ ios: 'exclamationmark.triangle', android: 'warning_amber' }} size={18} tintColor={"red"} />
-                                    <Text style={{ color: "red" }} className="text-left">
-                                        {errors.email.message}
-                                    </Text>
-                                </Animated.View>
-                            )}
-                        </View>
-                    )}
-                />
+                    />
+                </View>
                 {
 
                     (isEditingName || isEditingLastName) && (

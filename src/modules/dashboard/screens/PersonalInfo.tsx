@@ -1,15 +1,15 @@
 import { BlurComponent, CustomLoading, CustomPopUp } from "@/components/common"
 import { BackButton } from "@/components/ui/BackButton"
-import { useRegister } from "@/modules/auth/hooks/useRegister"
 import { BlurTargetView } from "expo-blur"
 import { router } from "expo-router"
 import { useRef, useState } from "react"
 import { KeyboardAvoidingView, Platform, ScrollView, StatusBar, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { PersonalInfoForm } from "../components/PersonalInfoForm"
+import { useEditProfile } from "../hooks/useEditProfile"
 
 export const PersonalInfo = () => {
-    const { mutate, isError, isPending, showPopUp, setShowPopUp, errorMessage } = useRegister()
+    const { mutate, isError, isPending, showPopUp, setShowPopUp, errorMessage } = useEditProfile()
 
     const blurTargetRef = useRef<View>(null)
     const [showPopup, setShowPopup] = useState(false)
@@ -43,7 +43,7 @@ export const PersonalInfo = () => {
                             keyboardShouldPersistTaps="handled"
                             showsVerticalScrollIndicator={false}>
                             <BackButton onPress={() => router.back()} top={10} left={10} />
-                            <PersonalInfoForm setShowDeleteAccountPopup={handleDeleteAccountPopup} setShowPasswordChangePopup={handlePasswordChangePopup} />
+                            <PersonalInfoForm setShowDeleteAccountPopup={handleDeleteAccountPopup} setShowPasswordChangePopup={handlePasswordChangePopup} onEditProfile={mutate} />
                         </ScrollView>
                     </KeyboardAvoidingView>
                 </SafeAreaView>
