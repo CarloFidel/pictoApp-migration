@@ -2,9 +2,10 @@ import { useAuthStore } from '@/modules/auth/store/authStore'
 import { globalStyle } from '@/styles/global.style'
 import { router } from 'expo-router'
 import { SymbolView } from 'expo-symbols'
-import { Image, Pressable, StatusBar, Text, View } from 'react-native'
-import Animated, { FadeInDown, FadeInLeft, FadeInRight, ZoomIn } from 'react-native-reanimated'
+import { Pressable, StatusBar, Text, View } from 'react-native'
+import Animated, { FadeInDown, FadeInLeft, ZoomIn } from 'react-native-reanimated'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { CustomAvatar } from '../components/CustomAvatar'
 import { DashboaedBackgroundSvg } from '../components/DashboaedBackgroundSvg'
 import DashboardItem from '../components/DashboardItem'
 import { DASHBOARD_AYUDA_ITEMS, DASHBOARD_CUENTA_ITEMS, DASHBOARD_PREFERENCIAS_ITEMS } from '../config/dasboard.items.config'
@@ -31,24 +32,7 @@ export const DashboardScreen = () => {
                     </Animated.View>
                     <Animated.Text entering={FadeInLeft.delay(500).duration(400)} className='text-white font-hanken-light text-xl'>{email}</Animated.Text>
                 </View>
-                <Animated.View className={`relative aspect-square w-22 rounded-full  ${istherapist ? 'border-3' : 'border'} ${istherapist ? 'border-primary-700' : 'border-white'} bg-white overflow-hidden`}
-                    style={globalStyle.shadow.medium}
-                    entering={FadeInRight.delay(600).duration(300)}
-                >
-                    <Image
-                        source={
-                            avatar
-                                ? { uri: avatar }
-                                : require('@/assets/images/generic-user-image.jpg')
-                        }
-                        style={{
-                            width: '100%',
-                            height: '100%',
-                            resizeMode: "contain",
-                        }}
-                    />
-
-                </Animated.View>
+                <CustomAvatar avatar={avatar!} istherapist={false} size={'small'} enteringDirection={'right'} />
 
                 <Animated.View
                     entering={ZoomIn.delay(1000).springify().damping(10).stiffness(100).mass(1)}

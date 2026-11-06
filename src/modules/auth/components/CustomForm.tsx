@@ -70,6 +70,7 @@ const CustomForm = (props: Props) => {
             style={{ height: Platform.OS === 'ios' ? height - 10 : height, gap: 40, paddingTop: 70 }}
             className="justify-start items-center w-full py-10"
         >
+            
             <Text className="text-4xl font-hanken-light text-text text-start w-full px-6">{formType === 'register' ? 'Registro' : 'Iniciar sesión'}</Text>
 
             {formType === 'register' && (

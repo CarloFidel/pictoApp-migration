@@ -1,10 +1,8 @@
-import { Text, View } from 'react-native'
+import { PersonalInfo } from '@/modules/dashboard/screens/PersonalInfo'
 
 const MyProfile = () => {
   return (
-    <View>
-      <Text>MyProfile</Text>
-    </View>
+    <PersonalInfo />
   )
 }
 

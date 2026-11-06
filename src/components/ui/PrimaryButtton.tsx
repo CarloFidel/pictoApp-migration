@@ -5,7 +5,7 @@ import { Image, Pressable, PressableProps, Text, useWindowDimensions } from 'rea
 
 interface PrimaryButttonProps extends PressableProps {
   text: string;
-  variant: 'outline' | 'filled' | 'alert';
+  variant: 'outline' | 'filled' | 'alert' | 'disabled';
   size: 'sm' | 'md' | 'lg';
   icon?: {
     ios: SFSymbol;
@@ -25,15 +25,18 @@ export const PrimaryButtton = ({ text, variant, backgroundColor, size, icon, dis
   const buttonBackground =
     variant === 'outline' ? 'bg-background-light' :
       variant === 'filled' ? 'bg-primary-600' :
-        variant === 'alert' ? 'bg-alert' : 'bg-primary-500';
+        variant === 'alert' ? 'bg-alert' :
+          variant === 'disabled' ? 'bg-gray-04' : 'bg-primary-500';
 
   const textColor = variant === 'outline' ? 'text-text' :
     variant === 'filled' ? 'text-white' :
-      variant === 'alert' ? 'text-white' : 'text-white';
+      variant === 'alert' ? 'text-white' :
+        variant === 'disabled' ? 'text-gray-400' : 'text-white';
 
   const iconColor = variant === 'outline' ? '#333333' :
     variant === 'filled' ? 'white' :
-      variant === 'alert' ? 'white' : 'white';
+      variant === 'alert' ? 'white' :
+        variant === 'disabled' ? '#9E9E9EA7' : 'white';
 
   const border = {
     borderWidth: variant === 'outline' ? 1 : 0,
@@ -42,6 +45,7 @@ export const PrimaryButtton = ({ text, variant, backgroundColor, size, icon, dis
   return (
     <Pressable
       className={`${backgroundColor ? backgroundColor : buttonBackground} rounded-2xl  items-center justify-center gap-2 ${globalStyle.buttonPress} ${iconRight ? 'flex-row-reverse' : 'flex-row'}`}
+      disabled={variant === 'disabled'}
       style={[{
         width: buttonWidth,
         padding: buttonPadding,
@@ -49,7 +53,7 @@ export const PrimaryButtton = ({ text, variant, backgroundColor, size, icon, dis
         borderWidth: border.borderWidth,
         marginTop: distanceTop ? distanceTop : 0,
       },
-      globalStyle.shadow.small,
+      variant !== 'disabled' && globalStyle.shadow.small,
       ]}
       {...props}
     >
