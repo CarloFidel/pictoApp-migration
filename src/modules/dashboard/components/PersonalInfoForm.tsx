@@ -6,8 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { SymbolView } from "expo-symbols"
 import { Controller, useForm } from "react-hook-form"
 import { Platform, Pressable, Text, useWindowDimensions, View } from "react-native"
-import Animated, { FadeIn, FadeInDown, FadeOut, ZoomIn } from "react-native-reanimated"
-import { useEditProfileMutation } from "../hooks/editProfileMutation"
+import Animated, { FadeIn, FadeOut, ZoomIn } from "react-native-reanimated"
+import { useEditProfileMutation } from "../hooks/profileMutation"
 import { useEditField } from "../hooks/useEditField"
 import { EditProfileData } from "../interface/edit-profile.interface"
 import { EditProfileSchema } from "../schema/edit-profile.schema"
@@ -46,7 +46,7 @@ export const PersonalInfoForm = ({ setShowDeleteAccountPopup, setShowPasswordCha
 
     return (
         <View
-            style={{ height: height * 0.94, justifyContent: 'space-between', paddingTop: 70 }}
+            style={{ height: height * 0.85, justifyContent: 'space-between', paddingTop: 70 }}
             className="justify-start items-center w-full py-10"
 
         >
@@ -220,11 +220,6 @@ export const PersonalInfoForm = ({ setShowDeleteAccountPopup, setShowPasswordCha
 
 
 
-            <Animated.View entering={FadeInDown.duration(800)} exiting={FadeOut.duration(300)} className='gap-5'>
-                <Pressable onPress={() => { setShowDeleteAccountPopup(true) }}>
-                    <Text className="text-lg font-hanken-light text-center w-full px-6 text-alert">Eliminar cuenta</Text>
-                </Pressable>
-            </Animated.View>
         </View>
     )
 }

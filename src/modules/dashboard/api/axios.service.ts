@@ -12,3 +12,11 @@ export const axiosEditProfile = async (token: string, data: EditProfileData) => 
     });
     return response.data;
 }
+export const axiosRemoveProfile = async (token: string) => {
+    const response = await customApiConfig.delete("/auth/user", {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+    return response.data;
+}

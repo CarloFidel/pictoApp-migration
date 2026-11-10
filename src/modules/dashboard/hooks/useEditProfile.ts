@@ -3,7 +3,7 @@ import { errorMessageMapperAuth } from "@/modules/auth/utility/error.message.map
 import { getAxiosError } from "@/utility/getAxiosError"
 import { router } from "expo-router"
 import { useEffect, useState } from "react"
-import { useEditProfileMutation } from "./editProfileMutation"
+import { useEditProfileMutation } from "./profileMutation"
 
 export const useEditProfile = () => {
     const { mutate, isError, isPending, isSuccess, error, data } = useEditProfileMutation()
@@ -36,4 +36,4 @@ export const useEditProfile = () => {
         setShowPopUp
     }
 
-}
+} 
