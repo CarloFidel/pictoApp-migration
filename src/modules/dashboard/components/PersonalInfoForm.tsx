@@ -3,6 +3,7 @@ import { PrimaryButtton } from "@/components/ui/PrimaryButtton"
 import { useAuthStore } from "@/modules/auth/store/authStore"
 import { globalStyle } from "@/styles/global.style"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { router } from "expo-router"
 import { SymbolView } from "expo-symbols"
 import { Controller, useForm } from "react-hook-form"
 import { Platform, Pressable, Text, useWindowDimensions, View } from "react-native"
@@ -62,7 +63,7 @@ export const PersonalInfoForm = ({ setShowDeleteAccountPopup, setShowPasswordCha
                         className='absolute top-24 right-3 rounded-full'
                         style={globalStyle.shadow.small}
                     >
-                        <Pressable className='p-2 rounded-full bg-white/80 z-10 active:bg-gray-300' >
+                        <Pressable className='p-2 rounded-full bg-white/80 z-10 active:bg-gray-300' onPress={() => router.push('/avatarChange')}>
                             <SymbolView name={{ ios: 'pencil', android: 'edit' }} size={18} tintColor={globalStyle.color.gray[55]} />
                         </Pressable>
                     </Animated.View>
