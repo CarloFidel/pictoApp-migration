@@ -1,9 +1,9 @@
 
-import PhotoScreen from '@/modules/photo/screen/PhotoScreen'
+import CameraScreen from '@/modules/photo/screen/PhotoScreen'
 
 const avatarChange = () => {
     return (
-        <PhotoScreen />
+        <CameraScreen />
     )
 }
 
