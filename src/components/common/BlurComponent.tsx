@@ -41,7 +41,7 @@ const BlurComponent = ({ onTap, children, blurTarget }: Props) => {
           intensity={35}
           tint="systemMaterialDark"
           blurTarget={blurTarget}
-          blurMethod="dimezisBlurView"
+          blurMethod={blurTarget ? "dimezisBlurView" : "none"}
           style={{
             position: "absolute",
             top: 0,

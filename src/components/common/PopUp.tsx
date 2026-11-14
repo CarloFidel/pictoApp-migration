@@ -6,19 +6,21 @@ import { PrimaryButtton } from "../ui/PrimaryButtton";
 
 interface Props {
   warning?: boolean;
+  info?: boolean;
   text: string;
   buttonText?: string;
   buttonVariant?: 'filled' | 'outline' | 'alert';
   onPress: () => void;
 }
 const CustomPopUp = ({
+  info,
   onPress,
   buttonText = "Ok",
   text,
   warning = false,
   buttonVariant = 'outline',
 }: Props) => {
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
   return (
     <Animated.View
@@ -38,7 +40,22 @@ const CustomPopUp = ({
           size={50}
           tintColor={globalStyle.color.gray[55]}
         />
-      ) : (
+      ) : info ?
+        (
+        <Animated.View
+          entering={FadeInDown.springify().duration(800)}
+        >
+          <SymbolView
+            name={{
+              ios: "info.circle",
+              android: "info"
+            }}
+            size={40}
+            tintColor={globalStyle.color.primary[600]}
+          />
+        </Animated.View>
+
+        ) : (
         <Animated.View
           entering={FadeInDown.springify().duration(800)}
         >
@@ -47,11 +64,11 @@ const CustomPopUp = ({
               ios: "checkmark.circle",
               android: "check"
             }}
-            size={50}
+            size={30}
             tintColor={globalStyle.color.primary[600]}
           />
         </Animated.View>
-      )}
+        )}
       <Text className="text-center text-text font-hanken text-lg" style={{ width: width * 0.5 }}>
         {text}
       </Text>

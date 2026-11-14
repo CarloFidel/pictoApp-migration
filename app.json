@@ -11,7 +11,9 @@
       "icon": "./assets/expo.icon",
       "bundleIdentifier": "com.charlyflow.PictoAppmigrate",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSCameraUsageDescription": "Necesitamos la cámara para actualizar tu foto de perfil.",
+        "NSMicrophoneUsageDescription": "Necesitamos el micrófono si grabas vídeo con la cámara."
       }
     },
     "android": {
@@ -41,6 +43,14 @@
           "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone",
           "recordAudioAndroid": true,
           "barcodeScannerEnabled": true
+        }
+      ],
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Necesitamos acceso a tus fotos.",
+          "savePhotosPermission": "Necesitamos permiso para guardar la foto en tu galería.",
+          "granularPermissions": ["photo"]
         }
       ],
       [

@@ -3,7 +3,7 @@ import CameraScreen from '@/modules/photo/screen/PhotoScreen'
 
 const avatarChange = () => {
     return (
-        <CameraScreen />
+        <CameraScreen photoType='avatar' />
     )
 }
 

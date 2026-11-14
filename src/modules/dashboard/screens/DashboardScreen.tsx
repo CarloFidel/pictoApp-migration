@@ -1,9 +1,8 @@
 import { useAuthStore } from '@/modules/auth/store/authStore'
 import { globalStyle } from '@/styles/global.style'
 import { router } from 'expo-router'
-import { SymbolView } from 'expo-symbols'
-import { Pressable, StatusBar, Text, View } from 'react-native'
-import Animated, { FadeInDown, FadeInLeft, ZoomIn } from 'react-native-reanimated'
+import { StatusBar, Text, View } from 'react-native'
+import Animated, { FadeInDown, FadeInLeft } from 'react-native-reanimated'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { CustomAvatar } from '../components/CustomAvatar'
 import { DashboaedBackgroundSvg } from '../components/DashboaedBackgroundSvg'
@@ -33,17 +32,6 @@ export const DashboardScreen = () => {
                     <Animated.Text entering={FadeInLeft.delay(500).duration(400)} className='text-white font-hanken-light text-xl'>{email}</Animated.Text>
                 </View>
                 <CustomAvatar avatar={avatar!} istherapist={false} size={'small'} enteringDirection={'right'} />
-
-                <Animated.View
-                    entering={ZoomIn.delay(1000).springify().damping(10).stiffness(100).mass(1)}
-                    className='absolute top-24 right-3 rounded-full'
-                    style={globalStyle.shadow.small}
-                >
-                    <Pressable className='p-2 rounded-full bg-white/80 z-10 active:bg-gray-300' >
-                        <SymbolView name={{ ios: 'pencil', android: 'edit' }} size={18} tintColor={globalStyle.color.gray[55]} />
-                    </Pressable>
-                </Animated.View>
-
             </View>
             <Animated.View
                 className={`relative flex-1 overflow-hidden rounded-t-4xl py-12 px-4 gap-12 border border-primary-600 bg-white`}
