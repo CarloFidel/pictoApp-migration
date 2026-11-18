@@ -170,27 +170,36 @@ const CameraScreen = ({ photoType }: PhotoScreenProps) => {
 
     if (selectedImage && photoType === 'pictogram') {
         return (
-            <View style={styles.container}>
-                <CameraView ref={camaraRef} style={styles.camera} facing={facing} />
-
-                <CustomCameraButton
-                    icon={{ ios: 'camera.rotate', android: 'flip_camera_ios' }}
-                    onPress={toggleCameraFacing}
-                    position="right-4 top-8"
+            <View className='flex-1 justify-start items-center p-20'>
+                <BackButton
+                    onPress={() => setselectedImage('')}
+                    top={26}
                 />
-                <CustomCameraButton
-                    icon={{ ios: 'photo', android: 'photo' }}
-                    onPress={() => { handleOnShutter() }}
-                    position="right-4 bottom-12"
-                />
-                <ShutterButton
-                    onPress={() => { handleOnShutter() }}
-                />
-                <BackButton top={26} left={12} onPress={() => router.back()} />
+                <Image source={{ uri: selectedImage }} className='w-full h-full object-cover' />
             </View>
         );
     }
 
+    return (
+        <View style={styles.container}>
+            <CameraView ref={camaraRef} style={styles.camera} facing={facing} />
+
+            <CustomCameraButton
+                icon={{ ios: 'camera.rotate', android: 'flip_camera_ios' }}
+                onPress={toggleCameraFacing}
+                position="right-4 top-8"
+            />
+            <CustomCameraButton
+                icon={{ ios: 'photo', android: 'photo' }}
+                onPress={() => { handleOnShutter() }}
+                position="right-4 bottom-12"
+            />
+            <ShutterButton
+                onPress={() => { handleOnShutter() }}
+            />
+            <BackButton top={26} left={12} onPress={() => router.back()} />
+        </View>
+    );
 };
 
 export default CameraScreen;

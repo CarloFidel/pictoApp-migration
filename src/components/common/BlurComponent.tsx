@@ -4,10 +4,11 @@ import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 
 interface Props {
   onTap?: () => void;
-  children: React.ReactNode;
+  outDelay?: number;
+  children?: React.ReactNode;
   blurTarget?: React.RefObject<View | null>;
 }
-const BlurComponent = ({ onTap, children, blurTarget }: Props) => {
+const BlurComponent = ({ onTap, children, blurTarget, outDelay }: Props) => {
   return (
     <Pressable
       onPress={onTap}
@@ -34,7 +35,7 @@ const BlurComponent = ({ onTap, children, blurTarget }: Props) => {
           alignItems: 'center',
         }}
         entering={FadeIn.springify().duration(400)}
-        exiting={FadeOut.springify().duration(400)}
+        exiting={FadeOut.springify().duration(outDelay ?? 400)}
       >
         {children}
         <BlurView

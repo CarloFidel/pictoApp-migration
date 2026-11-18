@@ -1,4 +1,5 @@
 import { BlurComponent, CustomLoading, CustomPopUp } from "@/components/common"
+import ConfirmModal from "@/components/common/ConfirmModal"
 import { BackButton } from "@/components/ui/BackButton"
 import { useAuthStore } from "@/modules/auth/store/authStore"
 import { BlurTargetView } from "expo-blur"
@@ -16,23 +17,15 @@ export const PersonalInfo = () => {
     const { mutate: mutateRemoveProfile, isError: isErrorRemoveProfile, isPending: isPendingRemoveProfile, showPopUp: showPopUpRemoveProfile, setShowPopUp: setShowPopUpRemoveProfile, errorMessage: errorMessageRemoveProfile } = useRemoveProfile()
     const { token } = useAuthStore()
     const blurTargetRef = useRef<View>(null)
-    const [showPopup, setShowPopup] = useState(false)
+    const [showRemoveAccountPopup, setShowRemoveAccountPopup] = useState(false)
     const [showPasswordChangePopup, setShowPasswordChangePopup] = useState(false)
 
-    const handleDeleteAccountPopup = (term: boolean) => {
-        if (term) {
-            setShowPopup(true)
-        } else {
-            setShowPopup(false)
-        }
+    const handleDeleteAccountPopup = () => {
+        setShowRemoveAccountPopup((prev) => !prev)
     }
 
-    const handlePasswordChangePopup = (term: boolean) => {
-        if (term) {
-            setShowPasswordChangePopup(true)
-        } else {
-            setShowPasswordChangePopup(false)
-        }
+    const handlePasswordChangePopup = () => {
+        setShowPasswordChangePopup((prev) => !prev)
     }
     const handleDeleteAccount = () => {
         mutateRemoveProfile(token ?? '')
@@ -52,7 +45,7 @@ export const PersonalInfo = () => {
                             <BackButton onPress={() => router.back()} top={10} left={10} />
                             <PersonalInfoForm setShowDeleteAccountPopup={handleDeleteAccountPopup} setShowPasswordChangePopup={handlePasswordChangePopup} onEditProfile={mutate} />
                             <Animated.View entering={FadeInDown.duration(800)} exiting={FadeOut.duration(300)} className='gap-5'>
-                                <Pressable onPress={() => { handleDeleteAccountPopup(true) }}>
+                                <Pressable onPress={() => { handleDeleteAccountPopup() }}>
                                     <Text className="text-lg font-hanken-light text-center w-full px-6 text-alert mb-10">Eliminar cuenta</Text>
                                 </Pressable>
                             </Animated.View>
@@ -77,20 +70,22 @@ export const PersonalInfo = () => {
                 </BlurComponent>
             )}
             {
-                showPopup && (
-                    <BlurComponent onTap={() => { setShowPopup(false) }} blurTarget={blurTargetRef} >
-                        <CustomPopUp
-                            text='Esta acción no se puede deshacer'
-                            onPress={handleDeleteAccount}
-                            buttonText="Eliminar cuenta"
-                            warning
-                            buttonVariant="alert"
-                        />
+                showRemoveAccountPopup && (
+                    <BlurComponent blurTarget={blurTargetRef} outDelay={100} >
                     </BlurComponent>
-
-
                 )
             }
+            <ConfirmModal
+                visible={showRemoveAccountPopup}
+                titleOne="Eliminar"
+                titleTwo="Cancelar"
+                variantOne="alert"
+                variantTwo="outline"
+                text='Está seguro que desea eliminar su cuenta'
+                onPressOne={handleDeleteAccount}
+                onPressTwo={handleDeleteAccountPopup}
+            />
+
             {
                 showPasswordChangePopup && (
                     <BlurComponent onTap={() => { setShowPasswordChangePopup(false) }} blurTarget={blurTargetRef} >
