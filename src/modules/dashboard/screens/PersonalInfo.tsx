@@ -81,7 +81,7 @@ export const PersonalInfo = () => {
                 titleTwo="Cancelar"
                 variantOne="alert"
                 variantTwo="outline"
-                text='Está seguro que desea eliminar su cuenta'
+                text='¿ºSeguro desea eliminar su cuenta?'
                 onPressOne={handleDeleteAccount}
                 onPressTwo={handleDeleteAccountPopup}
             />
