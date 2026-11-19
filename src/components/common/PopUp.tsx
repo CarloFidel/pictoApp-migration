@@ -1,6 +1,7 @@
 import { globalStyle } from "@/styles/global.style";
+import { GlassView, isLiquidGlassAvailable } from "expo-glass-effect";
 import { SymbolView } from "expo-symbols";
-import { Text, useWindowDimensions } from "react-native";
+import { Platform, StyleSheet, Text, useWindowDimensions } from "react-native";
 import Animated, { FadeInDown, FadeOutDown } from "react-native-reanimated";
 import { PrimaryButtton } from "../ui/PrimaryButtton";
 
@@ -22,6 +23,79 @@ const CustomPopUp = ({
 }: Props) => {
   const { width } = useWindowDimensions();
 
+  const AnimatedGlassView = Animated.createAnimatedComponent(GlassView)
+  const InnerContent = () => {
+    return (
+      <>
+        {warning ? (
+          <SymbolView
+            name={{
+              ios: "exclamationmark.triangle",
+              android: "warning"
+            }}
+            size={50}
+            tintColor={globalStyle.color.gray[55]}
+          />
+        ) : info ?
+          (
+            <Animated.View
+              entering={FadeInDown.springify().duration(800)}
+            >
+              <SymbolView
+                name={{
+                  ios: "info.circle",
+                  android: "info"
+                }}
+                size={24}
+                tintColor={globalStyle.color.primary[600]}
+              />
+            </Animated.View>
+
+          ) : (
+            <Animated.View
+              entering={FadeInDown.springify().duration(800)}
+            >
+              <SymbolView
+                name={{
+                  ios: "checkmark.circle",
+                  android: "check"
+                }}
+                size={30}
+                tintColor={globalStyle.color.primary[600]}
+              />
+            </Animated.View>
+          )}
+        <Text className="text-center text-text font-hanken text-lg" style={{ width: width * 0.5 }}>
+          {text}
+        </Text>
+        <PrimaryButtton
+          onPress={onPress}
+          text={buttonText}
+          variant={buttonVariant}
+          size="md"
+        />
+
+      </>
+    )
+  }
+
+  if (Platform.OS === 'ios' && isLiquidGlassAvailable()) {
+
+    return (
+      <AnimatedGlassView 
+      glassEffectStyle={'regular'}
+
+      style={styles.glasViewStyle} 
+      entering={FadeInDown.springify().duration(800)} 
+      exiting={FadeOutDown.springify().duration(800)}
+      
+      >
+        <InnerContent />
+      </AnimatedGlassView>
+    )
+
+  }
+
   return (
     <Animated.View
       entering={FadeInDown.springify().duration(800)}
@@ -31,55 +105,28 @@ const CustomPopUp = ({
         zIndex: 11,
       }}
     >
-      {warning ? (
-        <SymbolView
-          name={{
-            ios: "exclamationmark.triangle",
-            android: "warning"
-          }}
-          size={50}
-          tintColor={globalStyle.color.gray[55]}
-        />
-      ) : info ?
-        (
-        <Animated.View
-          entering={FadeInDown.springify().duration(800)}
-        >
-          <SymbolView
-            name={{
-              ios: "info.circle",
-              android: "info"
-            }}
-            size={40}
-            tintColor={globalStyle.color.primary[600]}
-          />
-        </Animated.View>
-
-        ) : (
-        <Animated.View
-          entering={FadeInDown.springify().duration(800)}
-        >
-          <SymbolView
-            name={{
-              ios: "checkmark.circle",
-              android: "check"
-            }}
-            size={30}
-            tintColor={globalStyle.color.primary[600]}
-          />
-        </Animated.View>
-        )}
-      <Text className="text-center text-text font-hanken text-lg" style={{ width: width * 0.5 }}>
-        {text}
-      </Text>
-      <PrimaryButtton
-        onPress={onPress}
-        text={buttonText}
-        variant={buttonVariant}
-        size="md"
-      />
+      <InnerContent />
     </Animated.View>
+
+
   );
 };
 
 export default CustomPopUp;
+
+
+const styles = StyleSheet.create({
+  glasViewStyle: {
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 18,
+    padding: 10,
+    marginTop: 10,
+    gap: 14,
+  },
+
+
+})

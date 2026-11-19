@@ -54,10 +54,17 @@ export const PersonalInfo = () => {
                     </KeyboardAvoidingView>
                 </SafeAreaView>
             </BlurTargetView>
-            {isPending && (
-                <BlurComponent blurTarget={blurTargetRef}>
-                    <CustomLoading />
-                </BlurComponent>
+            {isPending || isPendingRemoveProfile && (
+                <>
+                    {
+                        setShowRemoveAccountPopup((prev) => !prev)
+
+                    }
+                    <BlurComponent blurTarget={blurTargetRef}>
+                        <CustomLoading />
+                    </BlurComponent>
+
+                </>
             )}
             {isError && showPopUp && (
                 <BlurComponent blurTarget={blurTargetRef}>
@@ -94,6 +101,7 @@ export const PersonalInfo = () => {
                             onPress={() => { setShowPasswordChangePopup(false) }}
                             buttonText="Ok"
                             buttonVariant="filled"
+                            info
                         />
                     </BlurComponent>
                 )

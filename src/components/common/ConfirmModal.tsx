@@ -1,5 +1,5 @@
 import { globalStyle } from '@/styles/global.style'
-import { GlassView } from 'expo-glass-effect'
+import { GlassView, isGlassEffectAPIAvailable } from 'expo-glass-effect'
 import { useRef } from 'react'
 import { Modal, Platform, StyleSheet, Text, View } from 'react-native'
 import { PrimaryButtton } from '../ui'
@@ -29,9 +29,9 @@ function ConfirmModal({ titleOne, variantOne, titleTwo, variantTwo, text, onPres
         >
             <View className='flex-1 justify-end items-center'>
                 {
-                    Platform.OS === 'ios' ? (
+                    Platform.OS === 'ios' && isGlassEffectAPIAvailable() ? (
                         <GlassView
-                            glassEffectStyle={'regular'}
+                            glassEffectStyle={'clear'}
 
                             style={styles.internalContainer}
                         >
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 24,
         borderTopRightRadius: 24,
         padding: 16,
-        backgroundColor: 'rgba(255, 255, 255, 0.05)',
+        backgroundColor: 'rgba(255, 255, 255, 0.2)',
         paddingTop: 24,
         justifyContent: 'space-between',
         alignItems: 'center',

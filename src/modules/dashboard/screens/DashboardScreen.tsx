@@ -1,5 +1,6 @@
 import { useAuthStore } from '@/modules/auth/store/authStore'
 import { globalStyle } from '@/styles/global.style'
+import { GlassView } from 'expo-glass-effect'
 import { router } from 'expo-router'
 import { StatusBar, Text, View } from 'react-native'
 import Animated, { FadeInDown, FadeInLeft } from 'react-native-reanimated'
@@ -9,6 +10,7 @@ import { DashboaedBackgroundSvg } from '../components/DashboaedBackgroundSvg'
 import DashboardItem from '../components/DashboardItem'
 import { DASHBOARD_AYUDA_ITEMS, DASHBOARD_CUENTA_ITEMS, DASHBOARD_PREFERENCIAS_ITEMS } from '../config/dasboard.items.config'
 
+const AnimatedGlassView = Animated.createAnimatedComponent(GlassView)
 
 export const DashboardScreen = () => {
 
@@ -34,9 +36,9 @@ export const DashboardScreen = () => {
                 <CustomAvatar avatar={avatar!} istherapist={false} size={'small'} enteringDirection={'right'} />
             </View>
             <Animated.View
-                className={`relative flex-1 overflow-hidden rounded-t-4xl py-12 px-4 gap-12 border border-primary-600 bg-white`}
+                className={`relative flex-1 overflow-hidden py-12 px-4 gap-12 border border-primary-600 bg-white`}
                 entering={FadeInDown.duration(600).delay(1000)}
-                style={globalStyle.shadow.dashboard}
+                style={[globalStyle.shadow.dashboard, { borderTopLeftRadius: 34, borderTopRightRadius: 34 }]}
             >
                 {
                     istherapist && (
