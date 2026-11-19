@@ -1,6 +1,7 @@
 import { globalStyle } from '@/styles/global.style'
+import { GlassView } from 'expo-glass-effect'
 import { useRef } from 'react'
-import { Modal, Text, View } from 'react-native'
+import { Modal, Platform, StyleSheet, Text, View } from 'react-native'
 import { PrimaryButtton } from '../ui'
 
 interface Props {
@@ -26,28 +27,64 @@ function ConfirmModal({ titleOne, variantOne, titleTwo, variantTwo, text, onPres
             visible={visible}
             onRequestClose={onPressTwo}
         >
-            <View className='flex-1 justify-end items-center px-6'>
-                <View style={globalStyle.shadow.large} className='rounded-t-3xl bg-white p-4 pt-6 h-1/3 justify-between items-center border border-gray-04'>
-                    <Text className='text-center text-3xl font-light'>{text}</Text>
-                    <View className='gap-4 pb-4 w-full justify-center'>
-                        <PrimaryButtton
-                            text={titleOne}
-                            variant={variantOne}
-                            size='lg'
-                            onPress={onPressOne}
-                        />
-                        {
-                            titleTwo && (
-                                <PrimaryButtton
-                                    text={titleTwo}
-                                    variant={variantTwo ?? 'outline'}
-                                    size='lg'
-                                    onPress={onPressTwo}
-                                />
-                            )}
-                    </View>
+            <View className='flex-1 justify-end items-center'>
+                {
+                    Platform.OS === 'ios' ? (
+                        <GlassView
+                            glassEffectStyle={'regular'}
 
-                </View>
+                            style={styles.internalContainer}
+                        >
+                            <Text className='text-center text-3xl font-light'>{text}</Text>
+                            <View className='gap-4 pb-4 w-full justify-center items-center'>
+                                <PrimaryButtton
+                                    text={titleOne}
+                                    variant={variantOne}
+                                    size='lg'
+                                    onPress={onPressOne}
+                                />
+                                {
+                                    titleTwo && (
+                                        <PrimaryButtton
+                                            text={titleTwo}
+                                            variant={variantTwo ?? 'outline'}
+                                            size='lg'
+                                            onPress={onPressTwo}
+                                        />
+                                    )}
+                            </View>
+
+
+
+                        </GlassView>
+                    ) : (
+                        <View
+                            style={globalStyle.shadow.large}
+                            className='rounded-t-3xl bg-white/50 p-4 pt-6 h-1/3 justify-between items-center border border-gray-04'
+                        >
+                            <Text className='text-center text-3xl font-light'>{text}</Text>
+                            <View className='gap-4 pb-4 w-full justify-center'>
+                                <PrimaryButtton
+                                    text={titleOne}
+                                    variant={variantOne}
+                                    size='lg'
+                                    onPress={onPressOne}
+                                />
+                                {
+                                    titleTwo && (
+                                        <PrimaryButtton
+                                            text={titleTwo}
+                                            variant={variantTwo ?? 'outline'}
+                                            size='lg'
+                                            onPress={onPressTwo}
+                                        />
+                                    )}
+                            </View>
+
+                        </View>
+
+                    )
+                }
             </View>
         </Modal>
 
@@ -55,3 +92,17 @@ function ConfirmModal({ titleOne, variantOne, titleTwo, variantTwo, text, onPres
 }
 
 export default ConfirmModal;
+
+const styles = StyleSheet.create({
+    internalContainer: {
+        width: '100%',
+        borderTopLeftRadius: 24,
+        borderTopRightRadius: 24,
+        padding: 16,
+        backgroundColor: 'rgba(255, 255, 255, 0.05)',
+        paddingTop: 24,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        gap: 16
+    },
+})

@@ -34,7 +34,7 @@ export const PersonalInfo = () => {
     return (
         <View style={{ flex: 1 }}>
             <BlurTargetView ref={blurTargetRef} style={{ flex: 1 }}>
-                <SafeAreaView className="flex-1" style={{ backgroundColor: 'white' }} edges={['top']}>
+                <SafeAreaView className="flex-1" style={{ backgroundColor: 'white' }}>
                     <StatusBar barStyle="dark-content" />
                     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} className="">
                         <ScrollView
@@ -71,7 +71,7 @@ export const PersonalInfo = () => {
             )}
             {
                 showRemoveAccountPopup && (
-                    <BlurComponent blurTarget={blurTargetRef} outDelay={100} >
+                    <BlurComponent blurTarget={blurTargetRef} >
                     </BlurComponent>
                 )
             }
@@ -81,7 +81,7 @@ export const PersonalInfo = () => {
                 titleTwo="Cancelar"
                 variantOne="alert"
                 variantTwo="outline"
-                text='¿ºSeguro desea eliminar su cuenta?'
+                text='¿Seguro desea eliminar su cuenta?'
                 onPressOne={handleDeleteAccount}
                 onPressTwo={handleDeleteAccountPopup}
             />
