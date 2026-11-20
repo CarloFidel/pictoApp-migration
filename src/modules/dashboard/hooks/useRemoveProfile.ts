@@ -12,7 +12,7 @@ export const useRemoveProfile = () => {
     const { logOut } = useAuthStore()
 
     useEffect(() => {
-        if (!isSuccess || !data) return
+        if (!isSuccess) return
         logOut()
         router.push("/onboarding")
     }, [isSuccess, data])

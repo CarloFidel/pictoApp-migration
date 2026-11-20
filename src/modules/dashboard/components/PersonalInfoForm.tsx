@@ -28,7 +28,7 @@ interface Props {
 export const PersonalInfoForm = ({ setShowDeleteAccountPopup, setShowPasswordChangePopup, onEditProfile }: Props) => {
     const { email, name, lastName, avatar, roles, token } = useAuthStore.getState()
 
-    const { height, width } = useWindowDimensions()
+    const { height } = useWindowDimensions()
     const { control, handleSubmit, formState: { errors } } = useForm<EditProfileData>({ resolver: zodResolver(EditProfileSchema), defaultValues: { name: name, lastName: lastName, avatar: avatar, } })
 
     const onSubmit = handleSubmit((data) => {
@@ -93,7 +93,7 @@ export const PersonalInfoForm = ({ setShowDeleteAccountPopup, setShowPasswordCha
                                 error={errors.name ? true : false}
                                 editable={isEditingName}
                                 positionText="left"
-
+                                className={!isEditingName ? 'text-gray-500' : 'text-text'}
                             />
                             {errors.name && (
                                 <Animated.View
@@ -147,6 +147,8 @@ export const PersonalInfoForm = ({ setShowDeleteAccountPopup, setShowPasswordCha
                                 error={errors.lastName ? true : false}
                                 editable={isEditingLastName}
                                 positionText="left"
+                                className={!isEditingLastName ? 'text-gray-500' : 'text-text'}
+
                             />
                             {errors.lastName && (
                                 <Animated.View
