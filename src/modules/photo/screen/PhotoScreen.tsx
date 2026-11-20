@@ -1,10 +1,9 @@
 import { BlurComponent, CustomLoading, CustomPopUp } from '@/components/common';
 import { BackButton, PrimaryButtton } from '@/components/ui';
 import { useAuthStore } from '@/modules/auth/store/authStore';
-import { DashboaedBackgroundSvg } from '@/modules/dashboard/components/DashboaedBackgroundSvg';
 import { CameraType, CameraView, useCameraPermissions } from 'expo-camera';
 import * as ImagePicker from "expo-image-picker";
-import * as MediaLibrary from "expo-media-library";
+import { Asset, requestPermissionsAsync } from "expo-media-library";
 import { router } from 'expo-router';
 import { useRef, useState } from 'react';
 import { Image, Linking, StyleSheet, useWindowDimensions, View } from 'react-native';
@@ -22,8 +21,6 @@ interface PhotoScreenProps {
 const CameraScreen = ({ photoType }: PhotoScreenProps) => {
     const [facing, setFacing] = useState<CameraType>('back');
     const [permission, requestPermission] = useCameraPermissions();
-    const [libraryPermission, requestMediaPermission] = MediaLibrary.usePermissions();
-
     const [selectedImage, setselectedImage] = useState<string>();
     const [libraryDenied, setLibraryDenied] = useState(false);
 
@@ -31,27 +28,10 @@ const CameraScreen = ({ photoType }: PhotoScreenProps) => {
 
     const { token } = useAuthStore()
 
-    const targetRef = useRef<View>(null);
-
     const camaraRef = useRef<CameraView>(null);
     const { addPicture } = useCamaraStore();
     const { mutate, isError, isPending, isSuccess, data, error } = useUploadPhotoMutation()
 
-    const onRequestPermission = async () => {
-        try {
-            const { status: camaraPermissionStatus } =
-                await requestPermission();
-            if (camaraPermissionStatus !== "granted") {
-                return false;
-            }
-            const { status: mediaPermission } = await requestMediaPermission();
-            if (mediaPermission !== "granted") {
-                return false;
-            }
-        } catch (error: unknown) {
-            return false;
-        }
-    };
 
     if (!permission) {
         // Camera permissions are still loading.
@@ -64,19 +44,6 @@ const CameraScreen = ({ photoType }: PhotoScreenProps) => {
 
         );
     }
-
-    if (!permission.granted) {
-        return (
-            <View style={styles.container} className='flex-1 justify-center items-center'>
-                <CustomPopUp
-                    onPress={onRequestPermission}
-                    text="Necesitamos algunos permisos"
-                    info
-                />
-            </View>
-        );
-    }
-
 
     if (permission.status === "denied") {
         return (
@@ -123,25 +90,25 @@ const CameraScreen = ({ photoType }: PhotoScreenProps) => {
     const handleSavePhoto = async () => {
         if (!selectedImage) return;
 
-        if (!libraryPermission?.granted) {
-            setLibraryDenied(true);
-            return;
-        }
-
         try {
-            await MediaLibrary.Asset.create(selectedImage);
+            const mediaPermission = await requestPermissionsAsync(true, ["photo"]);
+            if (!mediaPermission.granted) {
+                setLibraryDenied(true);
+                return;
+            }
         } catch {
             setLibraryDenied(true);
             return;
         }
 
+        await Asset.create(selectedImage);
         addPicture(selectedImage);
         setselectedImage("");
         setLibraryDenied(false);
 
-        mutate({ url: selectedImage, token: token!, photoType });
-        console.log(data);
-        //router.back();
+        mutate({ url: selectedImage, token: token! })
+
+        return selectedImage;
     };
 
 
@@ -162,55 +129,42 @@ const CameraScreen = ({ photoType }: PhotoScreenProps) => {
 
     if (selectedImage && photoType === 'avatar') {
         return (
-            <>
-                <DashboaedBackgroundSvg />
-
-                <View className='flex-1 justify-start items-center p-20'>
-                    <BackButton
-                        onPress={() => setselectedImage('')}
-                        top={26}
+            <View className='flex-1 justify-start items-center p-20'>
+                <BackButton
+                    onPress={() => setselectedImage('')}
+                    top={26}
+                />
+                <Animated.View
+                    entering={FadeInDown.duration(400)}
+                    exiting={FadeOutDown.duration(400)}
+                    className='rounded-full overflow-hidden aspect-square self-center' style={{ width: width * 0.8 }}>
+                    <Image source={{ uri: selectedImage }} className='w-full h-full object-cover' />
+                </Animated.View>
+                <View className='flex-row justify-center items-center w-full gap-6 mt-8'>
+                    <PrimaryButtton
+                        variant='filled'
+                        size='sm'
+                        text='Guardar'
+                        onPress={handleSavePhoto}
                     />
-                    <Animated.View
-                        entering={FadeInDown.duration(400)}
-                        exiting={FadeOutDown.duration(400)}
-                        className='rounded-full overflow-hidden aspect-square self-center' style={{ width: width * 0.8 }}>
-                        <Image source={{ uri: selectedImage }} className='w-full h-full object-cover' />
-                    </Animated.View>
-                    <View className='flex-row justify-center items-center w-full gap-6 mt-8'>
-                        <PrimaryButtton
-                            variant='filled'
-                            size='sm'
-                            text='Guardar'
-                            onPress={handleSavePhoto}
-                        />
-                        <PrimaryButtton
-                            variant='outline'
-                            size='sm'
-                            text='Cancelar'
-                            onPress={() => setselectedImage('')}
-                        />
-                    </View>
-                    {libraryDenied && (
-                        <>
-                            <BlurComponent onTap={() => setLibraryDenied(false)}>
-                                <CustomPopUp
-                                    info
-                                    text="Necesitamos permiso para guardar la foto en tu galería"
-                                    onPress={() => {
-                                        setLibraryDenied(false);
-                                        Linking.openSettings();
-                                    }}
-                                />
-                            </BlurComponent>
-                        </>
-                    )}
-                    {isPending && (
-                        <BlurComponent>
-                            <CustomLoading />
-                        </BlurComponent>
-                    )}
+                    <PrimaryButtton
+                        variant='outline'
+                        size='sm'
+                        text='Cancelar'
+                        onPress={() => setselectedImage('')}
+                    />
                 </View>
-            </>
+                {libraryDenied && (
+                    <CustomPopUp
+                        info
+                        text="Necesitamos permiso para guardar la foto en tu galería"
+                        onPress={() => {
+                            setLibraryDenied(false);
+                            Linking.openSettings();
+                        }}
+                    />
+                )}
+            </View>
         );
     }
 
@@ -237,28 +191,13 @@ const CameraScreen = ({ photoType }: PhotoScreenProps) => {
             />
             <CustomCameraButton
                 icon={{ ios: 'photo', android: 'photo' }}
-                onPress={() => { onPickImages() }}
+                onPress={() => { handleOnShutter() }}
                 position="right-4 bottom-12"
             />
             <ShutterButton
                 onPress={() => { handleOnShutter() }}
             />
             <BackButton top={26} left={12} onPress={() => router.back()} />
-            {isError && (
-                <BlurComponent blurTarget={targetRef}>
-                    <CustomPopUp text="Error al subir la foto" onPress={() => router.back()} info />
-                </BlurComponent>
-            )}
-            {isSuccess && (
-                <BlurComponent blurTarget={targetRef}>
-                    <CustomPopUp text="Foto subida correctamente" onPress={() => router.back()} info />
-                </BlurComponent>
-            )}
-            {isPending && (
-                <BlurComponent blurTarget={targetRef}>
-                    <CustomLoading />
-                </BlurComponent>
-            )}
         </View>
     );
 };

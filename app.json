@@ -13,9 +13,7 @@
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "NSCameraUsageDescription": "Necesitamos la cámara para actualizar tu foto de perfil.",
-        "NSMicrophoneUsageDescription": "Necesitamos el micrófono si grabas vídeo con la cámara.",
-        "NSPhotoLibraryUsageDescription": "Necesitamos acceso a tus fotos para elegir y actualizar tu imagen de perfil.",
-        "NSPhotoLibraryAddUsageDescription": "Necesitamos permiso para guardar la foto en tu galería."
+        "NSMicrophoneUsageDescription": "Necesitamos el micrófono si grabas vídeo con la cámara."
       }
     },
     "android": {

@@ -3,11 +3,9 @@ import { customApiConfig } from "@/config/api/custom.api.config";
 interface Props {
     url: string;
     token: string;
-    photoType: "avatar" | "pictogram";
-    word?: string;
 }
 
-export const axiosUploadPhoto = async ({ url, token, photoType, word }: Props) => {
+export const axiosUploadPhoto = async ({ url, token }: Props) => {
     const formData = new FormData();
 
     formData.append("file", {
@@ -15,16 +13,14 @@ export const axiosUploadPhoto = async ({ url, token, photoType, word }: Props) =
         name: "photo.jpg",
         type: "image/jpeg",
     } as any);
-    formData.append("name", photoType);
-    if (word) {
-        formData.append("word", word);
-    }
-    const response = await customApiConfig.post("/photo/avatar", formData, {
+
+    const response = await customApiConfig.post("/photo/upload", {
+        data: formData,
+    }, {
         headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`
         },
     });
-
+    
     return response.data;
 };
