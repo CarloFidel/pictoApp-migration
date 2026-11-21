@@ -118,6 +118,7 @@ export default CustomPopUp;
 const styles = StyleSheet.create({
   glasViewStyle: {
     position: 'absolute',
+    backgroundColor: 'rgba(248, 243, 243, 0.5)',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 18,
