@@ -27,7 +27,7 @@ function ConfirmModal({ titleOne, variantOne, titleTwo, variantTwo, text, onPres
             visible={visible}
             onRequestClose={onPressTwo}
         >
-            <View className='flex-1 justify-end items-center'>
+            <View className='flex-1 justify-end items-center p-2'>
                 {
                     Platform.OS === 'ios' && isGlassEffectAPIAvailable() ? (
                         <GlassView
@@ -96,8 +96,7 @@ export default ConfirmModal;
 const styles = StyleSheet.create({
     internalContainer: {
         width: '100%',
-        borderTopLeftRadius: 24,
-        borderTopRightRadius: 24,
+        borderRadius: 52,
         padding: 16,
         backgroundColor: 'rgba(255, 255, 255, 0.2)',
         paddingTop: 24,
