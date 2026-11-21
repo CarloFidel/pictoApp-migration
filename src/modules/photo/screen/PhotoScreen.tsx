@@ -1,4 +1,5 @@
 import { BlurComponent, CustomLoading, CustomPopUp } from '@/components/common';
+import { CustomColorBg } from '@/components/common/CustomColorBg';
 import { BackButton, PrimaryButtton } from '@/components/ui';
 import { useAuthStore } from '@/modules/auth/store/authStore';
 import { CameraType, CameraView, useCameraPermissions } from 'expo-camera';
@@ -130,6 +131,7 @@ const CameraScreen = ({ photoType }: PhotoScreenProps) => {
     if (selectedImage && photoType === 'avatar') {
         return (
             <View className='flex-1 justify-start items-center p-20'>
+                <CustomColorBg/>
                 <BackButton
                     onPress={() => setselectedImage('')}
                     top={26}

@@ -1,3 +1,4 @@
+import { CustomColorBg } from '@/components/common/CustomColorBg'
 import { useAuthStore } from '@/modules/auth/store/authStore'
 import { globalStyle } from '@/styles/global.style'
 import { GlassView } from 'expo-glass-effect'
@@ -6,7 +7,6 @@ import { StatusBar, Text, View } from 'react-native'
 import Animated, { FadeInDown, FadeInLeft } from 'react-native-reanimated'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { CustomAvatar } from '../components/CustomAvatar'
-import { DashboaedBackgroundSvg } from '../components/DashboaedBackgroundSvg'
 import DashboardItem from '../components/DashboardItem'
 import { DASHBOARD_AYUDA_ITEMS, DASHBOARD_CUENTA_ITEMS, DASHBOARD_PREFERENCIAS_ITEMS } from '../config/dasboard.items.config'
 
@@ -42,7 +42,7 @@ export const DashboardScreen = () => {
             >
                 {
                     istherapist && (
-                        <DashboaedBackgroundSvg />
+                        <CustomColorBg />
                     )
                 }
                 <View className='gap-3'>
