@@ -57,10 +57,12 @@ function ConfirmModal({ titleOne, variantOne, titleTwo, variantTwo, text, onPres
 
 
                         </GlassView>
+
+                        //Pop up para android
                     ) : (
                         <View
                             style={globalStyle.shadow.large}
-                            className='rounded-t-3xl bg-white/50 p-4 pt-6 h-1/3 justify-between items-center border border-gray-04'
+                            className='rounded-4xl bg-white/50 p-4 pt-6 h-1/3 justify-between items-center border border-gray-04'
                         >
                             <Text className='text-center text-3xl font-light'>{text}</Text>
                             <View className='gap-4 pb-4 w-full justify-center'>
