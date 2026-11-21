@@ -7,15 +7,15 @@
     "development": {
       "developmentClient": true,
       "distribution": "internal",
-      "bun": "1.4.6"
+      "bun": "1.4.5"
     },
     "preview": {
       "distribution": "internal",
-      "bun": "1.4.6"
+      "bun": "1.4.5"
     },
     "production": {
       "autoIncrement": true,
-      "bun": "1.4.6"
+      "bun": "1.4.5"
     }
   },
   "submit": {
