@@ -120,8 +120,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: 'gray',
     borderRadius: 18,
     padding: 10,
     marginTop: 10,
