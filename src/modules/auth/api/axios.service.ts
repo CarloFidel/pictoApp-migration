@@ -19,6 +19,7 @@ export const axiosLogin = async (data: UserLogin,) => {
 
 
 export const axiosLoginGoogle = async (googleToken: string, roles: string[]) => {
+    console.log(googleToken, roles)
     const response = await customApiConfig.post("/auth/google", {
         token: googleToken,
         roles: roles || []

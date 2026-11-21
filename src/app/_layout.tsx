@@ -13,6 +13,8 @@ import '../global.css';
 
 SplashScreen.preventAutoHideAsync();
 
+console.log(process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID)
+
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
