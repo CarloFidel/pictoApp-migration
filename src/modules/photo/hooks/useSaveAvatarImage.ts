@@ -4,9 +4,9 @@ import { useEffect, useState } from "react"
 import { errorMessageMapperPhoto } from "../utility/error.message.mapper"
 import { useUploadPhotoMutation } from "./photoMutations"
 
-export const useLoadAvatarImage = () => {
+export const useSaveAvatarImage = () => {
     const { mutate, isError, isPending, isSuccess, data, error } = useUploadPhotoMutation()
-    const [showPopUp, setShowPopUp] = useState(true)
+    const [showPopUp, setShowPopUp] = useState(false)
 
     useEffect(() => {
         if (!isSuccess || !data) return

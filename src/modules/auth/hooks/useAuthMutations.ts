@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query"
-import { axiosLogin, axiosLoginGoogle, axiosRegister } from "../api/axios.service"
 import { UserLogin, UserRegister } from "../interfaces/user.interface"
+import { axiosLogin, axiosLoginGoogle, axiosRegister } from "../service/axios.auth.service"
 
 interface RegisterProps {
     data: UserRegister

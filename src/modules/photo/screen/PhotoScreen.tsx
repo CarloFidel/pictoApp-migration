@@ -1,18 +1,20 @@
 import { BlurComponent, CustomLoading, CustomPopUp } from '@/components/common';
 import { CustomColorBg } from '@/components/common/CustomColorBg';
 import { BackButton, PrimaryButtton } from '@/components/ui';
-import { useAuthStore } from '@/modules/auth/store/authStore';
-import { CameraType, CameraView, useCameraPermissions } from 'expo-camera';
+import { getAxiosError } from '@/utility/getAxiosError';
+import { CameraView, useCameraPermissions } from 'expo-camera';
 import * as ImagePicker from "expo-image-picker";
-import { Asset, requestPermissionsAsync } from "expo-media-library";
+import { Asset } from "expo-media-library";
 import { router } from 'expo-router';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { Image, Linking, StyleSheet, useWindowDimensions, View } from 'react-native';
 import Animated, { FadeInDown, FadeOutDown } from 'react-native-reanimated';
 import ShutterButton from '../components/ShutterButton';
 import CustomCameraButton from '../components/ui/CustomCameraButton';
-import { useUploadPhotoMutation } from '../hooks/photoMutations';
+import { usePhotoBehaviour } from '../hooks/usePhotoBehaviour';
+import { useSaveAvatarImage } from '../hooks/useSaveAvatarImage';
 import { useCamaraStore } from '../store/useCamaraStore';
+import { errorMessageMapperPhoto } from '../utility/error.message.mapper';
 
 interface PhotoScreenProps {
     photoType: 'avatar' | 'pictogram'
@@ -20,18 +22,64 @@ interface PhotoScreenProps {
 
 
 const CameraScreen = ({ photoType }: PhotoScreenProps) => {
-    const [facing, setFacing] = useState<CameraType>('back');
     const [permission, requestPermission] = useCameraPermissions();
-    const [selectedImage, setselectedImage] = useState<string>();
-    const [libraryDenied, setLibraryDenied] = useState(false);
-
     const { width } = useWindowDimensions();
-
-    const { token } = useAuthStore()
 
     const camaraRef = useRef<CameraView>(null);
     const { addPicture } = useCamaraStore();
-    const { mutate, isError, isPending, isSuccess, data, error } = useUploadPhotoMutation()
+    const { mutate, isError, isPending, isSuccess, errorMessage, showPopUp, setShowPopUp } = useSaveAvatarImage()
+
+    const {
+        facing,
+        setFacing,
+        selectedImage,
+        libraryDenied,
+
+        toggleCameraFacing,
+        setLibraryDenied,
+        setselectedImage,
+        handleSaveAvatarPhoto,
+        handleOnShutter }
+        = usePhotoBehaviour({
+            photoType,
+            camaraRef,
+            addPicture,
+            Asset
+        })
+
+    const handlePermissionDenied = () => {
+        Linking.openSettings();
+        router.dismissAll();
+    }
+
+    const onPickImages = async () => {
+        const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ["images", "videos"],
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 0.5,
+            allowsMultipleSelection: false,
+        });
+
+        if (result.canceled) return;
+
+        setselectedImage(result.assets[0].uri);
+    };
+
+
+    const sustitudeAvatarPhoto = async () => {
+
+        const url = await handleSaveAvatarPhoto()
+
+        if (!url) return
+
+        mutate({ url: url })
+
+
+    }
+
+
+
 
 
     if (!permission) {
@@ -70,68 +118,12 @@ const CameraScreen = ({ photoType }: PhotoScreenProps) => {
         );
     }
 
-    const toggleCameraFacing = () => {
-        setFacing(current => (current === 'back' ? 'front' : 'back'));
-    };
 
-    const handlePermissionDenied = () => {
-        Linking.openSettings();
-        router.dismissAll();
-    }
-
-    const handleOnShutter = async () => {
-        if (!camaraRef.current) return;
-
-        const picture = await camaraRef.current.takePictureAsync({
-            quality: 0.7,
-        });
-        setselectedImage(picture.uri);
-    };
-
-    const handleSavePhoto = async () => {
-        if (!selectedImage) return;
-
-        try {
-            const mediaPermission = await requestPermissionsAsync(true, ["photo"]);
-            if (!mediaPermission.granted) {
-                setLibraryDenied(true);
-                return;
-            }
-        } catch {
-            setLibraryDenied(true);
-            return;
-        }
-
-        await Asset.create(selectedImage);
-        addPicture(selectedImage);
-        setselectedImage("");
-        setLibraryDenied(false);
-
-        mutate({ url: selectedImage, token: token! })
-
-        return selectedImage;
-    };
-
-
-
-    const onPickImages = async () => {
-        const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ["images", "videos"],
-            allowsEditing: true,
-            aspect: [4, 3],
-            quality: 0.5,
-            allowsMultipleSelection: false,
-        });
-
-        if (result.canceled) return;
-
-        setselectedImage(result.assets[0].uri);
-    };
 
     if (selectedImage && photoType === 'avatar') {
         return (
             <View className='flex-1 justify-start items-center p-20'>
-                <CustomColorBg/>
+                <CustomColorBg />
                 <BackButton
                     onPress={() => setselectedImage('')}
                     top={26}
@@ -147,7 +139,7 @@ const CameraScreen = ({ photoType }: PhotoScreenProps) => {
                         variant='filled'
                         size='sm'
                         text='Guardar'
-                        onPress={handleSavePhoto}
+                        onPress={sustitudeAvatarPhoto}
                     />
                     <PrimaryButtton
                         variant='outline'
@@ -165,6 +157,16 @@ const CameraScreen = ({ photoType }: PhotoScreenProps) => {
                             Linking.openSettings();
                         }}
                     />
+                )}
+                {isPending && (
+                    <BlurComponent>
+                        <CustomLoading />
+                    </BlurComponent>
+                )}
+                {showPopUp && (
+                    <BlurComponent onTap={() => setShowPopUp(false)}>
+                        <CustomPopUp text={errorMessageMapperPhoto(getAxiosError(errorMessage))} onPress={() => setShowPopUp(false)} />
+                    </BlurComponent>
                 )}
             </View>
         );
@@ -193,7 +195,7 @@ const CameraScreen = ({ photoType }: PhotoScreenProps) => {
             />
             <CustomCameraButton
                 icon={{ ios: 'photo', android: 'photo' }}
-                onPress={() => { handleOnShutter() }}
+                onPress={() => { onPickImages() }}
                 position="right-4 bottom-12"
             />
             <ShutterButton

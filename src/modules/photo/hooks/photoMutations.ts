@@ -1,12 +1,11 @@
 import { useMutation } from "@tanstack/react-query";
-import { axiosUploadPhoto } from "../api/axios.service";
+import { axiosUploadPhoto } from "../api/axios.photo.service";
 
 interface Props {
     url: string;
-    token: string;
 }
 
 export const useUploadPhotoMutation = () => useMutation({
-    mutationFn: ({ url, token }: Props) => axiosUploadPhoto({ url, token }),
+    mutationFn: ({ url }: Props) => axiosUploadPhoto( url ),
     mutationKey: ["upload-photo"],
 })

@@ -3,3 +3,4 @@ export interface TemporalCamaraState {
   addPicture: (image: string) => void;
   clearPicture: () => void;
 }
+

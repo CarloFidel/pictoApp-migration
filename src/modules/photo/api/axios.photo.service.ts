@@ -1,11 +1,7 @@
 import { customApiConfig } from "@/config/api/custom.api.config";
 
-interface Props {
-    url: string;
-    token: string;
-}
 
-export const axiosUploadPhoto = async ({ url, token }: Props) => {
+export const axiosUploadPhoto = async (url: string) => {
     const formData = new FormData();
 
     formData.append("file", {
@@ -14,13 +10,13 @@ export const axiosUploadPhoto = async ({ url, token }: Props) => {
         type: "image/jpeg",
     } as any);
 
-    const response = await customApiConfig.post("/photo/upload", {
-        data: formData,
-    }, {
+    const response = await customApiConfig.post("/photo/avatar", 
+       formData,
+       {
         headers: {
-            Authorization: `Bearer ${token}`
+            "Content-Type": "multipart/form-data",
         },
-    });
-    
+       }
+    )
     return response.data;
 };
