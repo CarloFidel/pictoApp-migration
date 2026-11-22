@@ -10,7 +10,8 @@ export const useSaveAvatarImage = () => {
 
     useEffect(() => {
         if (!isSuccess || !data) return
-        router.push("/dashboard")
+        console.log(data)
+        router.dismissTo({ pathname: "/dashboard", params: { url: String(data) } })
     }, [isSuccess, data])
 
 

@@ -14,10 +14,6 @@ export const usePhotoBehaviour = ({ photoType, camaraRef, addPicture }: UsePhoto
     const [selectedImage, setselectedImage] = useState<string>();
     const [libraryDenied, setLibraryDenied] = useState(false);
 
-
-
-
-
     const toggleCameraFacing = () => {
         setFacing(current => (current === 'back' ? 'front' : 'back'));
         camaraRef: typeof CameraView;
