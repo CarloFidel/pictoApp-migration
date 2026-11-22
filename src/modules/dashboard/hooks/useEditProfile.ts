@@ -7,7 +7,7 @@ import { useEditProfileMutation } from "./profileMutation"
 
 export const useEditProfile = () => {
     const { mutate, isError, isPending, isSuccess, error, data } = useEditProfileMutation()
-    const [showPopUp, setShowPopUp] = useState(true)
+    const [showPopUp, setShowPopUp] = useState(false)
 
     const { logIn } = useAuthStore()
 

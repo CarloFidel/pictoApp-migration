@@ -1,5 +1,8 @@
-export { default as BlurComponent } from "./BlurComponent"
-export { default as CustomForm } from "./CustomForm"
-export { default as CustomLoading } from "./CustomLoading"
-export { default as CustomPopUp } from "./PopUp"
+export { BlurComponent } from "./BlurComponent"
+export { ConfirmModal } from "./ConfirmModal"
+export { CustomColorBg } from "./CustomColorBg"
+export { CustomForm } from "./CustomForm"
+export { CustomLoading } from "./CustomLoading"
+export { CustomPopUp } from "./CustomPopUp"
+
 

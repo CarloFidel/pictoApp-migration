@@ -1,7 +1,5 @@
-import { BlurComponent, CustomLoading, CustomPopUp } from "@/components/common"
-import ConfirmModal from "@/components/common/ConfirmModal"
+import { BlurComponent, ConfirmModal, CustomLoading, CustomPopUp } from "@/components/common"
 import { BackButton } from "@/components/ui/BackButton"
-import { useAuthStore } from "@/modules/auth/store/authStore"
 import { BlurTargetView } from "expo-blur"
 import { router } from "expo-router"
 import { useRef, useState } from "react"
@@ -13,12 +11,12 @@ import { useEditProfile } from "../hooks/useEditProfile"
 import { useRemoveProfile } from "../hooks/useRemoveProfile"
 
 export const PersonalInfo = () => {
-    const { mutate, isError, isPending, showPopUp, setShowPopUp, errorMessage } = useEditProfile()
-    const { mutate: mutateRemoveProfile, isError: isErrorRemoveProfile, isPending: isPendingRemoveProfile, showPopUp: showPopUpRemoveProfile, setShowPopUp: setShowPopUpRemoveProfile, errorMessage: errorMessageRemoveProfile } = useRemoveProfile()
-    const { token } = useAuthStore()
-    const blurTargetRef = useRef<View>(null)
+    const { mutate, isError: isErrorEditProfile, isPending: isPendingEditProfile, showPopUp: showPopUpEditProfile, setShowPopUp: setShowPopUpEditProfile, errorMessage: errorMessageEditProfile } = useEditProfile()
+    const { mutate: mutateRemoveProfile, isError: isErrorRemoveProfile, isPending: isPendingRemoveProfile, errorMessage: errorMessageRemoveProfile } = useRemoveProfile()
     const [showRemoveAccountPopup, setShowRemoveAccountPopup] = useState(false)
     const [showPasswordChangePopup, setShowPasswordChangePopup] = useState(false)
+
+    const blurTargetRef = useRef<View>(null)
 
     const handleDeleteAccountPopup = () => {
         setShowRemoveAccountPopup((prev) => !prev)
@@ -28,7 +26,7 @@ export const PersonalInfo = () => {
         setShowPasswordChangePopup((prev) => !prev)
     }
     const handleDeleteAccount = () => {
-        mutateRemoveProfile(token ?? '')
+        mutateRemoveProfile()
     }
 
     return (
@@ -43,7 +41,7 @@ export const PersonalInfo = () => {
                             keyboardShouldPersistTaps="handled"
                             showsVerticalScrollIndicator={false}>
                             <BackButton onPress={() => router.back()} top={10} left={10} />
-                            <PersonalInfoForm setShowDeleteAccountPopup={handleDeleteAccountPopup} setShowPasswordChangePopup={handlePasswordChangePopup} onEditProfile={mutate} />
+                            <PersonalInfoForm setShowPopUpEditProfile={setShowPopUpEditProfile} setShowPasswordChangePopup={handlePasswordChangePopup} onEditProfile={mutate} />
                             <Animated.View entering={FadeInDown.duration(800)} exiting={FadeOut.duration(300)} className='gap-5'>
                                 <Pressable onPress={() => { handleDeleteAccountPopup() }}>
                                     <Text className="text-lg font-hanken-light text-center w-full px-6 text-alert mb-10">Eliminar cuenta</Text>
@@ -54,10 +52,10 @@ export const PersonalInfo = () => {
                     </KeyboardAvoidingView>
                 </SafeAreaView>
             </BlurTargetView>
-            {isPending || isPendingRemoveProfile && (
+            {isPendingRemoveProfile && (
                 <>
                     {
-                        setShowRemoveAccountPopup((prev) => !prev)
+                        setShowRemoveAccountPopup(false)
 
                     }
                     <BlurComponent blurTarget={blurTargetRef}>
@@ -66,11 +64,23 @@ export const PersonalInfo = () => {
 
                 </>
             )}
-            {isError && showPopUp && (
+            {isPendingEditProfile && (
+                <>
+                    {
+                        setShowPopUpEditProfile(false)
+
+                    }
+                    <BlurComponent blurTarget={blurTargetRef}>
+                        <CustomLoading />
+                    </BlurComponent>
+
+                </>
+            )}
+            {isErrorEditProfile && (
                 <BlurComponent blurTarget={blurTargetRef}>
                     <CustomPopUp
-                        text={errorMessage}
-                        onPress={() => { setShowPopUp(false) }}
+                        text={errorMessageEditProfile}
+                        onPress={() => { setShowPopUpEditProfile(false) }}
                         buttonText="Ok"
                         warning
                     />

@@ -16,7 +16,7 @@ interface Props {
     onPressTwo: () => void
 }
 
-function ConfirmModal({ titleOne, variantOne, titleTwo, variantTwo, text, onPressOne, onPressTwo, visible }: Props) {
+export const ConfirmModal = ({ titleOne, variantOne, titleTwo, variantTwo, text, onPressOne, onPressTwo, visible }: Props) => {
     const blurTargetRef = useRef<View>(null)
     return (
 
@@ -92,8 +92,6 @@ function ConfirmModal({ titleOne, variantOne, titleTwo, variantTwo, text, onPres
 
     );
 }
-
-export default ConfirmModal;
 
 const styles = StyleSheet.create({
     internalContainer: {

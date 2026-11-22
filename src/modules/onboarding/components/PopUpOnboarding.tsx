@@ -1,5 +1,5 @@
 import { PrimaryButtton } from '@/components/ui/PrimaryButtton'
-import { IMAGES_ROUTES } from '@/constants/images.statics.routes'
+import { IMAGES_ROUTES } from '@/constants/routes/images.statics.routes'
 import { router } from 'expo-router'
 import { type AndroidSymbol, type SFSymbol } from 'expo-symbols'
 import { View } from 'react-native'

@@ -1,4 +1,4 @@
-import { IMAGES_ROUTES } from '@/constants/images.statics.routes';
+import { IMAGES_ROUTES } from '@/constants/routes/images.statics.routes';
 import { globalStyle } from '@/styles/global.style';
 import { SymbolView, type AndroidSymbol, type SFSymbol } from 'expo-symbols';
 import { Image, Pressable, PressableProps, Text, useWindowDimensions } from 'react-native';
@@ -44,7 +44,7 @@ export const PrimaryButtton = ({ text, variant, backgroundColor, size, icon, dis
   }
   return (
     <Pressable
-      className={`${backgroundColor ? backgroundColor : buttonBackground} rounded-2xl  items-center justify-center gap-2 ${globalStyle.buttonPress} ${iconRight ? 'flex-row-reverse' : 'flex-row'}`}
+      className={`${backgroundColor ? backgroundColor : buttonBackground} rounded-3xl  items-center justify-center gap-2 ${globalStyle.buttonPress} ${iconRight ? 'flex-row-reverse' : 'flex-row'}`}
       disabled={variant === 'disabled'}
       style={[{
         width: buttonWidth,

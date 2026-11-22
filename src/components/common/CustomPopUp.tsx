@@ -13,7 +13,7 @@ interface Props {
   buttonVariant?: 'filled' | 'outline' | 'alert';
   onPress: () => void;
 }
-const CustomPopUp = ({
+export const CustomPopUp = ({
   info,
   onPress,
   buttonText = "Ok",
@@ -33,7 +33,8 @@ const CustomPopUp = ({
               ios: "exclamationmark.triangle",
               android: "warning"
             }}
-            size={50}
+            size={28}
+            weight={"light"}
             tintColor={globalStyle.color.gray[55]}
           />
         ) : info ?
@@ -46,7 +47,8 @@ const CustomPopUp = ({
                   ios: "info.circle",
                   android: "info"
                 }}
-                size={24}
+                size={28}
+                weight={"light"}
                 tintColor={globalStyle.color.primary[600]}
               />
             </Animated.View>
@@ -60,7 +62,8 @@ const CustomPopUp = ({
                   ios: "checkmark.circle",
                   android: "check"
                 }}
-                size={30}
+                size={28}
+                weight={"light"}
                 tintColor={globalStyle.color.primary[600]}
               />
             </Animated.View>
@@ -82,13 +85,13 @@ const CustomPopUp = ({
   if (Platform.OS === 'ios' && isLiquidGlassAvailable()) {
 
     return (
-      <AnimatedGlassView 
-      glassEffectStyle={'regular'}
+      <AnimatedGlassView
+        glassEffectStyle={'regular'}
 
-      style={styles.glasViewStyle} 
-      entering={FadeInDown.springify().duration(800)} 
-      exiting={FadeOutDown.springify().duration(800)}
-      
+        style={styles.glasViewStyle}
+        entering={FadeInDown.springify().duration(800)}
+        exiting={FadeOutDown.springify().duration(800)}
+
       >
         <InnerContent />
       </AnimatedGlassView>
@@ -100,7 +103,7 @@ const CustomPopUp = ({
     <Animated.View
       entering={FadeInDown.springify().duration(800)}
       exiting={FadeOutDown.springify().duration(800)}
-      className="absolute bg-white justify-center border border-gray-200 items-center p-2 py-8 rounded-2xl gap-5 mt-2"
+      className="absolute bg-white justify-center border border-gray-200 items-center p-2 pt-6 pb-4 rounded-4xl gap-4"
       style={{
         zIndex: 11,
       }}
@@ -112,21 +115,15 @@ const CustomPopUp = ({
   );
 };
 
-export default CustomPopUp;
-
-
 const styles = StyleSheet.create({
   glasViewStyle: {
     position: 'absolute',
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 18,
-    padding: 10,
+    borderRadius: 36,
+    padding: 18,
     marginTop: 10,
+    marginBottom: 10,
     gap: 14,
   },
-
-
 })

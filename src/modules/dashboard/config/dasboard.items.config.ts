@@ -1,3 +1,4 @@
+import { DASHBOARD_ROUTES } from '@/constants/routes/routes'
 import { type Href } from 'expo-router'
 import type { AndroidSymbol, SFSymbol } from 'expo-symbols'
 
@@ -13,22 +14,22 @@ export const DASHBOARD_CUENTA_ITEMS: Items[] = [
     {
         title: 'Información personal',
         icon: { ios: 'person', android: 'person' },
-        redirect: '/myProfile',
+        redirect: DASHBOARD_ROUTES.myProfile,
     },
     {
         title: 'Mis fotos',
         icon: { ios: 'photo', android: 'photo' },
-        redirect: '/myPhotos',
+        redirect: DASHBOARD_ROUTES.myPhotos,
     },
     {
         title: 'Horarios guardados',
         icon: { ios: 'calendar', android: 'event' },
-        redirect: '/mySchedules',
+        redirect: DASHBOARD_ROUTES.mySchedules,
     },
     {
         title: 'Mis artículos',
         icon: { ios: 'book', android: 'book' },
-        redirect: '/myArticles',
+        redirect: DASHBOARD_ROUTES.myArticles,
     },
 
 
@@ -38,12 +39,12 @@ export const DASHBOARD_AYUDA_ITEMS: Items[] = [
     {
         title: 'Preguntas frecuentes',
         icon: { ios: 'questionmark.circle', android: 'help_center' },
-        redirect: '/faqs',
+        redirect: DASHBOARD_ROUTES.faqs,
     },
     {
         title: 'Sobre esta app',
         icon: { ios: 'info.circle', android: 'info' },
-        redirect: '/about',
+        redirect: DASHBOARD_ROUTES.about,
     },
 ]
 

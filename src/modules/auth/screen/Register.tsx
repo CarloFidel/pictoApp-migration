@@ -1,6 +1,6 @@
 import BlurComponent from '@/components/common/BlurComponent';
 import CustomLoading from '@/components/common/CustomLoading';
-import CustomPopUp from '@/components/common/PopUp';
+import CustomPopUp from '@/components/common/CustomPopUp';
 import { BackButton } from '@/components/ui/BackButton';
 import { BlurTargetView } from 'expo-blur';
 import { router } from 'expo-router';

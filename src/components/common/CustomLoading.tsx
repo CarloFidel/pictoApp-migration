@@ -2,7 +2,7 @@ import { globalStyle } from "@/styles/global.style";
 import { ActivityIndicator, useWindowDimensions } from "react-native";
 import Animated, { FadeInDown, FadeOutDown } from "react-native-reanimated";
 
-const CustomLoading = () => {
+export const CustomLoading = () => {
   const { width } = useWindowDimensions();
 
   return (
@@ -22,4 +22,3 @@ const CustomLoading = () => {
   );
 };
 
-export default CustomLoading;

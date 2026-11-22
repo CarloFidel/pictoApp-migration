@@ -1,4 +1,5 @@
 import { customApiConfig } from "@/config/api/custom.api.config";
+import { PHOTO_ENDPOINTS } from "./photo.endpoints";
 
 
 export const axiosUploadPhoto = async (url: string) => {
@@ -10,7 +11,7 @@ export const axiosUploadPhoto = async (url: string) => {
         type: "image/jpeg",
     } as any);
 
-    const response = await customApiConfig.post("/photo/avatar", 
+    const response = await customApiConfig.post(PHOTO_ENDPOINTS.upload_avatar_photo, 
        formData,
        {
         headers: {

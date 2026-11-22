@@ -19,20 +19,23 @@ type editProfileMutate = ReturnType<typeof useEditProfileMutation>['mutate']
 
 
 interface Props {
-    setShowDeleteAccountPopup: (term: boolean) => void;
     setShowPasswordChangePopup: (term: boolean) => void;
+    setShowPopUpEditProfile: (term: boolean) => void;
     onEditProfile: editProfileMutate
 }
 
 
-export const PersonalInfoForm = ({ setShowDeleteAccountPopup, setShowPasswordChangePopup, onEditProfile }: Props) => {
-    const { email, name, lastName, avatar, roles, token } = useAuthStore.getState()
+export const PersonalInfoForm = ({ 
+    setShowPasswordChangePopup, 
+    onEditProfile, 
+ }: Props) => {
+    const { email, name, lastName, avatar, roles } = useAuthStore.getState()
 
     const { height } = useWindowDimensions()
     const { control, handleSubmit, formState: { errors } } = useForm<EditProfileData>({ resolver: zodResolver(EditProfileSchema), defaultValues: { name: name, lastName: lastName, avatar: avatar, } })
 
     const onSubmit = handleSubmit((data) => {
-        onEditProfile({ token: token ?? '', data: data })
+        onEditProfile(data)
     })
 
 
@@ -220,9 +223,6 @@ export const PersonalInfoForm = ({ setShowDeleteAccountPopup, setShowPasswordCha
                 </Pressable>
 
             </View>
-
-
-
         </View>
     )
 }

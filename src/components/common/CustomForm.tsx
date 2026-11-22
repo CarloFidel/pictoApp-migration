@@ -36,10 +36,7 @@ type Props =
         }
     }
     
-
-
-
-const CustomForm = (props: Props) => {
+export const CustomForm = (props: Props) => {
     const { formType } = props
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const { roles } = useLocalSearchParams()
@@ -234,4 +231,3 @@ const CustomForm = (props: Props) => {
     );
 };
 
-export default CustomForm;

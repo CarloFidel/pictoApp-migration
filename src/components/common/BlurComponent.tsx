@@ -8,7 +8,7 @@ interface Props {
   children?: React.ReactNode;
   blurTarget?: React.RefObject<View | null>;
 }
-const BlurComponent = ({ onTap, children, blurTarget, outDelay }: Props) => {
+export const BlurComponent = ({ onTap, children, blurTarget, outDelay }: Props) => {
   return (
     <Pressable
       onPress={onTap}
@@ -57,4 +57,3 @@ const BlurComponent = ({ onTap, children, blurTarget, outDelay }: Props) => {
   );
 };
 
-export default BlurComponent;
