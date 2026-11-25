@@ -1,8 +1,8 @@
 import { getAxiosError } from "@/utility/getAxiosError"
 import { router } from "expo-router"
 import { useEffect, useState } from "react"
-import { useAuthStore } from "../store/authStore"
-import { errorMessageMapperAuth } from "../utility/error.message.mapper"
+import { useAuthStore } from "../../store/authStore"
+import { errorMessageMapperAuth } from "../../utility/error.message.mapper"
 import { useLoginMutation } from "./useAuthMutations"
 
 export const useLogin = () => {
@@ -13,7 +13,7 @@ export const useLogin = () => {
   
     useEffect(() => {
       if (!isSuccess || !data) return
-      logIn(data.name, data.lastName, data.email, data.password, data.roles, data.token)
+      logIn(data.name, data.lastName, data.email, data.roles, data.token, data.avatar)
       router.push("/dashboard")
     }, [isSuccess, data])
   

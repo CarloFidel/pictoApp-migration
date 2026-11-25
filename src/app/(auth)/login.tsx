@@ -1,4 +1,4 @@
-import { LoginScreen } from "@/modules/auth/screen/Login"
+import { LoginScreen } from "@/modules/auth/presentation/screen/Login"
 
 const login = () => {
     return (

@@ -1,4 +1,4 @@
-import { RegisterScreen } from '@/modules/auth/screen/Register'
+import { RegisterScreen } from '@/modules/auth/presentation/screen/Register'
 
 const Register = () => {
   return (

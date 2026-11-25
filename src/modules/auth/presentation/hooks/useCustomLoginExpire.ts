@@ -1,7 +1,7 @@
 import { getPayloadJwt } from "@/utility/getPayloadJwt"
 import { router } from "expo-router"
 import { useEffect, useState } from "react"
-import { useAuthStore } from "../store/authStore"
+import { useAuthStore } from "../../store/authStore"
 
 
 

@@ -1,7 +1,7 @@
 import { deleteItemAsync, getItem, setItem } from 'expo-secure-store';
 import { create } from "zustand";
 import { createJSONStorage, persist } from 'zustand/middleware';
-import { UserState } from "../interfaces/user-state.interface";
+import { UserState } from "./user-state.interface";
 
 
 export const useAuthStore = create(
@@ -13,12 +13,11 @@ export const useAuthStore = create(
             name: '',
             lastName: '',
             email: '',
-            password: '',
             roles: [],
             token: '',
             avatar: '',
 
-            logIn: (name, lastName, email, password, roles, token, avatar = '') => set(() => {
+            logIn: (name, lastName, email, roles, token, avatar) => set(() => {
                 return {
                     isLoggedIn: true,
                     isSessionExpired: false,
@@ -26,7 +25,6 @@ export const useAuthStore = create(
                     name,
                     lastName,
                     email,
-                    password,
                     roles,
                     token,
                     avatar,
@@ -40,7 +38,6 @@ export const useAuthStore = create(
                     name: '',
                     lastName: '',
                     email: '',
-                    password: '',
                     roles: [],
                     token: '',
                     avatar: '',
@@ -56,7 +53,6 @@ export const useAuthStore = create(
                     name: '',
                     lastName: '',
                     email: '',
-                    password: '',
                     roles: [],
                     token: '',
                     avatar: '',

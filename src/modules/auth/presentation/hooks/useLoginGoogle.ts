@@ -1,8 +1,8 @@
 import { getAxiosError } from "@/utility/getAxiosError"
 import { router } from "expo-router"
 import { useEffect, useState } from "react"
-import { useAuthStore } from "../store/authStore"
-import { errorMessageMapperAuth } from "../utility/error.message.mapper"
+import { useAuthStore } from "../../store/authStore"
+import { errorMessageMapperAuth } from "../../utility/error.message.mapper"
 import { useLoginGoogleMutation } from "./useAuthMutations"
 
 

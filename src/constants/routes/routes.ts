@@ -1,7 +1,7 @@
 
 export const DASHBOARD_ROUTES = {
     myProfile: '/myProfile',
-    myPhotos: '/myProfile',
+    myPhotos: '/myPhotos',
     mySchedules: '/myProfile',
     myArticles: '/myProfile',
 

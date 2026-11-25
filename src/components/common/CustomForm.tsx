@@ -8,9 +8,9 @@ import { Controller, useForm } from 'react-hook-form'
 import { Platform, Pressable, Text, useWindowDimensions, View } from 'react-native'
 import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated'
 
-import { useLoginMutation, useRegisterMutation } from '../../modules/auth/hooks/useAuthMutations'
 import { UserLogin, UserRegister } from '../../modules/auth/interfaces/user.interface'
-import { LoginSchema, RegisterSchema } from '../../modules/auth/schema/form.schema'
+import { useLoginMutation, useRegisterMutation } from '../../modules/auth/presentation/hooks/useAuthMutations'
+import { LoginSchema, RegisterSchema } from '../../modules/auth/presentation/schema/form.schema'
 import { CustomInput, PrimaryButtton } from '../ui'
 
 type RegisterMutate = ReturnType<typeof useRegisterMutation>['mutate']

@@ -1,7 +1,7 @@
 import { BlurComponent, CustomLoading, CustomPopUp } from '@/components/common';
 import { BackButton } from '@/components/ui/BackButton';
 import { PrimaryButtton } from '@/components/ui/PrimaryButtton';
-import { useLoginGoogle } from '@/modules/auth/hooks/useLoginGoogle';
+import { useLoginGoogle } from '@/modules/auth/presentation/hooks/useLoginGoogle';
 import { globalStyle } from '@/styles/global.style';
 import { BlurTargetView } from 'expo-blur';
 import { Link } from 'expo-router';

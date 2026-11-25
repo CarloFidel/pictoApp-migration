@@ -11,8 +11,11 @@ import { DASHBOARD_AYUDA_ITEMS, DASHBOARD_CUENTA_ITEMS, DASHBOARD_PREFERENCIAS_I
 
 
 export const DashboardScreen = () => {
-    
+
     const { email, name, logOut, avatar, roles } = useAuthStore.getState()
+
+    console.log(avatar, name, email)
+
     const { url } = useLocalSearchParams()
     const avatarUrl = Array.isArray(url) ? url[0] : url
 
@@ -33,7 +36,7 @@ export const DashboardScreen = () => {
                     </Animated.View>
                     <Animated.Text entering={FadeInLeft.delay(500).duration(400)} className='text-white font-hanken-light text-xl'>{email}</Animated.Text>
                 </View>
-                <CustomAvatar avatar={avatarUrl ?? avatar ?? ''} istherapist={false} size={'small'} enteringDirection={'right'} />
+                <CustomAvatar avatar={avatarUrl ?? avatar!} istherapist={false} size={'small'} enteringDirection={'right'} />
             </View>
             <Animated.View
                 className={`relative flex-1 overflow-hidden py-12 px-4 gap-12 border border-primary-600 bg-white`}
@@ -52,7 +55,7 @@ export const DashboardScreen = () => {
                             <DashboardItem
                                 key={item.title}
                                 icon={item.icon}
-                                redirect={() => router.push(item.redirect!)}
+                                redirect={() => router.push({ pathname: item.redirect!, params: { url } })}
                                 title={item.title}
                             />
                         ))

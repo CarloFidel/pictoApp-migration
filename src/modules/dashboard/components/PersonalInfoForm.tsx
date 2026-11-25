@@ -22,17 +22,19 @@ interface Props {
     setShowPasswordChangePopup: (term: boolean) => void;
     setShowPopUpEditProfile: (term: boolean) => void;
     onEditProfile: editProfileMutate
+    avatarUrl: string
 }
 
 
 export const PersonalInfoForm = ({ 
     setShowPasswordChangePopup, 
     onEditProfile, 
+    avatarUrl
  }: Props) => {
-    const { email, name, lastName, avatar, roles } = useAuthStore.getState()
+    const { email, name, lastName, roles } = useAuthStore.getState()
 
     const { height } = useWindowDimensions()
-    const { control, handleSubmit, formState: { errors } } = useForm<EditProfileData>({ resolver: zodResolver(EditProfileSchema), defaultValues: { name: name, lastName: lastName, avatar: avatar, } })
+    const { control, handleSubmit, formState: { errors } } = useForm<EditProfileData>({ resolver: zodResolver(EditProfileSchema), defaultValues: { name: name, lastName: lastName, } })
 
     const onSubmit = handleSubmit((data) => {
         onEditProfile(data)
@@ -60,7 +62,7 @@ export const PersonalInfoForm = ({
 
                 <Text className="text-4xl font-hanken-light text-text text-center w-full px-6">Información Personal</Text>
                 <Animated.View>
-                    <CustomAvatar avatar={avatar!} istherapist={false} size={'medium'} enteringDirection={'top'} delay={200} />
+                    <CustomAvatar avatar={avatarUrl} istherapist={false} size={'medium'} enteringDirection={'top'} delay={200} />
                     <Animated.View
                         entering={ZoomIn.delay(1000).springify().damping(10).stiffness(100).mass(1)}
                         className='absolute top-24 right-3 rounded-full'

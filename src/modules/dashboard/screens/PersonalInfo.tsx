@@ -1,7 +1,8 @@
 import { BlurComponent, ConfirmModal, CustomLoading, CustomPopUp } from "@/components/common"
 import { BackButton } from "@/components/ui/BackButton"
+import { useAuthStore } from "@/modules/auth/store/authStore"
 import { BlurTargetView } from "expo-blur"
-import { router } from "expo-router"
+import { router, useLocalSearchParams } from "expo-router"
 import { useRef, useState } from "react"
 import { KeyboardAvoidingView, Platform, Pressable, ScrollView, StatusBar, Text, View } from "react-native"
 import Animated, { FadeInDown, FadeOut } from "react-native-reanimated"
@@ -11,7 +12,7 @@ import { useEditProfile } from "../hooks/useEditProfile"
 import { useRemoveProfile } from "../hooks/useRemoveProfile"
 
 export const PersonalInfo = () => {
-    const { mutate, isError: isErrorEditProfile, isPending: isPendingEditProfile, showPopUp: showPopUpEditProfile, setShowPopUp: setShowPopUpEditProfile, errorMessage: errorMessageEditProfile } = useEditProfile()
+    const { mutate, isError: isErrorEditProfile, isPending: isPendingEditProfile, setShowPopUp: setShowPopUpEditProfile, errorMessage: errorMessageEditProfile } = useEditProfile()
     const { mutate: mutateRemoveProfile, isError: isErrorRemoveProfile, isPending: isPendingRemoveProfile, errorMessage: errorMessageRemoveProfile } = useRemoveProfile()
     const [showRemoveAccountPopup, setShowRemoveAccountPopup] = useState(false)
     const [showPasswordChangePopup, setShowPasswordChangePopup] = useState(false)
@@ -29,6 +30,13 @@ export const PersonalInfo = () => {
         mutateRemoveProfile()
     }
 
+    const { avatar } = useAuthStore()
+
+    const { url } = useLocalSearchParams()
+    console.log(url)
+    const avatarUrl = Array.isArray(url) ? url[1] : url
+
+
     return (
         <View style={{ flex: 1 }}>
             <BlurTargetView ref={blurTargetRef} style={{ flex: 1 }}>
@@ -41,7 +49,7 @@ export const PersonalInfo = () => {
                             keyboardShouldPersistTaps="handled"
                             showsVerticalScrollIndicator={false}>
                             <BackButton onPress={() => router.back()} top={10} left={10} />
-                            <PersonalInfoForm setShowPopUpEditProfile={setShowPopUpEditProfile} setShowPasswordChangePopup={handlePasswordChangePopup} onEditProfile={mutate} />
+                            <PersonalInfoForm avatarUrl={avatarUrl ?? avatar} setShowPopUpEditProfile={setShowPopUpEditProfile} setShowPasswordChangePopup={handlePasswordChangePopup} onEditProfile={mutate} />
                             <Animated.View entering={FadeInDown.duration(800)} exiting={FadeOut.duration(300)} className='gap-5'>
                                 <Pressable onPress={() => { handleDeleteAccountPopup() }}>
                                     <Text className="text-lg font-hanken-light text-center w-full px-6 text-alert mb-10">Eliminar cuenta</Text>

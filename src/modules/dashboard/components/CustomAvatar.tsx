@@ -26,7 +26,7 @@ export const CustomAvatar = ({ avatar, istherapist, size, enteringDirection, del
         style={{
             width: '100%',
             height: '100%',
-            resizeMode: "contain",
+            resizeMode: "cover",
         }}
     />
 

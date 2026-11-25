@@ -2,7 +2,6 @@ export interface UserState {
     name?: string;
     lastName?: string;
     email: string;
-    password: string;
     roles?: string[];
     token?: string;
     avatar?: string;
@@ -14,7 +13,6 @@ export interface UserState {
         name: string,
         lastName: string,
         email: string,
-        password: string,
         roles: string[],
         token: string,
         avatar?: string,

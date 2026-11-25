@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import { BlurComponent, CustomPopUp } from '@/components/common';
 import GlobalProvider from '@/config/providers/GlobalProvider';
-import { useCustomLoginExpire } from '@/modules/auth/hooks/useCustomLoginExpire';
+import { useCustomLoginExpire } from '@/modules/auth/presentation/hooks/useCustomLoginExpire';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { BlurTargetView } from 'expo-blur';
 import { View } from 'react-native';

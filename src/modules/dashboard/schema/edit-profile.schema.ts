@@ -17,12 +17,7 @@ export const EditProfileSchema = z.object({
     .regex(/^[A-Za-zÀ-ÿ\s]+$/, {
       message: "El apellido solo puede contener letras",
     })
-    .optional(),
-
-  avatar: z
-    .string({ message: "El avatar debe ser una URL válida" })
-    .optional(),
-
+    .optional()
 });
 
 
