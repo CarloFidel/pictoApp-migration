@@ -7,12 +7,12 @@ import { useRef, useState } from "react"
 import { KeyboardAvoidingView, Platform, Pressable, ScrollView, StatusBar, Text, View } from "react-native"
 import Animated, { FadeInDown, FadeOut } from "react-native-reanimated"
 import { SafeAreaView } from "react-native-safe-area-context"
-import { PersonalInfoForm } from "../components/PersonalInfoForm"
+import { PersonalInfoForm } from "../components"
 import { useEditProfile } from "../hooks/useEditProfile"
 import { useRemoveProfile } from "../hooks/useRemoveProfile"
 
 export const PersonalInfo = () => {
-    const { mutate, isError: isErrorEditProfile, isPending: isPendingEditProfile, setShowPopUp: setShowPopUpEditProfile, errorMessage: errorMessageEditProfile } = useEditProfile()
+    const { mutate, isError: isErrorEditProfile, isPending: isPendingEditProfile,showPopUp: showPopEditProfile, setShowPopUp: setShowPopUpEditProfile, errorMessage: errorMessageEditProfile } = useEditProfile()
     const { mutate: mutateRemoveProfile, isError: isErrorRemoveProfile, isPending: isPendingRemoveProfile, errorMessage: errorMessageRemoveProfile } = useRemoveProfile()
     const [showRemoveAccountPopup, setShowRemoveAccountPopup] = useState(false)
     const [showPasswordChangePopup, setShowPasswordChangePopup] = useState(false)
@@ -84,11 +84,11 @@ export const PersonalInfo = () => {
 
                 </>
             )}
-            {isErrorEditProfile && (
+            {isErrorEditProfile && showPopEditProfile && (
                 <BlurComponent blurTarget={blurTargetRef}>
                     <CustomPopUp
                         text={errorMessageEditProfile}
-                        onPress={() => { setShowPopUpEditProfile(false) }}
+                        onPress={() => setShowPopUpEditProfile(false) }
                         buttonText="Ok"
                         warning
                     />

@@ -1,4 +1,4 @@
-import { DashboardScreen } from "@/modules/dashboard/screens/DashboardScreen"
+import { DashboardScreen } from "@/modules/dashboard/presentation/screens/DashboardScreen"
 
 const dashboard = () => {
   return (

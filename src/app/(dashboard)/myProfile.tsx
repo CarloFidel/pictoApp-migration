@@ -1,4 +1,4 @@
-import { PersonalInfo } from '@/modules/dashboard/screens/PersonalInfo'
+import { PersonalInfo } from "@/modules/dashboard/presentation/screens/PersonalInfo"
 
 const MyProfile = () => {
   return (

@@ -14,7 +14,7 @@ interface Props {
 
 
 
-const DashboardItem = ({ icon, title, redirect, onPress }: Props) => {
+export const DashboardItem = ({ icon, title, redirect, onPress }: Props) => {
     return (
         <View className='flex-row w-full justify-between items-center'>
             <Pressable onPress={redirect ? redirect : onPress}>
@@ -28,4 +28,3 @@ const DashboardItem = ({ icon, title, redirect, onPress }: Props) => {
     )
 }
 
-export default DashboardItem

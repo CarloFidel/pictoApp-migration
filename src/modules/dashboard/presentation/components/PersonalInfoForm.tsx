@@ -8,11 +8,11 @@ import { SymbolView } from "expo-symbols"
 import { Controller, useForm } from "react-hook-form"
 import { Platform, Pressable, Text, useWindowDimensions, View } from "react-native"
 import Animated, { FadeIn, FadeOut, ZoomIn } from "react-native-reanimated"
+import { EditProfileData } from "../../interface/edit-profile.interface"
+import { getTherapistRole } from "../../utility/getRole"
 import { useEditProfileMutation } from "../hooks/profileMutation"
 import { useEditField } from "../hooks/useEditField"
-import { EditProfileData } from "../interface/edit-profile.interface"
 import { EditProfileSchema } from "../schema/edit-profile.schema"
-import { getTherapistRole } from "../utility/getRole"
 import { CustomAvatar } from "./CustomAvatar"
 
 type editProfileMutate = ReturnType<typeof useEditProfileMutation>['mutate']

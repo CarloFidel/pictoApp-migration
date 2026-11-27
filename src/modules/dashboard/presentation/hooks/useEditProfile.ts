@@ -13,7 +13,7 @@ export const useEditProfile = () => {
 
     useEffect(() => {
         if (!isSuccess || !data) return
-        logIn(data.name, data.lastName, data.email, data.password, data.roles, data.token, data.avatar)
+        logIn(data.name, data.lastName, data.email, data.roles, data.token, data.avatar)
         router.push("/dashboard")
     }, [isSuccess, data])
 
